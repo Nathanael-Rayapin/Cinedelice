@@ -1,9 +1,13 @@
 # Front
 <!-- Dépendances -->
 npm create vite@latest
+npm install -D vitest @testing-library/react @testing-library/jest-dom jsdom
+npm install -D sass-embedded
+npm install tailwindcss@latest @tailwindcss/vite@latest daisyui@latest
+npm install react-icons --save
 
 # Back
-<!-- Dépendances -->n
+<!-- Dépendances -->
 npm init -y
 npm install express
 npm install -D typescript
