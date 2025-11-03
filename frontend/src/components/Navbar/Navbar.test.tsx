@@ -7,6 +7,7 @@ describe('Navbar', () => {
   it('should contain a header', () => {
     render(<Navbar />)
 
-    expect(screen.getByText('Test')).toBeInTheDocument();
+    expect(screen.findByText('Recettes')).toBeTruthy();
+    expect(screen.findByText('Films')).toBeTruthy();
   })
 })

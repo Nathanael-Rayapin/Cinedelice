@@ -1,45 +1,101 @@
 .navbar {
     width: 100%;
-    height: 150px;
+    height: 100px;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 96px 24px;
+    padding: 0 16px;
     box-shadow: 0 8px 0 0 rgba(69, 69, 69, 0.15);
 
     .brand {
-        a {
-            text-decoration: none;
-        }
+        flex-shrink: 0;
+        display: flex;
+        align-items: center;
+        gap: 16px;
+        margin-right: 16px;
 
         img {
-            width: 100px;
-            height: 100px;
+            width: 50px;
+            height: 50px;
             object-fit: cover;
         }
     }
 
     .filters {
-        display: flex;
-        align-items: center;
-        gap: 64px;
+        display: none;
     }
 
     .sections {
+        gap: 32px;
         display: flex;
-        align-items: center;
-        gap: 64px;
 
-        a {
-            font-size: 20px;
-            text-decoration: none;
-            color: #0D1B2A;
-            font-weight: 400;
-            transition: all 0.3s ease;
-            cursor: pointer;
+        a:not(.profile li a) {
+            display: none;
+        }
 
-            &:hover {
-                color: #FB8B24;
+        .search-btn {
+            display: block;
+        }
+    }
+}
+
+@media screen and (min-width: 769px) {
+    .navbar {
+        padding: 0 24px;
+
+        .filters {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .sections {
+            display: flex;
+            align-items: center;
+            gap: 32px;
+
+            a {
+                display: inline-block;
+                color: #0D1B2A;
+                font-size: 16px;
+                font-weight: 400;
+                transition: all 0.3s ease;
+
+                &:hover {
+                    color: #FB8B24;
+                }
+            }
+
+            .search-btn {
+                display: none;
+            }
+        }
+
+        .brand {
+            margin-right: 16px;
+        }
+    }
+}
+
+@media screen and (min-width: 992px) {
+    .navbar {
+        height: 150px;
+        padding: 96px 24px;
+
+        .brand img {
+            width: 100px;
+            height: 100px;
+        }
+
+        .filters {
+            gap: 48px;
+        }
+
+        .sections {
+            gap: 48px;
+
+            a {
+                font-size: 18px;
             }
         }
     }

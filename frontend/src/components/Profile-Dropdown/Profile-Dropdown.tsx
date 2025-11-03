@@ -11,10 +11,10 @@ const ProfileDropdown = () => {
 
                 <ul className="menu dropdown-content bg-base-100 rounded-box z-1 w-52 p-2 shadow-sm">
                     <li>
-                        <label>Connexion</label>
+                        <a>Connexion</a>
                     </li>
                     <li>
-                        <label>Inscription</label>
+                        <a>Inscription</a>
                     </li>
                 </ul>
             </details>
