@@ -1,15 +1,72 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
+// Pour générer le code permettant de requêter la BDD (client Prisma)
 generator client {
   provider = "prisma-client"
-  output   = "../generated/prisma"
+  output   = "./generated"
 }
 
+// Pour choisir la bonne base de données
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
+}
+
+// ==== Models ===
+
+model User {
+  id Int @id @default(autoincrement())
+  username String @unique()
+  email String @unique()
+  password  String
+  age_declaration Boolean
+  role Role @default(user)
+
+  created_at DateTime @default(now())
+  updated_at DateTime @default(now()) @updatedAt
+
+  recipes Recipe[] // un utilisateur peut avoir plusieurs recettes (relation inverse)
+
+  @@map("user") // Correspondance entre le model "User" en minuscule dans le code et la table "user" dans la BDD 
+}
+
+enum Role {
+  user
+  admin
+}
+
+model Category {
+  id Int @id @default(autoincrement())
+  name String @unique()
+
+  created_at DateTime @default(now())
+  updated_at DateTime @default(now()) @updatedAt
+
+  recipes Recipe[] // une categorie peut contenir plusieur recettes 
+
+  @@map("category")
+}
+
+model Recipe{
+  id Int @id @default(autoincrement())
+  user_id Int
+  category_id Int? // clé étrangère vers la catégorie optionnel
+  movie_id Int // id du film (lié à l'API externe TMDb)
+  title String
+  number_of_person Int
+  preparation_time Int
+  description String? // description courte (optionnelle)
+  image String // URL de l'image de la recette
+  ingredients String
+  preparation_steps String
+  status Recipe_status @default(draft)// état de publication (brouillon ou publiée)
+  created_at         DateTime      @default(now())                 // date de création automatique
+  updated_at         DateTime      @default(now()) @updatedAt      // date de mise à jour automatique
+
+  user User @relation(fields: [user_id], references: [id], onDelete: Cascade) //une recette appartient à un utilisateur
+  category Category? @relation(fields: [category_id], references: [id], onDelete: SetNull) // une recette appartient à une catégorie (ou aucune si supprimé)
+  @@map("recipe")
+
+}
+enum Recipe_status {
+  draft
+  published
 }
