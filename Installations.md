@@ -15,6 +15,16 @@ npm install prisma @prisma/client
 npm install -D prisma
 npm install argon2
 npm i jsonwebtoken
+npm install typescript ts-node @types/node --save-dev
+
+
+# BDD
+psql -U postgres
+CREATE USER cinedelices WITH LOGIN PASSWORD 'cinedelices';
+CREATE DATABASE cinedelices WITH OWNER cinedelices;
+\c cinedelices cinedelices
+ALTER USER cinedelices CREATEDB; Donner le droit de créer une base
+npm run db:migrate:dev creation de des tables 
 
 # Attention
 Pas de git init dans les projets backend et frontend, on le fait à la racine des 2 projets. Pas de package.json non plus à la racine, on les met dans leur projets respectives.
