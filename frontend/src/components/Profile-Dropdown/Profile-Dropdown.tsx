@@ -1,5 +1,6 @@
 import { HiOutlineUserCircle } from "react-icons/hi2";
 import './Profile-Dropdown.scss';
+import { NavLink } from "react-router";
 
 const ProfileDropdown = () => {
     return (
@@ -14,7 +15,11 @@ const ProfileDropdown = () => {
                         <a>Connexion</a>
                     </li>
                     <li>
-                        <a>Inscription</a>
+                        <NavLink to="/inscription"
+                            className={({ isActive }) => isActive ? "active" : ""}
+                        >
+                            Inscription
+                        </NavLink>
                     </li>
                 </ul>
             </details>
