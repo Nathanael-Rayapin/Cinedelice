@@ -16,7 +16,8 @@
     "============= Pour les tests ======": "",
     "test:unit": "node --test ./**/*.unit.test.ts",
     "test:spec": "node --test --env-file=./test/config/.env.test --import ./test/config/global-setup.ts --experimental-test-isolation=none ./**/*.spec.test.ts",
-    "test": "npm run test:unit && npm run test:spec"
+    "test": "npm run test:unit && npm run test:spec",
+    "dev": "node --watch --env-file=.env index.ts"
   },
   "keywords": [],
   "author": "",
@@ -24,12 +25,16 @@
   "dependencies": {
     "@prisma/client": "^6.18.0",
     "argon2": "^0.44.0",
+    "eslint": "^9.39.0",
     "express": "^5.1.0",
     "jsonwebtoken": "^9.0.2",
     "typescript-eslint": "^8.46.2"
   },
   "devDependencies": {
+    "@types/express": "^5.0.5",
+    "@types/node": "^24.10.0",
     "prisma": "^6.18.0",
+    "ts-node": "^10.9.2",
     "typescript": "^5.9.3"
   }
 }
