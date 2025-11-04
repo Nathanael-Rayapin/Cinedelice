@@ -7,6 +7,7 @@ import { IoIosSearch } from "react-icons/io";
 import logo from '../../assets/logo.svg';
 
 import './Navbar.scss';
+import { NavLink } from 'react-router';
 
 const Navbar = () => {
   return (
@@ -14,9 +15,9 @@ const Navbar = () => {
       <nav className='navbar'>
         <div className="brand">
           <BurgerMenuDropdown />
-          <a href="#">
+          <NavLink to="/">
             <img src={logo} alt="Logo" />
-          </a>
+          </NavLink>
         </div>
         <div className="filters">
           <CategoriesDropdown />

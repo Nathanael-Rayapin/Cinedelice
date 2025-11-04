@@ -1,4 +1,4 @@
-import { Route, Routes } from 'react-router'
+import { Navigate, Route, Routes } from 'react-router'
 import Layout from './components/Layout/Layout'
 import Navbar from './components/Navbar/Navbar'
 import Home from './pages/Home/Home'
@@ -13,7 +13,11 @@ function App() {
       <Navbar />
       <Layout>
         <Routes>
-          <Route index element={<Home />} />
+          <Route path="/" element={<Navigate to="/pour-vous" replace />} />
+          <Route path="/pour-vous" element={<Home />} />
+          <Route path="/tendance" element={<Home />} />
+          <Route path="/favoris" element={<Home />} />
+
           <Route path="/inscription" element={<Signup />} />
           <Route path="/connexion" element={<Signin />} />
         </Routes>
