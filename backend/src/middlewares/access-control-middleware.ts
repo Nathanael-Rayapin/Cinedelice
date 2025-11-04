@@ -1,7 +1,7 @@
 import type { Request, Response, NextFunction } from "express";
-//import { UnauthorizedError, ForbiddenError } from "../lib/errors.ts";
+import { UnauthorizedError, ForbiddenError } from "../lib/errors.ts";
 import type { Role } from "../models/index.ts";
-//import { verifyAndDecodeJWT } from "../lib/tokens.ts";
+import { verifyAndDecodeJWT } from "../lib/tokens.ts";
 
 // Ce middleware :
 // - laisse passer si l'utilisateur est soit membre, author ou admin

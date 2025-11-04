@@ -4,4 +4,4 @@ import * as usersController from "../controllers/users.controller.ts";
 
 export const router = Router();
 
-router.get("/admin/users",usersController.getAllUsers);
+router.get("/users",usersController.getAllUsers);

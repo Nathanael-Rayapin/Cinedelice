@@ -1,3 +1,14 @@
 @apiBaseUrl = http://localhost:3000/api
 ### Afficher toutes les utilisateurs
-GET {{apiBaseUrl}}/admin/users
+GET {{apiBaseUrl}}/users
+
+### Inscription 
+POST {{apiBaseUrl}}/auth/register
+Content-Type:application/json
+
+{
+  "username": "chris",
+  "email": "chris@example.com",
+  "password": "123456",
+  "age_declaration": true
+}
