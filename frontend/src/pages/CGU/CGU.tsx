@@ -75,21 +75,100 @@ const CGU = () => {
 <h4>6. Protection des Données Personnelles (RGPD)</h4>
 <p>CinéDélices s'engage à protéger les données personnelles de ses Utilisateurs.</p>
 
-<h1>Une Politique de Confidentialité décrivant le traitement des données (collecte, finalité, droits de l'Utilisateur) est accessible ici : [LIEN VERS VOTRE POLITIQUE DE CONFIDENTIALITÉ].</h1>
-
 <h4>7. Droit Applicable et Litiges</h4>
 <p>Les présentes CGU sont régies par le droit français.</p>
 
 <p>En cas de litige entre CinéDélices et l'Utilisateur, une solution amiable sera recherchée en priorité. À défaut d'accord amiable, les tribunaux français seront seuls compétents.</p>
 
-📝 Mentions Légales (Obligatoires)
-Éditeur du Site : CinéDélices - ARCORATO
+<h2>Mentions Légales</h2>
+<p>Éditeur du Site : CinéDélices - ARCORATO</p>
 
-Adresse de l'éditeur : 42 rue des bambis 75008 Paris
+<p>Adresse de l'éditeur : 42 rue des bambis 75008 Paris</p>
 
-Contact : cinedelices@example.com
+<p>Contact : cinedelices@example.com</p>
 
-Hébergeur du Site : AWS (Amazon Web Services) - 410 Terry Ave N, Seattle, WA 98109, USA
+<p>Hébergeur du Site : AWS (Amazon Web Services) - 410 Terry Ave N, Seattle, WA 98109, USA</p>
+
+<h2>POLITIQUE DE CONFIDENTIALITÉ</h2>
+<p>Site : CinéDélices - ARCORATO</p>
+
+<h4>1. Introduction</h4>
+<p>La présente Politique de Confidentialité a pour objectif d'informer les Utilisateurs du Site sur la manière dont leurs données personnelles sont collectées et traitées par ARCORATO, en sa qualité de Responsable de Traitement, conformément au Règlement Général sur la Protection des Données (RGPD) n° 2016/679 et à la loi Informatique et Libertés du 6 janvier 1978 modifiée.</p>
+
+<p>Nous nous engageons à garantir la confidentialité de vos données et à assurer un niveau de protection optimal.</p>
+
+<p>Responsable de Traitement : ARCORATO</p>
+<p>Siège Social : 42 rue des bambis 75008 Paris</p>
+<p>Contact DPO / RGPD : Pour toute question relative à la protection des données ou pour exercer vos droits, vous pouvez nous contacter à l'adresse e-mail dédiée : cinedelices@example.com</p>
+
+<h4>3. Les Données Collectées, Finalités et Bases Légales</h4>
+<p>Nous collectons et traitons les données personnelles des Utilisateurs pour les finalités suivantes, en nous appuyant sur une base légale définie par le RGPD.</p>
+
+<h3>A. Données collectées lors de la création de compte (Inscription)</h3>
+
+<p>Adresse e-mail : "Gestion de l'identité du Membre, accès sécurisé au compte, communication de service. Vérification de l'âge minimum (15 ans)." = Exécution du Contrat (les CGU)</p>
+<p>Pseudo / Nom d'utilisateur : "Identification publique lors de la publication de contenus (commentaires, recettes)." = Intérêt Légitime de l'éditeur</p>
+<p>Mot de passe : "Sécurité et authentification du Membre (stocké de manière chiffrée et irréversible)." = Exécution du Contrat (les CGU)</p>
+
+<h3>B. Données générées par l'Utilisateur</h3>
+
+<p>Contributions (Recettes, Commentaires) : Publication et affichage sur le Site. = Consentement (via la soumission) et Intérêt Légitime (promotion du Site)</p>
+<p>Préférences (Recettes favorites) : Personnalisation de l'expérience utilisateur. = Intérêt Légitime (amélioration du service)</p>
+
+<h3>C. Données collectées automatiquement</h3>
+
+<p>Adresses IP : "Sécurité du Site (prévention des fraudes, des attaques), maintenance." = Intérêt Légitime (sécurité et défense du système)</p>
+<p>Données de navigation (Pages vues, durée) : "Statistiques d'audience anonymes, amélioration des services et des fonctionnalités." = Consentement (via le bandeau Cookies)</p>
+
+<h4>4. Durée de Conservation des Données</h4>
+<p>Vos données personnelles sont conservées uniquement pour la durée nécessaire à l'accomplissement des finalités pour lesquelles elles ont été collectées.</p>
+
+<p>Données de compte : Conservées tant que le compte de Membre est actif. En cas d'inactivité prolongée du compte (absence de connexion pendant trois (3) ans), nous vous enverrons une notification et procèderons à la suppression des données du compte si aucune action n'est entreprise.</p>
+
+<p>Logs de connexion (IP) : Conservés pour une durée maximale de douze (12) mois à des fins de sécurité.</p>
+
+<p>Contributions publiques : Les recettes et commentaires publiés restent sur le Site, même après la suppression du compte, sauf demande explicite d'effacement de l'auteur.</p>
+
+<h4>5. Destinataires des Données</h4>
+<p>Les données personnelles sont destinées en premier lieu aux services internes de [NOM DU SITE]. Elles peuvent également être communiquées à :</p>
+
+<p>Sous-traitants techniques : Notre hébergeur [Nom de l'Hébergeur], pour la maintenance et la sécurité du Site.</p>
+
+<p>Outils de mesure d'audience : [Nom de l'outil, ex: Google Analytics], qui traitent les données de navigation sous forme pseudonymisée.</p>
+
+<p>Autorités compétentes : En cas d'obligation légale ou pour répondre à une demande judiciaire ou administrative.</p>
+
+<h4>6. Droits des Utilisateurs (Conformité RGPD)</h4>
+<p>Conformément à la réglementation, vous disposez des droits suivants concernant vos données personnelles, à exercer en contactant [VOTRE ADRESSE E-MAIL RGPD] :</p>
+
+<p>Droit d'accès et de rectification : Demander l'accès à vos données et la correction de toute information erronée.</p>
+
+<p>Droit à l'effacement ("Droit à l'oubli") : Demander la suppression de vos données personnelles (sous réserve des obligations légales de conservation).</p>
+
+<p>Droit d'opposition : Vous opposer au traitement de vos données pour des motifs légitimes.</p>
+
+<p>Droit à la limitation : Demander la suspension du traitement de vos données.</p>
+
+<p>Droit à la portabilité : Récupérer les données que vous nous avez fournies dans un format structuré et lisible par machine.</p>
+
+<p>Droit de retirer votre consentement : Retirer à tout moment votre consentement pour les traitements basés sur celui-ci (ex: l'utilisation de certains cookies).</p>
+
+<p>Vous avez également le droit d'introduire une réclamation auprès de la CNIL (Commission Nationale de l'Informatique et des Libertés) si vous estimez que vos droits n'ont pas été respectés.</p>
+
+<h4>7. Gestion des Cookies</h4>
+<p>Un cookie est un petit fichier texte déposé sur votre terminal lors de la consultation d'un site. Nous utilisons des cookies pour :</p>
+
+<ul>
+  <li>Assurer le bon fonctionnement technique du Site (ex: maintenir votre session de connexion).</li>
+  <li>Réaliser des statistiques de fréquentation (cookies d'analyse).</li>
+</ul>
+
+<p>Vous pouvez gérer et modifier vos préférences en matière de cookies à tout moment via l'outil de gestion des cookies présent sur le Site ou via les réglages de votre navigateur.</p>
+
+<h4>8. Âge Minimum et Protection des Mineurs</h4>
+<p>Comme stipulé dans nos CGU, l'inscription est réservée aux personnes âgées de 15 ans ou plus. Nous ne collectons pas sciemment les données de personnes de moins de 15 ans sans le consentement des titulaires de l'autorité parentale. Si une telle collecte était portée à notre connaissance, nous prendrions les mesures nécessaires pour supprimer les données.</p>
+
+<p>Cette Politique de Confidentialité vous offre une base très détaillée. N'oubliez pas de remplacer toutes les mentions entre crochets [ ] par vos informations réelles.</p>
     </div>
   );
 };
