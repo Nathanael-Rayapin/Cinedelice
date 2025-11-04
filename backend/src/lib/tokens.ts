@@ -62,21 +62,3 @@ export interface Token {
   expiresInMS: number;
 }
 
-export function setTokensInCookies(res: Response, accessToken: Token, refreshToken: Token) {
-  res.cookie("accessToken", accessToken.token, {
-    httpOnly: true, // Le cookie ne sera pas lisible via "document.cookie" côté frontend par sécurité // ==> éviter les XSS
-    maxAge: accessToken.expiresInMS, // 1h de validité du cookie
-
-    // Pour des cookies sécurisés cross-origin il faut :
-    secure: true,     // les cookies cross-origin, c'est seulement en HTTPS !
-    sameSite: "none"  // les cookies cross-origin, c'est forcement entre plusieurs origins
-  });
-
-  res.cookie("refreshToken", refreshToken.token, {
-    path: "/api/auth/refresh", // Afin que le cookie ne soit transmis du front->back uniquement sur la route /api/auth/refresh
-    httpOnly: true, // Le cookie ne sera pas lisible via "document.cookie" côté frontend par sécurité // ==> éviter les XSS
-    maxAge: refreshToken.expiresInMS, // 7j de validité du cookie
-    secure: true,
-    sameSite: "none",
-  });
-}

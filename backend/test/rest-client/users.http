@@ -7,8 +7,8 @@ POST {{apiBaseUrl}}/auth/register
 Content-Type:application/json
 
 {
-  "username": "chris",
-  "email": "chris@example.com",
+  "username": "nathanael",
+  "email": "nathael@example.com",
   "password": "123456",
   "age_declaration": true
 }
