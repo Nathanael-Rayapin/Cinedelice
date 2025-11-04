@@ -3,7 +3,6 @@
     margin: 60px 0 20px 80px;
     gap: 30px;
     cursor: pointer;
-    
 }
 
 #tag-1 {
@@ -20,7 +19,7 @@
 .random-recipe {
     width: 80%;
     height: auto;
-    margin: 0 auto;;
+    margin: 0 auto;
 }
 
 .recipe-card {
@@ -150,6 +149,7 @@ h2 {
 .recipe-section-title {
   margin-left: 80px;
 }
+
 .featured-recipes {
   width: 80%;
   margin: 0 auto 50px;
@@ -305,4 +305,30 @@ h2 {
   font-weight: 600;
   color: white;
   margin: 0;
+}
+
+/* === TABLETTE (769px et plus) === */
+@media (min-width: 769px) {
+  .featured-recipes {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+  }
+
+  .browse-list {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+  }
+}
+
+/* === DESKTOP (992px et plus) === */
+@media (min-width: 992px) {
+  .featured-recipes {
+    grid-template-columns: repeat(4, 1fr);
+  }
+
+  .browse-list {
+    grid-template-columns: repeat(4, 1fr);
+  }
 }
