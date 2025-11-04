@@ -3,8 +3,8 @@ import { LiaEyeSlashSolid } from "react-icons/lia";
 import { LiaEyeSolid } from "react-icons/lia";
 
 import { useState } from 'react';
-import './Signup.scss';
 import { Link } from 'react-router';
+import './Signup.scss';
 
 const pseudoPattern = /^[a-zA-Z0-9]+(-[a-zA-Z0-9]+)*$/i;
 const emailPattern = /^.+@.+$/i;

@@ -1,11 +1,16 @@
 import { fireEvent, render, screen, waitFor, type ByRoleMatcher, type ByRoleOptions } from "@testing-library/react";
 import { beforeEach, describe, expect, it } from "vitest";
 import Signup from "./Signup";
+import { BrowserRouter } from "react-router";
 
 describe("Signup Form", () => {
 
     beforeEach(() => {
-        render(<Signup />);
+        render(
+            <BrowserRouter>
+                <Signup />
+            </BrowserRouter>
+        );
     });
 
     it("should not submit if the pseudo is empty", async () => {
