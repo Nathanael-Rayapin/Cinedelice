@@ -52,9 +52,9 @@ const Home = () => {
             </div>
 
              {/* Section "Recettes à la une" */}
-            <h2>Recettes à la une</h2>
-            <div className="featured-recipes">
-                <div className="featured-card">
+            <h2 className='recipe-section-title'>Recettes à la une</h2>
+            <section className="featured-recipes">
+                <section className="featured-card">
                     <img src={chocolats} alt="Chocolats" className="featured-img" />
                     <div className="featured-body">
                         <h3>Chocolats</h3>
@@ -67,7 +67,7 @@ const Home = () => {
                             <span className="badge dessert">Dessert</span>
                         </div>
                     </div>
-                </div>
+                </section>
 
                 <div className="featured-card">
                     <img src={ramen} alt="Ramen" className="featured-img" />
@@ -83,7 +83,7 @@ const Home = () => {
                         </div>
                     </div>
                 </div>
-            </div>
+            </section>
 
             {/* Section "Parcourir par films" */}
             <div className="browse-section">
