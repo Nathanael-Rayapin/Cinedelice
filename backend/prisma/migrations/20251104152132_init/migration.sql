@@ -11,6 +11,7 @@ CREATE TABLE "user" (
     "email" TEXT NOT NULL,
     "password" TEXT NOT NULL,
     "age_declaration" BOOLEAN NOT NULL,
+    "cgu_accepted" BOOLEAN NOT NULL,
     "role" "Role" NOT NULL DEFAULT 'user',
     "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updated_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,

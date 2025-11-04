@@ -17,7 +17,8 @@ model User {
   username String @unique()
   email String @unique()
   password  String
-  age_declaration Boolean
+  age_declaration Boolean 
+  cgu_accepted Boolean
   role Role @default(user)
 
   created_at DateTime @default(now())

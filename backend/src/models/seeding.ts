@@ -1,4 +1,6 @@
 import { prisma } from './index.ts';
+// Pour hasher les mots de pass
+//import * as argon2 from"argon2";
 
 
 async function main() {
@@ -9,8 +11,9 @@ async function main() {
     data: {
       username: 'luc',
       email: 'luc@example.com',
-      password: 'password', // 🔒 à remplacer plus tard par un vrai hash Argon2
+      password: 'password',
       age_declaration: true,
+      cgu_accepted: true,
       role: 'user',
     },
   });
@@ -20,7 +23,9 @@ async function main() {
       username: 'admin',
       email: 'admin@example.com',
       password: 'password',
+      //password: await argon2.hash('password'),
       age_declaration: true,
+      cgu_accepted: true,
       role: 'admin',
     },
   });
@@ -32,12 +37,7 @@ async function main() {
   const category2 = await prisma.category.create({
     data: { name: 'Plat principal' },
   });
-  const category3 = await prisma.category.create({
-    data: { name: 'Entrée' },
-  });
-    const category4 = await prisma.category.create({
-    data: { name: 'Autres' },
-  });
+
 
   // ==== Création de recettes ====
   await prisma.recipe.createMany({

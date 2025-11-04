@@ -2,23 +2,23 @@ import * as argon2 from "argon2";
 import type { Request, Response } from "express";
 import { BadRequestError, ConflictError, UnauthorizedError } from "../lib/errors.ts";
 import { prisma } from "../models/index.ts";
-import { generateAuthenticationTokens, saveRefreshToken, setTokensInCookies } from "../lib/tokens.ts";
+//import { generateAuthenticationTokens, saveRefreshToken} from "../lib/tokens.ts";
 
 //========Inscription d'un utilisateur=============
 
 export async function registerUser(req: Request, res: Response) {
   // On récupère les données envoyées par le client dans le corps de la requête
-  const { username, email, password, age_declaration } = req.body;
+  const { username, email, password, age_declaration, cgu_accepted } = req.body;
  
   // Vérifier que tous les champs obligatoires sont bien présents
-  if (!username || !email || !password || age_declaration !== true) {
+  if (!username || !email || !password || age_declaration !== true || cgu_accepted !== true) {
     throw new BadRequestError("Tous les champs sont obligatoires.");
   }
 
   // Vérifier que l'email n'est pas déjà utilisé
   const alreadyExistingUser = await prisma.user.findFirst({ where: { email } });
   if (alreadyExistingUser) {
-    throw new ConflictError("Cet email existe déjà !");
+    throw new ConflictError("L'email et le mot de passe ne correspondent pas");
   }
 
   // Hasher le mot de passe (argon2) pour éviter de le stocker en clair
@@ -31,6 +31,7 @@ export async function registerUser(req: Request, res: Response) {
       email,
       password: hash,
       age_declaration,
+      cgu_accepted,
       role: "user", // par défaut, tout nouvel utilisateur est "user"
     }});
 
@@ -63,33 +64,5 @@ export async function loginUser(req: Request, res: Response) {
     throw new UnauthorizedError("L'email et le mot de passe ne correspondent pas");
   }
 
-  // Générer des tokens d'accès
-  // - 1h
-  // - payload : userId + role
-  // - signer : JWT_SECRET
-  const { accessToken, refreshToken } = generateAuthenticationTokens(user);
-  await saveRefreshToken(user, refreshToken);
-
-  // Renvoyer le token 
-  // 1) L'accrocher dans les cookies
-  setTokensInCookies(res, accessToken, refreshToken);
-
-  // L'envoyer dans le body de la réponse
-  res.json({ accessToken, refreshToken });
 }
-
 //======================= Deconnexion=============
-
-export async function logoutUser(req: Request, res: Response) {
-  // Comment on déconnecte l'utilisateur ? 
-  // Ca dépend comment il a stocké le token !
-  // -> si stocké dans le localStorage -> c'est le front qui le retire du localStorage, et le tour est joué ! 
-  // -> si stocké dans les cookies -> c'est le backend qui set les cookies du front ! -> c'est au backend d'envoyer un nouveau cookie pour remplacer celui existant
-  res.cookie("accessToken", "DELETED", { maxAge: 1000 });
-  res.cookie("refreshToken", "DELETED", { maxAge: 1000 });
-  res.status(204).json({ status: 204, message: "Successfully logged out" });
-
-  // Remarque : on pourrait aussi supprimer le refresh token de la BDD, mais mieux vaut utiliser un CRON pour ce genre de chose
-  // CRON = tâche périodique sur la machine (ex : un script qui se lance tous les matins à 9h pour surppimer les refresh token expiré)
-}
-

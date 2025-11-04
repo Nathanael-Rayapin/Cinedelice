@@ -10,5 +10,6 @@ Content-Type:application/json
   "username": "nathanael",
   "email": "nathael@example.com",
   "password": "123456",
-  "age_declaration": true
+  "age_declaration": true,
+  "cgu_accepted":true
 }
