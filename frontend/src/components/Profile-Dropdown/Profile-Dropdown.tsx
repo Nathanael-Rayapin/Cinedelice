@@ -12,7 +12,11 @@ const ProfileDropdown = () => {
 
                 <ul className="menu dropdown-content bg-base-100 rounded-box z-1 w-52 p-2 shadow-sm">
                     <li>
-                        <a>Connexion</a>
+                        <NavLink to="/connexion"
+                            className={({ isActive }) => isActive ? "active" : ""}
+                        >
+                            Connexion
+                        </NavLink>
                     </li>
                     <li>
                         <NavLink to="/inscription"
