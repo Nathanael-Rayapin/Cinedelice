@@ -4,6 +4,7 @@ import Navbar from './components/Navbar/Navbar'
 import Home from './pages/Home/Home'
 import Signup from './pages/Signup/Signup'
 import Signin from './pages/Signin/Signin'
+import Footer from './pages/Footer/Footer'
 import './App.css'
 
 function App() {
@@ -17,6 +18,7 @@ function App() {
           <Route path="/connexion" element={<Signin />} />
         </Routes>
       </Layout>
+      <Footer />
     </>
   )
 }
