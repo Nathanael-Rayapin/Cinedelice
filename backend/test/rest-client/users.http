@@ -1,0 +1,3 @@
+@apiBaseUrl = http://localhost:3000/api
+### Afficher toutes les utilisateurs
+GET {{apiBaseUrl}}/admin/users

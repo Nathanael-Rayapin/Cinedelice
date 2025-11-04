@@ -9,7 +9,7 @@ export async function getAllRecipes(req:Request,res:Response){
       NOT:{status:"draft"},//exclut brouillon
     },
     include:{
-      //on remplace le user_id par les info de l user
+      //on rajoute le user_id par les info de l user
       user:{
         select:{username:true},//on ne garde que le nom
       },
