@@ -18,6 +18,8 @@ npm install -D prisma
 npm install argon2
 npm i jsonwebtoken
 npm install typescript ts-node @types/node --save-dev
+npm i eslint
+npm i --save-dev @types/express
 
 
 # BDD

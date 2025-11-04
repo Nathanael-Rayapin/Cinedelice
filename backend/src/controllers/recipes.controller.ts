@@ -4,6 +4,20 @@ import { prisma } from "../models/index.ts";
 import type { Request,Response } from "express";
 
 export async function getAllRecipes(req:Request,res:Response){
-  const recipes = await prisma.recipe.findMany();
+  const recipes = await prisma.recipe.findMany({
+    where:{
+      NOT:{status:"draft"},//exclut brouillon
+    },
+    include:{
+      //on remplace le user_id par les info de l user
+      user:{
+        select:{username:true},//on ne garde que le nom
+      },
+      //on inclut les le nom de la categorie
+      category:{
+        select:{name:true},
+      },
+    },
+  });
   res.status(200).json(recipes);
 }
