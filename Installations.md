@@ -5,6 +5,8 @@ npm install -D vitest @testing-library/react @testing-library/jest-dom jsdom
 npm install -D sass-embedded
 npm install tailwindcss@latest @tailwindcss/vite@latest daisyui@latest
 npm install react-icons --save
+npm install react-hook-form
+npm i react-router
 
 # Back
 <!-- Dépendances -->
