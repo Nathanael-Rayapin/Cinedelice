@@ -1,17 +1,18 @@
 @apiBaseUrl = http://localhost:3000/api
-@token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjUsInJvbGUiOiJ1c2VyIiwiaWF0IjoxNzYyMzQ5ODY0LCJleHAiOjE3NjIzNTM0NjR9._VjwN-BJVJKoVUZsPODXOsFOt8s6nC77sIUruS-RouI
-### Afficher toutes les utilisateurs
+@token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjUsInJvbGUiOiJ1c2VyIiwiaWF0IjoxNzYyMzU3MzU1LCJleHAiOjE3NjIzNjA5NTV9.as7XmqtxfqkK3YvEQCms6buSdNjStEE1ogzvut-RMCs
+@token_admin=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjksInJvbGUiOiJhZG1pbiIsImlhdCI6MTc2MjM1NzQ0OCwiZXhwIjoxNzYyMzYxMDQ4fQ.h0Me1wiq4b5VxksS-0VAwwBv0audGIHWriE-4I7tEiQ
+### Afficher toutes les utilisateurs (Admin)
 GET {{apiBaseUrl}}/users
-
+Authorization: Bearer {{token_admin}}
 ### Inscription 
 POST {{apiBaseUrl}}/auth/register
 Content-Type:application/json
 
 {
-  "username": "ludoo",
-  "email": "ludoo@example.com",
-  "password": "ludo",
-  "confirm_password":"ludo",
+  "username": "bob",
+  "email": "bob@example.com",
+  "password": "bob",
+  "confirm_password":"bob",
   "age_declaration": true,
   "cgu_accepted":true
 }
@@ -21,10 +22,19 @@ POST {{apiBaseUrl}}/auth/login
 Content-Type: application/json
 
 {
-  "email":"ludo@example.com",
-  "password":"ludo"
+  "email":"bob@example.com",
+  "password":"bob"
 }
 
 ### Mon profil 
 GET {{apiBaseUrl}}/auth/me
-Authorization: Bearer {{token}}
+Authorization: Bearer {{token_admin}}
+
+### Modifier le role d'un utilisateur (Admin)
+PATCH {{apiBaseUrl}}/users/5
+Authorization: Bearer {{token_admin}}
+Content-Type: application/json
+
+{
+  "role":"admin"
+}

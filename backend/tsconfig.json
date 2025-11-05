@@ -16,5 +16,9 @@
     "strict": true,                   // Règle de syntaxe TS à respecter
     "erasableSyntaxOnly": true,       // Utiliser uniquement la syntaxe supportées par Node.js (pas d'enum, décorateurs...)
     "verbatimModuleSyntax": true,     // Avoir les imports de type via `import type`
+        "typeRoots": [                // Permettre a TS de reconnaitre les types perso
+      "./src/@types",
+      "./node_modules/@types"
+        ]
   }
 }

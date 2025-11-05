@@ -43,8 +43,7 @@ export async function registerUser(req: Request, res: Response) {
     role:createdUser.role,
     created_at: createdUser.created_at
   });
-}
-
+};
 // ===================Connexion=====================
 
 export async function loginUser(req: Request, res: Response) {
@@ -80,6 +79,7 @@ export async function loginUser(req: Request, res: Response) {
   });
 };
 //===================Mon profil================
+
 export async function getMe(req:Request, res:Response){
   //verifier si le header authorization existe
   const authHeader = req.headers.authorization;
@@ -112,5 +112,4 @@ export async function getMe(req:Request, res:Response){
     message:"Utilisateur connecté",
     user,
   });
-}
-//======================= Deconnexion=============
+};
