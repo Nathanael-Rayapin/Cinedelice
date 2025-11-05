@@ -7,3 +7,11 @@ GET {{apiBaseUrl}}/categories/:id
 
 ### Créer une catégorie
 POST {{apiBaseUrl}}/admin/categories
+
+### Update catégorie
+PATCH {{apiBaseUrl}}/admin/categories/:id
+Content-Type: application/json
+
+{
+  "name": "Burgers"
+}

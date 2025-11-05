@@ -31,3 +31,31 @@ export async function createCategory(req: Request, res: Response) {
 
   res.status(201).json(createdCategory);
 }
+
+export async function updateCategory(req: Request, res: Response) {
+  // ON récupère l'ID de la catégorie que l'on souhaite update en BDD
+  const categoryId = parseInt(req.params.id, 10);
+
+  const { name } = req.body;
+
+  // On récupère la catégorie en BDD, s'il n'existe pas => 404
+  const category = await prisma.category.findUnique({ where: { id: categoryId }});
+  if (!category) { throw new NotFoundError("Category not found"); }
+
+  // Vérifier si le nouveau nom cible pour la catégorie n'est pas déjà pris, sinon => 409
+  const nbOfCategoryWithTheSameName = await prisma.category.count({ where: {
+    name, // Y a-t-il des catégories avec le même nom...
+    NOT: { id: categoryId } // ...qui ne sont pas la catégorie que l'on est en train d'update ?
+  } });
+  if (nbOfCategoryWithTheSameName > 0) { throw new ConflictError("Category name is already taken"); }
+
+  // Utilise prisma pour modifier la catégorie avec son nouveau nom
+  const updatedCategory = await prisma.category.update({
+    where: { id: categoryId },
+    data: { name }
+  });
+
+  // Renvoyer le niveau mis à jour
+  res.status(200).json(updatedCategory);
+}
+
