@@ -1,7 +1,14 @@
 import './CGU.scss';
 import logo from '../../assets/logo.svg';
+import { useEffect } from 'react';
 
 const CGU = () => {
+
+  // Remet la page en haut au chargement du composant
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   return (
     <div className="cgu-page">
         <img src={logo} alt="CinéDélices Logo" className="cgu-logo" /><br />
@@ -136,11 +143,11 @@ const CGU = () => {
 <p>Contributions publiques : Les recettes et commentaires publiés restent sur le Site, même après la suppression du compte, sauf demande explicite d'effacement de l'auteur.</p>
 <br />
 <h2>4. Destinataires des Données</h2><br />
-<p>Les données personnelles sont destinées en premier lieu aux services internes de [NOM DU SITE]. Elles peuvent également être communiquées à :</p>
+<p>Les données personnelles sont destinées en premier lieu aux services internes de CinéDélices. Elles peuvent également être communiquées à :</p>
 
-<p>Sous-traitants techniques : Notre hébergeur [Nom de l'Hébergeur], pour la maintenance et la sécurité du Site.</p>
+<p>Sous-traitants techniques : Notre hébergeur AWS, pour la maintenance et la sécurité du Site.</p>
 
-<p>Outils de mesure d'audience : [Nom de l'outil, ex: Google Analytics], qui traitent les données de navigation sous forme pseudonymisée.</p>
+<p>Outils de mesure d'audience : ex: Google Analytics, qui traitent les données de navigation sous forme pseudonymisée.</p>
 
 <p>Autorités compétentes : En cas d'obligation légale ou pour répondre à une demande judiciaire ou administrative.</p>
 <br />
@@ -161,17 +168,7 @@ const CGU = () => {
 
 <p>Vous avez également le droit d'introduire une réclamation auprès de la CNIL (Commission Nationale de l'Informatique et des Libertés) si vous estimez que vos droits n'ont pas été respectés.</p>
 <br />
-<h2>6. Gestion des Cookies</h2><br />
-<p>Un cookie est un petit fichier texte déposé sur votre terminal lors de la consultation d'un site. Nous utilisons des cookies pour :</p>
-
-<ul>
-  <li>Assurer le bon fonctionnement technique du Site (ex: maintenir votre session de connexion).</li>
-  <li>Réaliser des statistiques de fréquentation (cookies d'analyse).</li>
-</ul>
-
-<p>Vous pouvez gérer et modifier vos préférences en matière de cookies à tout moment via l'outil de gestion des cookies présent sur le Site ou via les réglages de votre navigateur.</p>
-<br />
-<h2>7. Âge Minimum et Protection des Mineurs</h2><br />
+<h2>6. Âge Minimum et Protection des Mineurs</h2><br />
 <p>Comme stipulé dans nos CGU, l'inscription est réservée aux personnes âgées de 15 ans ou plus. Nous ne collectons pas sciemment les données de personnes de moins de 15 ans sans le consentement des titulaires de l'autorité parentale. Si une telle collecte était portée à notre connaissance, nous prendrions les mesures nécessaires pour supprimer les données.</p>
 <br />
 

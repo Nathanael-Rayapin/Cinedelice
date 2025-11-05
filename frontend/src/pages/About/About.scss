@@ -1,0 +1,110 @@
+/* MOBILE FIRST — tout est empilé et centré */
+.about-page {
+  max-width: 1000px;
+  margin: auto;
+  padding: 2rem 1.2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 3rem;
+}
+
+.about-header {
+  text-align: center;
+  animation: fadeIn 0.8s ease;
+}
+
+.title {
+  font-style: italic;
+  font-size: 1.1rem;
+}
+
+.about-logo {
+  margin: 0 auto;
+  width: 35%;
+  max-width: 140px;
+}
+
+.about-section {
+  display: flex;
+  flex-direction: column; /* empilé en mobile */
+  align-items: center;
+  text-align: center;
+  gap: 1.5rem;
+}
+
+.about-text {
+  flex: 1;
+  line-height: 1.6;
+  font-size: 1rem;
+}
+
+.about-text h2 {
+  margin-bottom: 1rem;
+}
+
+.about-img-container {
+  text-align: center;
+}
+
+.about-img {
+  width: 260px;
+  max-width: 80%;
+  border-radius: 12px;
+  animation: float 3s infinite ease-in-out;
+}
+
+#burger {
+  box-shadow: 10px 4px 20px rgba(0, 0, 0, 0.4);
+}
+
+/* Effet flottement */
+@keyframes float {
+  0% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+  100% { transform: translateY(0); }
+}
+
+/* ------------------------------------------------------------------ */
+/* TABLETTE — à partir de 769px */
+/* On passe en mise en page côte à côte */
+@media (min-width: 769px) {
+
+  .about-section {
+    flex-direction: row;
+    text-align: left;
+  }
+
+  /* Sur tablette, l’image passe à gauche ou droite selon l’ordre HTML */
+  .about-text {
+    font-size: 1.05rem;
+  }
+
+  .about-img {
+    width: 320px;
+    max-width: 60%;
+  }
+}
+
+/* ------------------------------------------------------------------ */
+/* DESKTOP — à partir de 992px */
+/* On agrandit l’espacement et les images */
+@media (min-width: 992px) {
+
+  .about-page {
+    padding: 4rem 2rem;
+    gap: 5rem;
+  }
+
+  .about-section {
+    gap: 3rem;
+  }
+
+  .about-text {
+    font-size: 1.1rem;
+  }
+
+  .about-img {
+    width: 380px;
+    max-width: 450px;
+  }
+}

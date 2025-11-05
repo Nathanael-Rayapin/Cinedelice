@@ -6,6 +6,7 @@ import Signup from './pages/Signup/Signup'
 import Signin from './pages/Signin/Signin'
 import Footer from './pages/Footer/Footer'
 import CGU from './pages/CGU/CGU'
+import About from "./pages/About/about"
 import './App.css'
 
 function App() {
@@ -23,6 +24,7 @@ function App() {
           <Route path="/connexion" element={<Signin />} />
 
           <Route path="/cgu" element={<CGU />} />
+          <Route path="/about" element={<About />} />
           
         </Routes>
       </Layout>
