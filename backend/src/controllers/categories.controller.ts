@@ -9,11 +9,13 @@ export async function getAllCategories(req: Request, res: Response) {
 }
 
 export async function getOneCategory(req: Request, res: Response) {
-  // on récupère l'ID de la categorie qui nous intéresse en BDD
+  // on récupère l'ID de la categorie qui nous intéresse dans l'URL :
+  // Est-ce que l'utilisateur a envoyé un nombre valide dans l'URL ?
   const categoryId = parseInt(req.params.id, 10);
   if (isNaN(categoryId)) { throw new BadRequestError("Invalid ID format"); }
 
-  // On récupère la catégorie en BDD, si elle n'existe pas => 404
+  // Est-ce que cette catégorie existe vraiment dans la base de données ?
+  // On récupère l'objet complet de la catégorie dans la BDD, si elle n'existe pas => 404
   const category = await prisma.category.findUnique({ where: {id: categoryId }});
   if (!category) { throw new NotFoundError("Category not found"); }
 
@@ -34,13 +36,11 @@ export async function createCategory(req: Request, res: Response) {
 }
 
 export async function updateCategory(req: Request, res: Response) {
-  // ON récupère l'ID de la catégorie que l'on souhaite update en BDD
   const categoryId = parseInt(req.params.id, 10);
   if (isNaN(categoryId)) { throw new BadRequestError("Invalid ID format"); }
 
   const { name } = req.body;
 
-  // On récupère la catégorie en BDD, s'il n'existe pas => 404
   const category = await prisma.category.findUnique({ where: { id: categoryId }});
   if (!category) { throw new NotFoundError("Category not found"); }
 
@@ -62,11 +62,9 @@ export async function updateCategory(req: Request, res: Response) {
 }
 
 export async function deleteCategory(req: Request, res: Response) {
-  // on récupère l'ID de la categorie à supprimer en BDD
   const categoryId = parseInt(req.params.id, 10);
   if (isNaN(categoryId)) { throw new BadRequestError("Invalid ID format"); }
 
-  // on récupère la catégorie en BDD, si elle n'existe pas => 404
   const category = await prisma.category.findUnique({ where: { id: categoryId }});
   if (!category) { throw new NotFoundError("Category not found"); }
 
