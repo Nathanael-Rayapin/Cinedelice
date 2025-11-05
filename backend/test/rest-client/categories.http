@@ -3,4 +3,7 @@
 GET {{apiBaseUrl}}/categories
 
 ### Afficher une catégorie
-GET {{apiBaseUrl}}/categories/1
+GET {{apiBaseUrl}}/categories/:id
+
+### Créer une catégorie
+POST {{apiBaseUrl}}/admin/categories
