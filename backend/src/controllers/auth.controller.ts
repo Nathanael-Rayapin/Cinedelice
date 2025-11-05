@@ -2,7 +2,7 @@ import * as argon2 from "argon2";
 import type { Request, Response } from "express";
 import { BadRequestError, ConflictError, UnauthorizedError } from "../lib/errors.ts";
 import { prisma } from "../models/index.ts";
-import { generateAccessToken} from "../lib/tokens.ts";
+import { generateAccessToken, verifyAndDecodeJWT} from "../lib/tokens.ts";
 
 //========Inscription d'un utilisateur=============
 
@@ -77,6 +77,40 @@ export async function loginUser(req: Request, res: Response) {
       role: user.role,
       created_at: user.created_at
     }
+  });
+};
+//===================Mon profil================
+export async function getMe(req:Request, res:Response){
+  //verifier si le header authorization existe
+  const authHeader = req.headers.authorization;
+  if(!authHeader){
+    throw new UnauthorizedError("Token manquant dans le header Authorization");
+  }
+  //extraire le token du header(il est sous la forme 'Bearer xxx')
+  const token = authHeader.split(" ")[1];
+  //verifier et decoder le token
+  const {userId}=verifyAndDecodeJWT(token);
+  //recuperer utilisateur qui correspond à la BDD
+  const user = await prisma.user.findUnique({
+    where:{
+      id:userId
+    },
+    select:{
+      id:true,
+      username:true,
+      email:true,
+      role:true,
+      created_at:true
+    },
+  });
+  //si aucun user trouvé alors 401
+  if (!user){
+    throw new UnauthorizedError("Utilisateur non trouvé");
+  }
+  //sinon retourner les infos de l'user
+  res.status(200).json({
+    message:"Utilisateur connecté",
+    user,
   });
 }
 //======================= Deconnexion=============

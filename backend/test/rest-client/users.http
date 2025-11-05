@@ -1,4 +1,5 @@
 @apiBaseUrl = http://localhost:3000/api
+@token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjUsInJvbGUiOiJ1c2VyIiwiaWF0IjoxNzYyMzQ5MjMyLCJleHAiOjE3NjIzNTI4MzJ9.qh2hT8iKWMVmjJmAEtFEFLIJMayxXEq8kQLmnQxy6dw
 ### Afficher toutes les utilisateurs
 GET {{apiBaseUrl}}/users
 
@@ -23,3 +24,7 @@ Content-Type: application/json
   "email":"ludo@example.com",
   "password":"ludo"
 }
+
+### Mon profil 
+GET {{apiBaseUrl}}/auth/me
+Authorization: Bearer {{token}}
