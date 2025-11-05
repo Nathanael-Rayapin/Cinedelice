@@ -11,7 +11,8 @@ export async function getAllCategories(req: Request, res: Response) {
 export async function getOneCategory(req: Request, res: Response) {
   // on récupère l'ID de la categorie qui nous intéresse en BDD
   const categoryId = parseInt(req.params.id, 10);
-
+  if (!categoryId) { throw new NotFoundError("Invalid ID format"); }
+  
   // On récupère la catégorie en BDD, si elle n'existe pas => 404
   const category = await prisma.category.findUnique({ where: {id: categoryId }});
   if (!category) { throw new NotFoundError("Category not found"); }
@@ -35,6 +36,7 @@ export async function createCategory(req: Request, res: Response) {
 export async function updateCategory(req: Request, res: Response) {
   // ON récupère l'ID de la catégorie que l'on souhaite update en BDD
   const categoryId = parseInt(req.params.id, 10);
+  if (!categoryId) { throw new NotFoundError("Invalid ID format"); }
 
   const { name } = req.body;
 
@@ -62,7 +64,7 @@ export async function updateCategory(req: Request, res: Response) {
 export async function deleteCategory(req: Request, res: Response) {
   // on récupère l'ID de la categorie à supprimer en BDD
   const categoryId = parseInt(req.params.id, 10);
-  if (!categoryId) { throw new NotFoundError("Category not found"); }
+  if (!categoryId) { throw new NotFoundError("Invalid ID format"); }
 
   // on récupère la catégorie en BDD, si elle n'existe pas => 404
   const category = await prisma.category.findUnique({ where: { id: categoryId }});
