@@ -1,21 +1,21 @@
 import { FcLike } from "react-icons/fc"
-import type { IRecipeProps } from "../../interfaces/recipe"
+import type { IRecipe } from "../../interfaces/recipe"
 import './Featured-Card.scss';
 
-const FeaturedCard = ({ recipe }: { recipe: IRecipeProps }) => {
+const FeaturedCard = ({ recipe }: { recipe: IRecipe }) => {
     return (
         <div key={recipe.id} className="featured-card">
-            <img src={recipe.img} alt={recipe.title} />
+            <img src={recipe.image} alt={recipe.title} />
             <div className="featured-content">
                 <h3>{recipe.title}</h3>
-                <p className="author">{recipe.author}</p>
+                <p className="author">{recipe.user.username}</p>
                 <div className="featured-footer">
                     <div className="likes">
                         <FcLike />
-                        <span>{recipe.likes.toLocaleString()}</span>
+                        <span>2456</span>
                     </div>
-                    <span className={`badge ${recipe.badge}`}>
-                        {recipe.badge.charAt(0).toUpperCase() + recipe.badge.slice(1)}
+                    <span className={`badge ${recipe.category}`}>
+                        {recipe.category.name}
                     </span>
                     
                 </div>

@@ -1,14 +1,13 @@
 import { LuClapperboard } from "react-icons/lu"
-import { coverRecipe } from "../../pages/Home/data"
 import { TbChefHat } from "react-icons/tb"
 import { IoMdTime } from "react-icons/io"
 import { FcLike } from "react-icons/fc"
 import { IoChatbubbles } from "react-icons/io5"
 import { useEffect, useState } from "react"
-import type { IRecipeProps } from "../../interfaces/recipe"
+import type { IRecipe } from "../../interfaces/recipe"
 import './Recipe-Cover.scss';
 
-const RecipeCover = ({ recipe }: { recipe: IRecipeProps }) => {
+const RecipeCover = ({ recipe }: { recipe: IRecipe }) => {
     const [iconSize, setIconSize] = useState(16);
 
     // We use useEffect to update the icon size when the window is resized
@@ -20,11 +19,11 @@ const RecipeCover = ({ recipe }: { recipe: IRecipeProps }) => {
         handleResize();
         window.addEventListener("resize", handleResize);
         return () => window.removeEventListener("resize", handleResize);
-    }, []);
+    }, [recipe]);
 
     return (
         <div className="recipe-cover">
-            <img src={coverRecipe} alt="Image de la recette" />
+            <img src={recipe.image} alt="Image de la recette" />
             <div className="recipe-content">
                 <h1>Burger de Mehdi</h1>
 
@@ -35,22 +34,22 @@ const RecipeCover = ({ recipe }: { recipe: IRecipeProps }) => {
                     </div>
                     <div className="info-item">
                         <TbChefHat color="#fff" size={iconSize} />
-                        <p>{recipe.author}</p>
+                        <p>{recipe.user.username}</p>
                     </div>
                     <div className="info-item">
                         <IoMdTime color="#fff" size={iconSize} />
-                        <p>{recipe.duration}</p>
+                        <p>{recipe.preparation_time}</p>
                     </div>
                 </div>
 
                 <div className="recipe-infos">
                     <div className="info-item">
                         <FcLike size={iconSize} />
-                        <p>{recipe.likes.toLocaleString()}</p>
+                        <p>3000</p>
                     </div>
                     <div className="info-item">
                         <IoChatbubbles color="#fff" size={iconSize} />
-                        <p>{recipe.comment.toLocaleString()}</p>
+                        <p>48</p>
                     </div>
                     <button className="btn m-1">Voir la recette</button>
                 </div>
