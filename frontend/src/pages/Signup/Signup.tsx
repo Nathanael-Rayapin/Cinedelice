@@ -11,15 +11,14 @@ const emailPattern = /^.+@.+$/i;
 const passwordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^a-zA-Z0-9]).+$/;
 
 const Signup = () => {
-    const { register, handleSubmit, watch, formState: { errors, isValid } } = useForm();
+    const { register, handleSubmit, getValues, formState: { errors, isValid } } = useForm();
 
     // Un simple log en attendant d'avoir l'endpoint d'inscription
     const onSubmit: SubmitHandler<FieldValues> = data => console.log(data);
 
     const [showPassword, setShowPassword] = useState(false);
     const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-    const passwordValue = watch("Password");
-
+    
     return (
         <div className="signup">
             <h1>Inscription</h1>
@@ -92,9 +91,8 @@ const Signup = () => {
                             className={`${errors.ConfirmPassword ? "input input-error" : "input-default"}`}
                             {...register("ConfirmPassword", {
                                 required: { value: true, message: "La confirmation du mot de passe est obligatoire" },
-                                min: { value: 8, message: "La confirmation du mot de passe doit contenir au moins 8 caractères" },
-                                pattern: { value: passwordPattern, message: "La ocnfirmation du mot de passe doit contenir au moins un chiffre, une lettre et un caractère spécial" },
-                                validate: (value) => value === passwordValue || "Les mots de passe ne correspondent pas"
+                                minLength: { value: 8, message: "La confirmation du mot de passe doit contenir au moins 8 caractères" },
+                                validate: (value) => value === getValues("Password") || "Les mots de passe ne correspondent pas"
                             })}
                         />
                         {showConfirmPassword
