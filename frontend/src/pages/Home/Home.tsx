@@ -1,23 +1,65 @@
-import { movies, recipes } from './data';
 import TabBar from '../../components/Tab-Bar/Tab-Bar';
 import RecipeCover from '../../components/Recipe-Cover/Recipe-Cover';
 import FeaturedCard from '../../components/Featured-Card/Featured-Card';
 import MovieCard from '../../components/Movie-Card/Movie-Card';
+import { useEffect, useState } from 'react';
+import { getRecipes } from '../../services/recipes';
+import type { IRecipe } from '../../interfaces/recipe';
+import { movies } from './data';
+import PacmanLoader from 'react-spinners/PacmanLoader';
 import './Home.scss'
 
-const Home = () => {   
-    const tabs = ['Pour vous', 'Tendances', 'Favoris'];
-    const randomRecipe = recipes[Math.floor(Math.random() * recipes.length)];
+const Home = () => {
+    const [recipes, setRecipes] = useState<IRecipe[]>([]);
+    const [errorMsg, setErrorMsg] = useState<string | null>(null);
+    const [loading, setLoading] = useState(false);
 
-    return (
+    const tabs = ['Pour vous', 'Tendances', 'Favoris'];
+
+
+    useEffect(() => {
+        const fetchRecipes = async () => {
+            try {
+                setLoading(true);
+                await new Promise(res => setTimeout(res, 1000));
+
+                const recipes = await getRecipes();
+                setRecipes(recipes);
+            } catch (error) {
+                if (error instanceof Error) {
+                    setErrorMsg(error.message);
+                }
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        fetchRecipes();
+    }, []);
+
+    // Loading State
+    if (loading) {
+        return (
+            <div className="loading-container">
+                <PacmanLoader color="#fB8b24" />
+            </div>
+        );
+    }
+
+    // Error State
+    if (errorMsg) {
+        return <p className="error-msg">{errorMsg}</p>;
+    }
+
+    return recipes && recipes.length > 0 &&
         <div className="home">
             <TabBar tabs={tabs} />
-            <RecipeCover recipe={randomRecipe} />
-            
+            <RecipeCover recipe={recipes[0]} />
+
             <h2>Recettes à la une</h2>
             <section className="featured-recipes">
                 {recipes.map((recipe) => (
-                    <FeaturedCard recipe={recipe} />
+                    <FeaturedCard key={recipe.id} recipe={recipe} />
                 ))}
             </section>
 
@@ -29,12 +71,11 @@ const Home = () => {
 
                 <div className="movies-list">
                     {movies.map((movie) => (
-                        <MovieCard movie={movie} /> 
+                        <MovieCard key={movie.id} movie={movie} />
                     ))}
                 </div>
             </div>
-         </div>   
-    );
+        </div>
 }
 
 export default Home
