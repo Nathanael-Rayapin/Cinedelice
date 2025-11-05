@@ -1,8 +1,6 @@
 @apiBaseUrl = http://localhost:3000/api
 @token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjUsInJvbGUiOiJ1c2VyIiwiaWF0IjoxNzYyMzU3MzU1LCJleHAiOjE3NjIzNjA5NTV9.as7XmqtxfqkK3YvEQCms6buSdNjStEE1ogzvut-RMCs
-@token_admin=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjksInJvbGUiOiJhZG1pbiIsImlhdCI6MTc2MjM2NjQ4NywiZXhwIjoxNzYyMzcwMDg3fQ.scp-Vn2mylShV2MlN9m5sjlgqg4UFPTH72ZAEPB0r0E
-
-### Afficher toutes les utilisateurs (Admin)
+@token_admin=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjksInJvbGUiOiJhZG1pbiIsImlhdCI6MTc2MjM3MDI0OSwiZXhwIjoxNzYyMzczODQ5fQ.hAbdIX5sE26s7vit5I5E7ws65imYLFfW5H1-01mdZok
 GET {{apiBaseUrl}}/users
 Authorization: Bearer {{token_admin}}
 ### Inscription 
@@ -32,12 +30,12 @@ GET {{apiBaseUrl}}/auth/me
 Authorization: Bearer {{token_admin}}
 
 ### Modifier le role d'un utilisateur (Admin)
-PATCH {{apiBaseUrl}}/users/5
+PATCH {{apiBaseUrl}}/users/2
 Authorization: Bearer {{token_admin}}
 Content-Type: application/json
 
 {
-  "role":"admin"
+  "role":"user"
 }
 
 ### Supprimer un user (Admin)

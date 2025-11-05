@@ -21,9 +21,13 @@ export async function updateUserRole(req: Request, res: Response) {
   }
 
   // Vérifier que l'utilisateur existe
-  const user = await prisma.user.findUnique({ where: { id: userId } });
-  if (!user) {
+  const userToUpdate = await prisma.user.findUnique({ where: { id: userId } });
+  if (!userToUpdate) {
     throw new NotFoundError("Utilisateur introuvable");
+  }
+  //  Empêcher un admin de modifier le rôle d’un autre admin
+  if (userToUpdate.role === "admin" && userToUpdate.id !== req.userId) {
+    throw new ForbiddenError("Un administrateur ne peut pas modifier le rôle d’un autre administrateur.");
   }
 
   // Mettre à jour le rôle

@@ -79,7 +79,6 @@ export async function loginUser(req: Request, res: Response) {
   });
 };
 //===================Mon profil================
-
 export async function getMe(req:Request, res:Response){
   //verifier si le header authorization existe
   const authHeader = req.headers.authorization;
