@@ -11,10 +11,10 @@
         height: 50px;
         border-radius: 80px;
         border: none;
-        color: #fff;
+        color: var(--color-white);
         font-size: 18px;
         font-weight: 600;
-        background: linear-gradient(to right, #E36414, #FB8B24);
+        background: linear-gradient(to right, var(--color-secondary), var(--color-primary));
     }
 
     li button {
@@ -29,7 +29,7 @@
     }
 
     li:not(.active) button a {
-        color: #D9D9D9;
+        color: var(--color-deep-gray);
         cursor: default;
     }
 }

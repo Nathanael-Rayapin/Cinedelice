@@ -3,7 +3,7 @@
     height: 40px;
     border-radius: 50%;
     border: none;
-    background: linear-gradient(to right, #E36414, #FB8B24);
+    background: linear-gradient(to right, var(--color-secondary), var(--color-primary));
 }
 
 @media screen and (min-width: 769px) {
