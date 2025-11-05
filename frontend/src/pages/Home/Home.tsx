@@ -6,7 +6,7 @@ import MovieCard from '../../components/Movie-Card/Movie-Card';
 import './Home.scss'
 
 const Home = () => {   
-    const tabs = ['Pour vous', 'Tendance', 'Favoris'];
+    const tabs = ['Pour vous', 'Tendances', 'Favoris'];
     const randomRecipe = recipes[Math.floor(Math.random() * recipes.length)];
 
     return (
