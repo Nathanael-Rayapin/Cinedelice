@@ -12,7 +12,7 @@ const limiter = rateLimit({
 });
 
 router.post("/auth/register", authController.registerUser);
-//router.post("/auth/login", limiter, authController.loginUser);
+router.post("/auth/login", limiter, authController.loginUser);
 //router.post("/auth/refresh", authController.refreshTokens);
 //router.post("/auth/logout", authController.logoutUser);
 //router.get("/auth/me", checkRoles(["user", "admin"]), authController.getAuthenticatedUser);

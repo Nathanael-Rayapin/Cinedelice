@@ -51,7 +51,7 @@ export async function loginUser(req: Request, res: Response) {
   const { email, password } = req.body;
 
   // Récupérer l'utilisateur en BDD via son email
-  const user = await prisma.user.findFirst({ where: { email } });
+  const user = await prisma.user.findUnique({ where: { email } });
   // SI KO => 401 : l'utilisateur et le mot de passe ne correspondent pas
   if (! user) {
     throw new UnauthorizedError("L'email et le mot de passe ne correspondent pas");
@@ -64,5 +64,13 @@ export async function loginUser(req: Request, res: Response) {
     throw new UnauthorizedError("L'email et le mot de passe ne correspondent pas");
   }
 
+  // Retourner les informations de l'utilisateur (sans mot de passe)
+  res.status(200).json({
+    id: user.id,
+    username: user.username,
+    email: user.email,
+    role: user.role,
+    created_at: user.created_at
+  });
 }
 //======================= Deconnexion=============

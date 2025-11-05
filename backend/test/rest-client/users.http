@@ -7,9 +7,18 @@ POST {{apiBaseUrl}}/auth/register
 Content-Type:application/json
 
 {
-  "username": "nathanael",
-  "email": "nathael@example.com",
-  "password": "123456",
+  "username": "ludo",
+  "email": "ludo@example.com",
+  "password": "ludo",
   "age_declaration": true,
   "cgu_accepted":true
+}
+
+### Connexion
+POST {{apiBaseUrl}}/auth/login
+Content-Type: application/json
+
+{
+  "email":"ludo@example.com",
+  "password":"ludo"
 }
