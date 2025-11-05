@@ -5,6 +5,7 @@ import Home from './pages/Home/Home'
 import Signup from './pages/Signup/Signup'
 import Signin from './pages/Signin/Signin'
 import Footer from './pages/Footer/Footer'
+import CGU from './pages/CGU/CGU'
 import './App.css'
 
 function App() {
@@ -20,6 +21,9 @@ function App() {
 
           <Route path="/inscription" element={<Signup />} />
           <Route path="/connexion" element={<Signin />} />
+
+          <Route path="/cgu" element={<CGU />} />
+          
         </Routes>
       </Layout>
       <Footer />

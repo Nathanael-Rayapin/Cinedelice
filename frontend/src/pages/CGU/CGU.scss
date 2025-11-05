@@ -1,3 +1,48 @@
+.cgu-logo {
+    margin: 0 auto;
+    width: 20%;
+}
+
 h1, h2 {
-    color: #e36414;
+    color: var(--color-secondary);
+}
+
+h3, h4 {
+    color: var(--color-primary);
+}
+
+h1 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    text-align: center;
+}
+
+h2 {
+    font-weight: 700;
+    font-size: 1.1rem;
+}
+
+h3 {
+    font-weight: 600;
+}
+
+h4 {
+    text-decoration: underline;
+    font-weight: 500;
+}
+
+.title {
+    text-align: center;
+    font-size: 1.2rem;
+}
+
+@media screen and (min-width: 769px) {
+
+    h1 {
+        font-size: 2rem;
+    }
+
+    .title {
+        font-size: 1.5rem;
+    }
 }

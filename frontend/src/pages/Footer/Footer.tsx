@@ -1,5 +1,6 @@
 import './Footer.scss';
 import logo from '../../assets/logo.svg';
+import { NavLink } from 'react-router';
 
 const Footer = () => {
   return (
@@ -13,8 +14,8 @@ const Footer = () => {
         
         <div className="footer-right">
           <nav className="footer-nav">
-            <a href="#cgu">CGU</a>
-            <a href="#about">À propos</a>
+            <NavLink to="/cgu">CGU</NavLink>
+            <NavLink to="/about">À propos</NavLink>
           </nav>
         </div>
         
