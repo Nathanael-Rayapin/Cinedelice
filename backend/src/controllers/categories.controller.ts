@@ -9,7 +9,7 @@ export async function getAllCategories(req: Request, res: Response) {
 }
 
 export async function getOneCategory(req: Request, res: Response) {
-  // on récupère l'ID du categorie qui nous intéresse en BDD
+  // on récupère l'ID de la categorie qui nous intéresse en BDD
   const categoryId = parseInt(req.params.id, 10);
 
   // On récupère la catégorie en BDD, si elle n'existe pas => 404
@@ -59,3 +59,19 @@ export async function updateCategory(req: Request, res: Response) {
   res.status(200).json(updatedCategory);
 }
 
+export async function deleteCategory(req: Request, res: Response) {
+  // on récupère l'ID de la categorie à supprimer en BDD
+  const categoryId = parseInt(req.params.id, 10);
+  if (!categoryId) { throw new NotFoundError("Category not found"); }
+
+  // on récupère la catégorie en BDD, si elle n'existe pas => 404
+  const category = await prisma.category.findUnique({ where: { id: categoryId }});
+  if (!category) { throw new NotFoundError("Category not found"); }
+
+  // on supprime la categorie avec Prisma
+  await prisma.category.delete({
+    where: { id: categoryId }
+  });
+
+  res.status(204).end();
+}
