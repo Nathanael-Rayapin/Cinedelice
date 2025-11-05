@@ -20,6 +20,8 @@ npm i jsonwebtoken
 npm install typescript ts-node @types/node --save-dev
 npm i eslint
 npm i --save-dev @types/express
+npm i cors
+npm i --save-dev @types/cors
 
 
 # BDD
