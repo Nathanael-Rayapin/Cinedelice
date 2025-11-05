@@ -9,4 +9,4 @@ router.get("/users",checkRoles(["admin"]),usersController.getAllUsers);
 router.patch("/users/:id",checkRoles(["admin"]),usersController.updateUserRole);
 
 //Supprimer un utilisateur (admin)
-//router.delete("/users/:id",checkRoles(["admin"])usersController.deleteUser);
+router.delete("/users/:id",checkRoles(["admin"]),usersController.deleteUser);
