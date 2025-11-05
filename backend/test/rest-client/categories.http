@@ -1,3 +1,6 @@
 @apiBaseUrl = http://localhost:3000/api
-### Afficher toutes les recettes
-GET {{apiBaseUrl}}/admin/categories
+### Afficher toutes les catégories
+GET {{apiBaseUrl}}/categories
+
+### Afficher une catégorie
+GET {{apiBaseUrl}}/categories/:id
