@@ -70,11 +70,13 @@ export async function loginUser(req: Request, res: Response) {
   res.status(200).json({
     message:"connexion réussie",
     token,
-    id: user.id,
-    username: user.username,
-    email: user.email,
-    role: user.role,
-    created_at: user.created_at
+    user:{
+      id: user.id,
+      username: user.username,
+      email: user.email,
+      role: user.role,
+      created_at: user.created_at
+    }
   });
 }
 //======================= Deconnexion=============
