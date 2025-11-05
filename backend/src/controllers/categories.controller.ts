@@ -1,7 +1,7 @@
 // import * as z from "zod";
 import type { Request, Response } from "express";
 import { prisma } from "../models/index.ts";
-import { ConflictError, NotFoundError } from "../lib/errors.ts";
+import { BadRequestError, ConflictError, NotFoundError } from "../lib/errors.ts";
 
 export async function getAllCategories(req: Request, res: Response) {
   const categories = await prisma.category.findMany();
@@ -11,8 +11,8 @@ export async function getAllCategories(req: Request, res: Response) {
 export async function getOneCategory(req: Request, res: Response) {
   // on récupère l'ID de la categorie qui nous intéresse en BDD
   const categoryId = parseInt(req.params.id, 10);
-  if (!categoryId) { throw new NotFoundError("Invalid ID format"); }
-  
+  if (isNaN(categoryId)) { throw new BadRequestError("Invalid ID format"); }
+
   // On récupère la catégorie en BDD, si elle n'existe pas => 404
   const category = await prisma.category.findUnique({ where: {id: categoryId }});
   if (!category) { throw new NotFoundError("Category not found"); }
@@ -36,7 +36,7 @@ export async function createCategory(req: Request, res: Response) {
 export async function updateCategory(req: Request, res: Response) {
   // ON récupère l'ID de la catégorie que l'on souhaite update en BDD
   const categoryId = parseInt(req.params.id, 10);
-  if (!categoryId) { throw new NotFoundError("Invalid ID format"); }
+  if (isNaN(categoryId)) { throw new BadRequestError("Invalid ID format"); }
 
   const { name } = req.body;
 
@@ -64,7 +64,7 @@ export async function updateCategory(req: Request, res: Response) {
 export async function deleteCategory(req: Request, res: Response) {
   // on récupère l'ID de la categorie à supprimer en BDD
   const categoryId = parseInt(req.params.id, 10);
-  if (!categoryId) { throw new NotFoundError("Invalid ID format"); }
+  if (isNaN(categoryId)) { throw new BadRequestError("Invalid ID format"); }
 
   // on récupère la catégorie en BDD, si elle n'existe pas => 404
   const category = await prisma.category.findUnique({ where: { id: categoryId }});
