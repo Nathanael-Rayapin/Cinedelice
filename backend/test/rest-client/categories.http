@@ -3,4 +3,4 @@
 GET {{apiBaseUrl}}/categories
 
 ### Afficher une catégorie
-GET {{apiBaseUrl}}/categories/:id
+GET {{apiBaseUrl}}/categories/1

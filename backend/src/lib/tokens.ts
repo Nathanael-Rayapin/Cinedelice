@@ -1,64 +1,38 @@
 import jwt, { type JwtPayload } from "jsonwebtoken";
-import crypto from "node:crypto";
 import { config } from "../../config.ts";
-import { prisma, type Role, type User } from "../models/index.ts";
 import { UnauthorizedError } from "./errors.ts";
-import type { Response } from "express";
+import type { Role } from "../models/index.ts";
 
+// === Configuration ===
 const ONE_HOUR_IN_MILLISECONDS = 1 * 60 * 60 * 1000;
-const ONE_WEEK_IN_MILLISECONDS = 7 * 24 * 60 * 60 * 1000;
 
-export function generateAuthenticationTokens(user: User) {
-  // Access token (JWT)
-  const payload = { userId: user.id, role: user.role };
-  const accessToken = jwt.sign(payload, config.jwtSecret, { expiresIn: `${ONE_HOUR_IN_MILLISECONDS}ms` });
+// === Générer un token JWT simple ===
+export function generateAccessToken(userId: number, role: Role) {
+  const payload = { userId, role };
 
-  // Refresh token (Opaque)
-  const refreshToken = crypto.randomBytes(64).toString("base64");
+  const token = jwt.sign(payload, config.jwtSecret, {//creation du token chiffré
+    expiresIn: `${ONE_HOUR_IN_MILLISECONDS}ms`, // expire dans 1h
+  });
 
-  // Renvoyer les tokens
   return {
-    accessToken: {
-      token: accessToken,
-      expiresInMS: ONE_HOUR_IN_MILLISECONDS
-    },
-    refreshToken: {
-      token: refreshToken,
-      expiresInMS: ONE_WEEK_IN_MILLISECONDS
-    }
+    token,
+    expiresInMS: ONE_HOUR_IN_MILLISECONDS,
   };
 }
 
+// === Vérifier et décoder un token ===
 export function verifyAndDecodeJWT(accessToken: string): AuthPayload {
   try {
-
-    const jwtPayload = jwt.verify(accessToken, config.jwtSecret) as AuthPayload; // Caster le type pour se faciliter la vie
+    const jwtPayload = jwt.verify(accessToken, config.jwtSecret) as AuthPayload;
     return jwtPayload;
-
   } catch (error) {
-    // si le token n'est pas valide ou expiré, renvoyer une 401
     console.error(error);
-    throw new UnauthorizedError("Invalid or expired token");
+    throw new UnauthorizedError("Token invalide ou expiré");
   }
 }
 
-// Bonus : pour s'assurer des types de ce que contient le payload que l'on manipule
+// === Interface du contenu du token ===
 export interface AuthPayload extends JwtPayload {
   userId: number;
-  userRole: Role;
+  role: Role;
 }
-
-export async function saveRefreshToken(user: User, refreshToken: Token) {
-  await prisma.refreshToken.create({ data: {
-    token: refreshToken.token,
-    user_id: user.id,
-    issued_at: new Date(),                                                 // Maintenant 
-    expires_at: new Date(new Date().valueOf() + refreshToken.expiresInMS), // Maintenant + 7J
-  }});
-}
-
-export interface Token {
-  token: string;
-  expiresInMS: number;
-}
-

@@ -2,7 +2,7 @@ import * as argon2 from "argon2";
 import type { Request, Response } from "express";
 import { BadRequestError, ConflictError, UnauthorizedError } from "../lib/errors.ts";
 import { prisma } from "../models/index.ts";
-//import { generateAuthenticationTokens, saveRefreshToken} from "../lib/tokens.ts";
+import { generateAccessToken} from "../lib/tokens.ts";
 
 //========Inscription d'un utilisateur=============
 
@@ -18,7 +18,7 @@ export async function registerUser(req: Request, res: Response) {
   // Vérifier que l'email n'est pas déjà utilisé
   const alreadyExistingUser = await prisma.user.findFirst({ where: { email } });
   if (alreadyExistingUser) {
-    throw new ConflictError("L'email et le mot de passe ne correspondent pas");
+    throw new ConflictError("L'email ou le mot de passe ne correspondent pas");
   }
 
   // Hasher le mot de passe (argon2) pour éviter de le stocker en clair
@@ -54,18 +54,22 @@ export async function loginUser(req: Request, res: Response) {
   const user = await prisma.user.findUnique({ where: { email } });
   // SI KO => 401 : l'utilisateur et le mot de passe ne correspondent pas
   if (! user) {
-    throw new UnauthorizedError("L'email et le mot de passe ne correspondent pas");
+    throw new UnauthorizedError("L'email ou le mot de passe ne correspondent pas");
   }
 
   // Comparer le mot de passe en clair avec le mot de passe haché de la BDD
   const isMatching = await argon2.verify(user.password, password);
   // SI KO => 401 : l'utilisateur et le mot de passe ne correspondent pas
   if (! isMatching) {
-    throw new UnauthorizedError("L'email et le mot de passe ne correspondent pas");
+    throw new UnauthorizedError("L'email ou le mot de passe ne correspondent pas");
   }
+  //  Génère le token JWT 
+  const { token } = generateAccessToken(user.id, user.role);
 
   // Retourner les informations de l'utilisateur (sans mot de passe)
   res.status(200).json({
+    message:"connexion réussie",
+    token,
     id: user.id,
     username: user.username,
     email: user.email,
