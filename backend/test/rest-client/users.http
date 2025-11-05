@@ -1,5 +1,5 @@
 @apiBaseUrl = http://localhost:3000/api
-@token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjUsInJvbGUiOiJ1c2VyIiwiaWF0IjoxNzYyMzQ5MjMyLCJleHAiOjE3NjIzNTI4MzJ9.qh2hT8iKWMVmjJmAEtFEFLIJMayxXEq8kQLmnQxy6dw
+@token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjUsInJvbGUiOiJ1c2VyIiwiaWF0IjoxNzYyMzQ5ODY0LCJleHAiOjE3NjIzNTM0NjR9._VjwN-BJVJKoVUZsPODXOsFOt8s6nC77sIUruS-RouI
 ### Afficher toutes les utilisateurs
 GET {{apiBaseUrl}}/users
 
@@ -11,7 +11,7 @@ Content-Type:application/json
   "username": "ludoo",
   "email": "ludoo@example.com",
   "password": "ludo",
-  "confirmPassword":"ludo",
+  "confirm_password":"ludo",
   "age_declaration": true,
   "cgu_accepted":true
 }

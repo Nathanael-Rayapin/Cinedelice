@@ -8,10 +8,10 @@ import { generateAccessToken, verifyAndDecodeJWT} from "../lib/tokens.ts";
 
 export async function registerUser(req: Request, res: Response) {
   // On récupère les données envoyées par le client dans le corps de la requête
-  const { username, email, password, confirmPassword, age_declaration, cgu_accepted } = req.body;
+  const { username, email, password, confirm_password, age_declaration, cgu_accepted } = req.body;
  
   // Vérifier que tous les champs obligatoires sont bien présents
-  if (!username || !email || !password || !confirmPassword  || age_declaration !== true || cgu_accepted !== true) {
+  if (!username || !email || !password || !confirm_password  || age_declaration !== true || cgu_accepted !== true) {
     throw new BadRequestError("Tous les champs sont obligatoires.");
   }
 
