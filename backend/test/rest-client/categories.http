@@ -1,4 +1,6 @@
 @apiBaseUrl = http://localhost:3000/api
+@token=eyJ
+
 ### Afficher toutes les catégories
 GET {{apiBaseUrl}}/categories
 

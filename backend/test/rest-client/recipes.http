@@ -1,3 +1,29 @@
 @apiBaseUrl = http://localhost:3000/api
-### Afficher toutes les recettes
+@token=eyJ
+
+### Lister toutes les recettes
 GET {{apiBaseUrl}}/recipes
+
+### Voir une recette par ID
+GET {{apiBaseUrl}}/recipes/1
+
+### Créer une recette (user)
+POST {{apiBaseUrl}}/recipes
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "title": "Pizza maison",
+  "category_id": 1,
+  "movie_id": 1234,
+  "number_of_person": 2,
+  "preparation_time": 40,
+  "description": "Une pizza inspirée du film Ratatouille 🍕",
+  "ingredients": "pâte, tomate, fromage",
+  "preparation_steps": "Pétrir, garnir, cuire",
+  "status": "draft"
+}
+
+### Supprimer une recette (user)
+DELETE {{apiBaseUrl}}/recipes/1
+Authorization: Bearer {{token}}

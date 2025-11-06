@@ -1,6 +1,6 @@
 import * as argon2 from "argon2";
 import type { Request, Response } from "express";
-import { BadRequestError, ConflictError, UnauthorizedError } from "../lib/errors.ts";
+import { BadRequestError, ConflictError, UnauthorizedError,NotFoundError } from "../lib/errors.ts";
 import { prisma } from "../models/index.ts";
 import { generateAccessToken, verifyAndDecodeJWT} from "../lib/tokens.ts";
 
@@ -113,3 +113,46 @@ export async function getMe(req:Request, res:Response){
     user,
   });
 };
+
+// ========= Modifier son mot de passe =========
+
+export async function updatePassword(req: Request, res: Response) {
+  const userId = req.currentUserId; // récupéré depuis le token (middleware)
+  const { oldPassword, newPassword } = req.body;
+
+  if (!oldPassword || !newPassword) {
+    throw new BadRequestError("L'ancien et le nouveau mot de passe sont obligatoires.");
+  }
+
+  const user = await prisma.user.findUnique({ where: { id: userId } });
+  if (!user) throw new NotFoundError("Utilisateur introuvable.");
+
+  const isMatching = await argon2.verify(user.password, oldPassword);
+  if (!isMatching) {
+    throw new UnauthorizedError("L'ancien mot de passe est incorrect.");
+  }
+
+  const hashedPassword = await argon2.hash(newPassword);
+  await prisma.user.update({
+    where: { id: userId },
+    data: { password: hashedPassword },
+  });
+
+  res.status(200).json({
+    message: "Mot de passe mis à jour avec succès.",
+  });
+}
+// ========= Supprimer son propre compte =========
+
+export async function deleteAccount(req: Request, res: Response) {
+  const userId = req.currentUserId;
+
+  const user = await prisma.user.findUnique({ where: { id: userId } });
+  if (!user) throw new NotFoundError("Utilisateur introuvable.");
+
+  await prisma.user.delete({ where: { id: userId } });
+
+  res.status(200).json({
+    message: "Votre compte a été supprimé avec succès.",
+  });
+}

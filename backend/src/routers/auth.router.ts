@@ -1,6 +1,6 @@
 import { Router } from "express";
+import { checkRoles } from "../middlewares/access-control-middleware.ts";
 import * as authController from "../controllers/auth.controller.ts";
-//import { checkRoles } from "../middlewares/access-control-middleware.ts";
 import rateLimit from "express-rate-limit";
 
 export const router = Router();
@@ -13,7 +13,10 @@ const limiter = rateLimit({
 
 router.post("/auth/register", authController.registerUser);
 router.post("/auth/login", limiter, authController.loginUser);
-//router.post("/auth/logout", authController.logoutUser);
 router.get("/auth/me", authController.getMe);
-//router.get("/auth/me", checkRoles(["user", "admin"]), authController.getAuthenticatedUser);
 
+//Modifier son mot de passe (admin ou user)
+router.patch("/auth/me/password",checkRoles(["admin","user"]),authController.updatePassword);
+
+//Supprimer son compte (admin ou user)
+router.delete("/auth/me",checkRoles(["admin","user"]),authController.deleteAccount);
