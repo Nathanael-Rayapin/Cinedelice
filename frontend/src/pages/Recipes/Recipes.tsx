@@ -119,7 +119,6 @@ const Recipes = () => {
                     Suivant
                 </button>
             </div>
-
         </div>
     );
 };
