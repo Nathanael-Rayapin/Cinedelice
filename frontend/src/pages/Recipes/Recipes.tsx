@@ -10,6 +10,8 @@ const Recipes = () => {
     const [recipes, setRecipes] = useState<IRecipe[]>([]); //Tableau de recettes (initialisé comme tableau vide)
     const [errorMsg, setErrorMsg] = useState<string | null>(null); //Message d'erreur (initialisé à null)
     const [loading, setLoading] = useState(true); //Booléen pour indiquer si les données sont en cours de chargement
+    const [currentPage, setCurrentPage] = useState(1); //Page actuelle pour la pagination
+    const recipesPerPage = 6; //Nombre de recettes à afficher par page
 
     //Le useEffect est utilisé pour charger les recettes au montage du composant (tableau de dépendances vide [])
     useEffect(() => {
@@ -29,6 +31,27 @@ const Recipes = () => {
         fetchRecipes();
     }, []);
 
+    // Logique de pagination
+    const indexOfLastRecipe = currentPage * recipesPerPage; //Calcule l'index (position) de la dernière recette à afficher sur la page actuelle
+    const indexOfFirstRecipe = indexOfLastRecipe - recipesPerPage; //Calcule l'index (position) de la première recette à afficher sur la page actuelle
+    const currentRecipes = recipes.slice(indexOfFirstRecipe, indexOfLastRecipe); //Extrait un sous-tableau de recettes à afficher sur la page actuelle, en utilisant les index calculés précédemment
+    const totalPages = Math.ceil(recipes.length / recipesPerPage); //Calcule le nombre total de pages nécessaires pour afficher toutes les recettes
+
+    const paginate = (pageNumber: number) => setCurrentPage(pageNumber); // Fonction qui met à jour l'état currentPage avec le numéro de page passé en argument
+
+    //Passe à la page précédente si elle existe
+    const goToPreviousPage = () => {
+        if (currentPage > 1) {
+            setCurrentPage(currentPage - 1);
+        }
+    };
+
+    //Passe à la page suivante si elle existe
+    const goToNextPage = () => {
+        if (currentPage < totalPages) {
+            setCurrentPage(currentPage + 1);
+        }
+    };
 
     //Si loading est true, un composant PacmanLoader est affiché avec une couleur orange (#fB8b24)
     if (loading) {
@@ -52,7 +75,7 @@ const Recipes = () => {
     //Si tout va bien, les recettes sont affichées sous forme de cartes (FeaturedCard) en utilisant currentRecipes.map
     return (
         <div className="recipes">
-            {recipes.map((recipe) => (
+            {currentRecipes.map((recipe) => (
                 <FeaturedCard key={recipe.id} recipe={recipe} />
             ))}
 
