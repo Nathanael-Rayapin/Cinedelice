@@ -73,3 +73,16 @@ export async function createRecipe(req: Request, res: Response) {
   res.status(201).json(createdRecipe);
 }
 
+export async function deleteRecipe(req: Request, res: Response) {
+  const recipeId = parseInt(req.params.id, 10);
+  if (isNaN(recipeId)) { throw new BadRequestError("Invalid ID format"); }
+
+  const recipe = await prisma.recipe.findUnique({ where: { id: recipeId }});
+  if (!recipe) { throw new NotFoundError("Category not found"); }
+
+  await prisma.recipe.delete({
+    where: { id: recipeId }
+  });
+
+  res.status(204).end();
+}
