@@ -30,7 +30,7 @@
         display: flex;
 
         a:not(.profile li a) {
-            display: none;
+            display: flex;
         }
 
         a.active {

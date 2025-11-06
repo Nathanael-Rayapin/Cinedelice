@@ -22,8 +22,8 @@ const Navbar = () => {
           <Search />
         </div>
         <div className="sections">
-          <a href="#">Recettes</a>
-          <a href="#">Films</a>
+          <a href="/recettes">Recettes</a>
+          <a href="/films">Films</a>
           <ProfileDropdown />
           <IoIosSearch className='search-btn' size={40} color="#FB8B24" />
         </div>
