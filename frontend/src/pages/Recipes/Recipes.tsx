@@ -34,16 +34,13 @@ const Recipes = () => {
     const indexOfFirstRecipe = indexOfLastRecipe - recipesPerPage; //Calcule l'index (position) de la première recette à afficher sur la page actuelle
     const currentRecipes = recipes.slice(indexOfFirstRecipe, indexOfLastRecipe); //Extrait un sous-tableau de recettes à afficher sur la page actuelle, en utilisant les index calculés précédemment
     const totalPages = Math.ceil(recipes.length / recipesPerPage); //Calcule le nombre total de pages nécessaires pour afficher toutes les recettes
-
     const paginate = (pageNumber: number) => setCurrentPage(pageNumber); // Fonction qui met à jour l'état currentPage avec le numéro de page passé en argument
-
     //Passe à la page précédente si elle existe
     const goToPreviousPage = () => {
         if (currentPage > 1) {
             setCurrentPage(currentPage - 1);
         }
     };
-
     //Passe à la page suivante si elle existe
     const goToNextPage = () => {
         if (currentPage < totalPages) {
