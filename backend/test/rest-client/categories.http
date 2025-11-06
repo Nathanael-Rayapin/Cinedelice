@@ -8,10 +8,10 @@ GET {{apiBaseUrl}}/categories
 GET {{apiBaseUrl}}/categories/:id
 
 ### Créer une catégorie
-POST {{apiBaseUrl}}/admin/categories
+POST {{apiBaseUrl}}/categories
 
 ### Update catégorie
-PATCH {{apiBaseUrl}}/admin/categories/:id
+PATCH {{apiBaseUrl}}/categories/:id
 Content-Type: application/json
 
 {
@@ -19,4 +19,4 @@ Content-Type: application/json
 }
 
 ### Delete une catégorie
-PATCH {{apiBaseUrl}}/admin/categories/:id
+PATCH {{apiBaseUrl}}/categories/:id

@@ -6,6 +6,6 @@ export const router = Router();
 
 router.get("/categories", checkRoles(["user", "admin"]), categoriesController.getAllCategories);
 router.get("/categories/:id", checkRoles(["user", "admin"]), categoriesController.getOneCategory);
-router.post("/admin/categories", checkRoles(["admin"]), categoriesController.createCategory);
-router.patch("/admin/categories/:id", checkRoles(["admin"]), categoriesController.updateCategory);
-router.delete("/admin/categories/:id", checkRoles(["admin"]), categoriesController.deleteCategory);
+router.post("/categories", checkRoles(["admin"]), categoriesController.createCategory);
+router.patch("/categories/:id", checkRoles(["admin"]), categoriesController.updateCategory);
+router.delete("/categories/:id", checkRoles(["admin"]), categoriesController.deleteCategory);

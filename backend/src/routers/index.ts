@@ -1,11 +1,11 @@
 import { Router } from "express";
 import { router as authRouter} from "../routers/auth.router.ts";
 import { router as categoriesRouter } from "../routers/categories.router.ts";
-import { router as adminRouter} from "../routers/admin.router.ts";
+import { router as usersRouter} from "./users.router.ts";
 
 export const router=Router();
 
 //router.use(recipesRouter);
-router.use(adminRouter);
+router.use(usersRouter);
 router.use(authRouter);
 router.use(categoriesRouter);

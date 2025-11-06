@@ -1,52 +1,48 @@
 @apiBaseUrl = http://localhost:3000/api
-@token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjExLCJyb2xlIjoidXNlciIsImlhdCI6MTc2MjQzNzA1NiwiZXhwIjoxNzYyNDQwNjU2fQ.YrlF7ssHf4ggSvDlu7KxWapYrSHgMPVHgx4yReH9r54
+@token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjksInJvbGUiOiJhZG1pbiIsImlhdCI6MTc2MjQ0Nzc4NSwiZXhwIjoxNzYyNDUxMzg1fQ.RvV-aYXTvDW2IYK_Oc1p4yUmdkRlQUgd0Pr4_7GqQdo
 # ========================
 # AUTHENTIFICATION
 # ========================
 
-### Inscription
-POST {{apiBaseUrl}}/auth/register
+### Inscription ###
+POST {{apiBaseUrl}}/users
 Content-Type: application/json
 
 {
-  "username": "mehdi",
-  "email": "mehdi@example.com",
-  "password": "mehdi123",
-  "confirm_password": "mehdi123",
+  "username": "loic",
+  "email": "loic@example.com",
+  "password": "loic",
+  "confirm_password": "loic",
   "age_declaration": true,
   "cgu_accepted": true
 }
 
-### Connexion
+### Connexion ###
 POST {{apiBaseUrl}}/auth/login
 Content-Type: application/json
 
 {
-  "email": "mehdi@example.com",
-  "password": "mehdi123"
+  "email": "bob@example.com",
+  "password": "bob"
 }
 
-### Mon profil
+### Mon profil ###
 GET {{apiBaseUrl}}/auth/me
 Authorization: Bearer {{token}}
 
 
-# ========================
-# USERS
-# ========================
-
-### Modifier son mot de passe (user ou admin)
-PATCH {{apiBaseUrl}}/auth/me/password/
+### Modifier son mot de passe (user ou admin) ###
+PATCH {{apiBaseUrl}}/users/me/password/
 Authorization: Bearer {{token}}
 Content-Type: application/json
 
 {
-  "oldPassword": "mehdi123",
+  "oldPassword": "mehdi",
   "newPassword": "mehdi"
 }
 
-### Supprimer son compte
-DELETE {{apiBaseUrl}}/auth/me
+### Supprimer son compte ###
+DELETE {{apiBaseUrl}}/users/me
 Authorization: Bearer {{token}}
 
 
@@ -54,12 +50,12 @@ Authorization: Bearer {{token}}
 # ADMIN
 # ========================
 
-### Lister tous les utilisateurs (admin)
-GET {{apiBaseUrl}}/admin/users
+### Lister tous les utilisateurs (admin) ###
+GET {{apiBaseUrl}}/users
 Authorization: Bearer {{token}}
 
-### Modifier le rôle d’un utilisateur (admin)
-PATCH {{apiBaseUrl}}/admin/users/3
+### Modifier le rôle d’un utilisateur (admin) ###
+PATCH {{apiBaseUrl}}/users/12
 Authorization: Bearer {{token}}
 Content-Type: application/json
 
@@ -67,8 +63,8 @@ Content-Type: application/json
   "role": "admin"
 }
 
-### Supprimer un utilisateur (admin)
-DELETE {{apiBaseUrl}}/users/3
+### Supprimer un utilisateur (admin) ###
+DELETE {{apiBaseUrl}}/users/13
 Authorization: Bearer {{token}}
 
 
