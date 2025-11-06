@@ -1,7 +1,7 @@
-// On importe notre client Prisma déjà configuré (connexion à la base de données)
+// import * as z from "zod";
+import type { Request, Response } from "express";
 import { prisma } from "../models/index.ts";
-// On importe les types Request et Response pour mieux typer Express
-import type { Request,Response } from "express";
+import { BadRequestError, NotFoundError } from "../lib/errors.ts";
 
 export async function getAllRecipes(req:Request,res:Response){
   const recipes = await prisma.recipe.findMany({
@@ -20,4 +20,16 @@ export async function getAllRecipes(req:Request,res:Response){
     },
   });
   res.status(200).json(recipes);
+}
+
+export async function getOneRecipe(req: Request, res: Response) {
+  // On récupère l'ID de la recette en BDD
+  const recipeId = parseInt(req.params.id, 10);
+  if (isNaN(recipeId)) { throw new BadRequestError("Invalid ID format"); }
+
+  // On récupère la recette en BDD
+  const recipe = await prisma.recipe.findUnique({ where: { id: recipeId }});
+  if (!recipe) { throw new NotFoundError("Recipe not found"); }
+
+  res.status(200).json(recipe);
 }
