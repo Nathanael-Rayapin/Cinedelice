@@ -39,5 +39,5 @@ Content-Type: application/json
 }
 
 ### Supprimer un user (Admin)
-DELETE {{apiBaseUrl}}/users/A
+DELETE {{apiBaseUrl}}/users/8
 Authorization: Bearer {{token_admin}}

@@ -1,7 +1,7 @@
 import type { Request, Response } from "express";
 import { prisma } from "../models/index.ts";
 import { BadRequestError,NotFoundError,ForbiddenError} from "../lib/errors.ts";
-
+import { Role } from "../models/index.ts";
 
 //========== Lister les utilisateurs (admin)  =============
 export async function getAllUsers(req: Request, res: Response) {
@@ -19,7 +19,7 @@ export async function updateUserRole(req: Request, res: Response) {
   const { role } = req.body;
 
   // Vérifier que le rôle est valide
-  if (role !== "admin" && role !== "user") {
+  if (role !== Role.admin && role !== Role.user) {
     throw new BadRequestError("Le rôle doit être 'admin' ou 'user'.");
   }
 
@@ -29,7 +29,7 @@ export async function updateUserRole(req: Request, res: Response) {
     throw new NotFoundError("Utilisateur introuvable");
   }
   //  Empêcher un admin de modifier le rôle d’un autre admin
-  if (userToUpdate.role === "admin" && userToUpdate.id !== req.userId) {
+  if (userToUpdate.role === Role.admin && userToUpdate.id !== req.userId) {
     throw new ForbiddenError("Un administrateur ne peut pas modifier le rôle d’un autre administrateur.");
   }
 
@@ -64,7 +64,7 @@ export async function deleteUser(req: Request, res: Response) {
   }
 
   // Empêcher un admin de supprimer un autre admin (sauf lui-même)
-  if (userToDelete.role === "admin" && userToDelete.id !== req.userId) {
+  if (userToDelete.role === Role.admin && userToDelete.id !== req.userId) {
     throw new ForbiddenError("Un administrateur ne peut pas supprimer un autre administrateur");
   }
 
