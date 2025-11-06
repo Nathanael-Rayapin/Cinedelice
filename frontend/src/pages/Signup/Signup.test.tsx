@@ -1,10 +1,10 @@
 import { fireEvent, render, screen, waitFor, type ByRoleMatcher, type ByRoleOptions } from "@testing-library/react";
-import { beforeEach, describe, expect, it } from "vitest";
+import { beforeEach, describe, expect, it, vi } from "vitest";
 import Signup from "./Signup";
 import { BrowserRouter } from "react-router";
+import * as services from '../../services/auth.service';
 
 describe("Signup Form", () => {
-
     beforeEach(() => {
         render(
             <BrowserRouter>
@@ -13,11 +13,11 @@ describe("Signup Form", () => {
         );
     });
 
-    it("should not submit if the pseudo is empty", async () => {
-        const pseudoInput = screen.getByLabelText(/Pseudo/);
+    it("should not submit if the Pseudo is empty", async () => {
+        const usernameInput = screen.getByLabelText(/Pseudo/);
         const submitButton = screen.getByRole("button", { name: /Je m'inscris/ });
 
-        fireEvent.change(pseudoInput, { target: { value: "" } });
+        fireEvent.change(usernameInput, { target: { value: "" } });
         fireEvent.click(submitButton);
 
         await waitFor(() => {
@@ -26,11 +26,11 @@ describe("Signup Form", () => {
         });
     });
 
-    it("should not submit if the pseudo is shorter than 3 characters", async () => {
-        const pseudoInput = screen.getByLabelText(/Pseudo/);
+    it("should not submit if the Pseudo is shorter than 3 characters", async () => {
+        const usernameInput = screen.getByLabelText(/Pseudo/);
         const submitButton = screen.getByRole("button", { name: /Je m'inscris/ });
 
-        fireEvent.change(pseudoInput, { target: { value: "Jo" } });
+        fireEvent.change(usernameInput, { target: { value: "Jo" } });
         fireEvent.click(submitButton);
 
         await waitFor(() => {
@@ -39,11 +39,11 @@ describe("Signup Form", () => {
         });
     });
 
-    it("should submit if the pseudo is valid", async () => {
-        const pseudoInput = screen.getByLabelText(/Pseudo/);
+    it("should submit if the Pseudo is valid", async () => {
+        const usernameInput = screen.getByLabelText(/Pseudo/);
         const submitButton = screen.getByRole("button", { name: /Je m'inscris/ });
 
-        fireEvent.change(pseudoInput, { target: { value: "John" } });
+        fireEvent.change(usernameInput, { target: { value: "John" } });
         fireEvent.click(submitButton);
 
         await waitFor(() => {
@@ -51,13 +51,13 @@ describe("Signup Form", () => {
         });
     });
 
-    it("should not submit if the email is empty", async () => {
-        const pseudoInput = screen.getByLabelText(/Pseudo/);
+    it("should not submit if the Email is empty", async () => {
+        const usernameInput = screen.getByLabelText(/Pseudo/);
         const emailInput = screen.getByLabelText(/Email/);
 
         const submitButton = screen.getByRole("button", { name: /Je m'inscris/ });
 
-        fireEvent.change(pseudoInput, { target: { value: "John" } });
+        fireEvent.change(usernameInput, { target: { value: "John" } });
         fireEvent.change(emailInput, { target: { value: "" } });
 
         fireEvent.click(submitButton);
@@ -68,32 +68,32 @@ describe("Signup Form", () => {
         });
     });
 
-    it("should not submit if the email is invalid", async () => {
+    it("should not submit if the Email is invalid", async () => {
         const form = screen.getByRole("form");
-        const pseudoInput = screen.getByLabelText(/Pseudo/);
+        const usernameInput = screen.getByLabelText(/Pseudo/);
         const emailInput = screen.getByLabelText(/Email/);
 
         const submitButton = screen.getByRole("button", { name: /Je m'inscris/ });
 
-        fireEvent.change(pseudoInput, { target: { value: "John" } });
+        fireEvent.change(usernameInput, { target: { value: "John" } });
         fireEvent.change(emailInput, { target: { value: "john.com" } });
 
         fireEvent.click(submitButton);
 
         await waitFor(() => {
-            // DataId for email may be null because of type "email" managed
+            // DataId for Email may be null because of type "Email" managed
             // natively by the browser, so we need to check the form instead
             expect(form.dataset.valid).toBe("false");
         });
     });
 
-    it("should submit if the email is valid", async () => {
-        const pseudoInput = screen.getByLabelText(/Pseudo/);
+    it("should submit if the Email is valid", async () => {
+        const usernameInput = screen.getByLabelText(/Pseudo/);
         const emailInput = screen.getByLabelText(/Email/);
 
         const submitButton = screen.getByRole("button", { name: /Je m'inscris/ });
 
-        fireEvent.change(pseudoInput, { target: { value: "John" } });
+        fireEvent.change(usernameInput, { target: { value: "John" } });
         fireEvent.change(emailInput, { target: { value: "john.doe@gmail.com" } });
 
         fireEvent.click(submitButton);
@@ -104,13 +104,13 @@ describe("Signup Form", () => {
     });
 
     it("should not submit if the password is empty", async () => {
-        const pseudoInput = screen.getByLabelText(/Pseudo/);
+        const usernameInput = screen.getByLabelText(/Pseudo/);
         const emailInput = screen.getByLabelText(/Email/);
         const passwordInput = screen.getByLabelText(/Mot de passe/);
 
         const submitButton = screen.getByRole("button", { name: /Je m'inscris/ });
 
-        fireEvent.change(pseudoInput, { target: { value: "John" } });
+        fireEvent.change(usernameInput, { target: { value: "John" } });
         fireEvent.change(emailInput, { target: { value: "john.doe@gmail.com" } });
         fireEvent.change(passwordInput, { target: { value: "" } });
 
@@ -123,7 +123,7 @@ describe("Signup Form", () => {
     });
 
     it("should not submit if the password is invalid", async () => {
-        const pseudoInput = screen.getByLabelText(/Pseudo/);
+        const usernameInput = screen.getByLabelText(/Pseudo/);
         const emailInput = screen.getByLabelText(/Email/);
         const passwordInput = screen.getByLabelText(/Mot de passe/);
 
@@ -131,7 +131,7 @@ describe("Signup Form", () => {
 
         const invalidPasswords = ["azerty", "AZERTY1", "Azerty1", "Azerty@", "123456"];
 
-        fireEvent.change(pseudoInput, { target: { value: "John" } });
+        fireEvent.change(usernameInput, { target: { value: "John" } });
         fireEvent.change(emailInput, { target: { value: "john.doe@gmail.com" } });
 
         for (const password of invalidPasswords) {
@@ -146,13 +146,13 @@ describe("Signup Form", () => {
     });
 
     it("should submit if the password is valid", async () => {
-        const pseudoInput = screen.getByLabelText(/Pseudo/);
+        const usernameInput = screen.getByLabelText(/Pseudo/);
         const emailInput = screen.getByLabelText(/Email/);
         const passwordInput = screen.getByLabelText(/Mot de passe/);
 
         const submitButton = screen.getByRole("button", { name: /Je m'inscris/ });
 
-        fireEvent.change(pseudoInput, { target: { value: "John" } });
+        fireEvent.change(usernameInput, { target: { value: "John" } });
         fireEvent.change(emailInput, { target: { value: "john.doe@gmail.com" } });
         fireEvent.change(passwordInput, { target: { value: "Azerty123!!!" } });
 
@@ -164,14 +164,14 @@ describe("Signup Form", () => {
     });
 
     it("should not submit if the confirm password is empty", async () => {
-        const pseudoInput = screen.getByLabelText(/Pseudo/);
+        const usernameInput = screen.getByLabelText(/Pseudo/);
         const emailInput = screen.getByLabelText(/Email/);
         const passwordInput = screen.getByLabelText(/Mot de passe/);
         const confirmPasswordInput = screen.getByLabelText(/Confirmation du mot de passe/);
 
         const submitButton = screen.getByRole("button", { name: /Je m'inscris/ });
 
-        fireEvent.change(pseudoInput, { target: { value: "John" } });
+        fireEvent.change(usernameInput, { target: { value: "John" } });
         fireEvent.change(emailInput, { target: { value: "john.doe@gmail.com" } });
         fireEvent.change(passwordInput, { target: { value: "Azerty123!!!" } });
         fireEvent.change(confirmPasswordInput, { target: { value: "" } });
@@ -185,7 +185,7 @@ describe("Signup Form", () => {
     });
 
     it("should not submit if the confirm password is invalid", async () => {
-        const pseudoInput = screen.getByLabelText(/Pseudo/);
+        const usernameInput = screen.getByLabelText(/Pseudo/);
         const emailInput = screen.getByLabelText(/Email/);
         const passwordInput = screen.getByLabelText(/Mot de passe/);
         const confirmPasswordInput = screen.getByLabelText(/Confirmation du mot de passe/);
@@ -194,7 +194,7 @@ describe("Signup Form", () => {
 
         const invalidPasswords = ["azerty", "AZERTY1", "Azerty1", "Azerty@", "123456"];
 
-        fireEvent.change(pseudoInput, { target: { value: "John" } });
+        fireEvent.change(usernameInput, { target: { value: "John" } });
         fireEvent.change(emailInput, { target: { value: "john.doe@gmail.com" } });
         fireEvent.change(passwordInput, { target: { value: "Azerty123!!!" } });
 
@@ -210,14 +210,14 @@ describe("Signup Form", () => {
     });
 
     it("should not submit if the passwords do not match", async () => {
-        const pseudoInput = screen.getByLabelText(/Pseudo/);
+        const usernameInput = screen.getByLabelText(/Pseudo/);
         const emailInput = screen.getByLabelText(/Email/);
         const passwordInput = screen.getByLabelText(/Mot de passe/);
         const confirmPasswordInput = screen.getByLabelText(/Confirmation du mot de passe/);
 
         const submitButton = screen.getByRole("button", { name: /Je m'inscris/ });
 
-        fireEvent.change(pseudoInput, { target: { value: "John" } });
+        fireEvent.change(usernameInput, { target: { value: "John" } });
         fireEvent.change(emailInput, { target: { value: "john.doe@gmail.com" } });
         fireEvent.change(passwordInput, { target: { value: "Azerty123!" } });
         fireEvent.change(confirmPasswordInput, { target: { value: "Azerty123?" } });
@@ -231,14 +231,14 @@ describe("Signup Form", () => {
     });
 
     it("should submit if the confirm password is valid", async () => {
-        const pseudoInput = screen.getByLabelText(/Pseudo/);
+        const usernameInput = screen.getByLabelText(/Pseudo/);
         const emailInput = screen.getByLabelText(/Email/);
         const passwordInput = screen.getByLabelText(/Mot de passe/);
         const confirmPasswordInput = screen.getByLabelText(/Confirmation du mot de passe/);
 
         const submitButton = screen.getByRole("button", { name: /Je m'inscris/ });
 
-        fireEvent.change(pseudoInput, { target: { value: "John" } });
+        fireEvent.change(usernameInput, { target: { value: "John" } });
         fireEvent.change(emailInput, { target: { value: "john.doe@gmail.com" } });
         fireEvent.change(passwordInput, { target: { value: "Azerty123!!!" } });
         fireEvent.change(confirmPasswordInput, { target: { value: "Azerty123!!!" } });
@@ -251,7 +251,7 @@ describe("Signup Form", () => {
     });
 
     it("should not submit if AgeDeclaration is unchecked", async () => {
-        const pseudoInput = screen.getByLabelText(/Pseudo/);
+        const usernameInput = screen.getByLabelText(/Pseudo/);
         const emailInput = screen.getByLabelText(/Email/);
         const passwordInput = screen.getByLabelText(/Mot de passe/);
         const confirmPasswordInput = screen.getByLabelText(/Confirmation du mot de passe/);
@@ -259,7 +259,7 @@ describe("Signup Form", () => {
 
         const submitButton = screen.getByRole("button", { name: /Je m'inscris/ });
 
-        fireEvent.change(pseudoInput, { target: { value: "John" } });
+        fireEvent.change(usernameInput, { target: { value: "John" } });
         fireEvent.change(emailInput, { target: { value: "john.doe@gmail.com" } });
         fireEvent.change(passwordInput, { target: { value: "Azerty123!!!" } });
         fireEvent.change(confirmPasswordInput, { target: { value: "Azerty123!!!" } });
@@ -272,7 +272,7 @@ describe("Signup Form", () => {
     });
 
     it("should submit if AgeDeclaration is checked", async () => {
-        const pseudoInput = screen.getByLabelText(/Pseudo/);
+        const usernameInput = screen.getByLabelText(/Pseudo/);
         const emailInput = screen.getByLabelText(/Email/);
         const passwordInput = screen.getByLabelText(/Mot de passe/);
         const confirmPasswordInput = screen.getByLabelText(/Confirmation du mot de passe/);
@@ -280,7 +280,7 @@ describe("Signup Form", () => {
 
         const submitButton = screen.getByRole("button", { name: /Je m'inscris/ });
 
-        fireEvent.change(pseudoInput, { target: { value: "John" } });
+        fireEvent.change(usernameInput, { target: { value: "John" } });
         fireEvent.change(emailInput, { target: { value: "john.doe@gmail.com" } });
         fireEvent.change(passwordInput, { target: { value: "Azerty123!!!" } });
         fireEvent.change(confirmPasswordInput, { target: { value: "Azerty123!!!" } });
@@ -294,7 +294,7 @@ describe("Signup Form", () => {
     });
 
     it("should not submit if TermOfUse is unchecked", async () => {
-        const pseudoInput = screen.getByLabelText(/Pseudo/);
+        const usernameInput = screen.getByLabelText(/Pseudo/);
         const emailInput = screen.getByLabelText(/Email/);
         const passwordInput = screen.getByLabelText(/Mot de passe/);
         const confirmPasswordInput = screen.getByLabelText(/Confirmation du mot de passe/);
@@ -302,7 +302,7 @@ describe("Signup Form", () => {
 
         const submitButton = screen.getByRole("button", { name: /Je m'inscris/ });
 
-        fireEvent.change(pseudoInput, { target: { value: "John" } });
+        fireEvent.change(usernameInput, { target: { value: "John" } });
         fireEvent.change(emailInput, { target: { value: "john.doe@gmail.com" } });
         fireEvent.change(passwordInput, { target: { value: "Azerty123!!!" } });
         fireEvent.change(confirmPasswordInput, { target: { value: "Azerty123!!!" } });
@@ -315,18 +315,9 @@ describe("Signup Form", () => {
     });
 
     it("should submit if TermOfUse is checked", async () => {
-        const pseudoInput = screen.getByLabelText(/Pseudo/);
-        const emailInput = screen.getByLabelText(/Email/);
-        const passwordInput = screen.getByLabelText(/Mot de passe/);
-        const confirmPasswordInput = screen.getByLabelText(/Confirmation du mot de passe/);
         const termCheckbox = screen.getByLabelText(/J’accepte les CGU/);
 
         const submitButton = screen.getByRole("button", { name: /Je m'inscris/ });
-
-        fireEvent.change(pseudoInput, { target: { value: "John" } });
-        fireEvent.change(emailInput, { target: { value: "john.doe@gmail.com" } });
-        fireEvent.change(passwordInput, { target: { value: "Azerty123!!!" } });
-        fireEvent.change(confirmPasswordInput, { target: { value: "Azerty123!!!" } });
 
         fireEvent.click(termCheckbox);
         fireEvent.click(submitButton);
@@ -337,17 +328,19 @@ describe("Signup Form", () => {
     });
 
     it("should submit if all fields are valid", async () => {
-        const pseudoInput = screen.getByLabelText(/Pseudo/);
+        const usernameInput = screen.getByLabelText(/Pseudo/);
         const emailInput = screen.getByLabelText(/Email/);
         const passwordInput = screen.getByLabelText(/Mot de passe/);
         const confirmPasswordInput = screen.getByLabelText(/Confirmation du mot de passe/);
         const ageCheckbox = screen.getByLabelText(/Je certifie avoir 15 ans ou plus/);
         const termCheckbox = screen.getByLabelText(/J’accepte les CGU/);
-        const form = screen.getByRole("form");
-
+        
         const submitButton = screen.getByRole("button", { name: /Je m'inscris/ });
 
-        fireEvent.change(pseudoInput, { target: { value: "John" } });
+        // Ici on espionne la fonction de signup pour savoir si elle a été appelée
+        const signupSpy = vi.spyOn(services, "signup");
+
+        fireEvent.change(usernameInput, { target: { value: "John" } });
         fireEvent.change(emailInput, { target: { value: "john.doe@gmail.com" } });
         fireEvent.change(passwordInput, { target: { value: "Azerty123!!!" } });
         fireEvent.change(confirmPasswordInput, { target: { value: "Azerty123!!!" } });
@@ -357,7 +350,7 @@ describe("Signup Form", () => {
         fireEvent.click(submitButton);
 
         await waitFor(() => {
-            expect(form.dataset.valid).toBe("true");
+            expect(signupSpy).toHaveBeenCalled();
         });
     });
 });

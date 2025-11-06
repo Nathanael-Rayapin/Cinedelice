@@ -1,6 +1,6 @@
 .layout {
     position: relative;
-    margin: 50px 24px 0;
+    padding: 50px 16px 0;
     min-height: calc(100vh - 100px);
 
     .error-msg {
@@ -24,12 +24,13 @@
 
 @media screen and (min-width: 769px) {
     .layout {
-        margin: 50px 96px 0;
+        padding: 50px 24px 0;
     }
 }
 
 @media screen and (min-width: 992px) {
     .layout {
+        padding: 50px 96px 0;
         min-height: calc(100vh - 150px);
     }
 }

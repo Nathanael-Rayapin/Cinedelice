@@ -1,6 +1,6 @@
-export interface IRecipe {
+export interface IRecipeDTO {
     id: number
-    category: ICategory;
+    category: ICategoryDTO;
     category_id: number;
     description: string;
     image: string;
@@ -14,14 +14,14 @@ export interface IRecipe {
     created_at: string;
     updated_at: string;
     user_id: number;
-    user: IUser;
+    user: IUserDTO;
 }
 
-export interface IUser {
+export interface IUserDTO {
     username: string;
 }
 
-interface ICategory {
+interface ICategoryDTO {
     name: string;
 }
 

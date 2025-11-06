@@ -1,8 +1,8 @@
 import { FcLike } from "react-icons/fc"
-import type { IRecipe } from "../../interfaces/recipe"
+import type { IRecipeDTO } from "../../interfaces/recipe"
 import './Featured-Card.scss';
 
-const FeaturedCard = ({ recipe }: { recipe: IRecipe }) => {
+const FeaturedCard = ({ recipe }: { recipe: IRecipeDTO }) => {
     return (
         <div key={recipe.id} className="featured-card">
             <img src={recipe.image} alt={recipe.title} />

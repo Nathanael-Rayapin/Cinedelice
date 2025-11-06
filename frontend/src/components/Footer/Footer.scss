@@ -47,10 +47,16 @@
   }
 }
 
+@media screen and (min-width: 769px) {
+  .footer {
+    padding: 24px 24px;
+  }
+}
+
 /* DESKTOP (992px et plus) */
 @media screen and (min-width: 992px) {
   .footer {
-    padding: 24px;
+    padding: 24px 96px;
 
     .footer-content {
       img {

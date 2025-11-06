@@ -4,10 +4,10 @@ import { IoMdTime } from "react-icons/io"
 import { FcLike } from "react-icons/fc"
 import { IoChatbubbles } from "react-icons/io5"
 import { useEffect, useState } from "react"
-import type { IRecipe } from "../../interfaces/recipe"
+import type { IRecipeDTO } from "../../interfaces/recipe"
 import './Recipe-Cover.scss';
 
-const RecipeCover = ({ recipe }: { recipe: IRecipe }) => {
+const RecipeCover = ({ recipe }: { recipe: IRecipeDTO }) => {
     const [iconSize, setIconSize] = useState(16);
 
     // We use useEffect to update the icon size when the window is resized

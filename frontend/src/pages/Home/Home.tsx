@@ -3,14 +3,14 @@ import RecipeCover from '../../components/Recipe-Cover/Recipe-Cover';
 import FeaturedCard from '../../components/Featured-Card/Featured-Card';
 import MovieCard from '../../components/Movie-Card/Movie-Card';
 import { useEffect, useState } from 'react';
-import { getRecipes } from '../../services/recipes';
-import type { IRecipe } from '../../interfaces/recipe';
+import { getRecipes } from '../../services/recipes.service';
+import type { IRecipeDTO } from '../../interfaces/recipe';
 import { movies } from './data';
 import PacmanLoader from 'react-spinners/PacmanLoader';
 import './Home.scss'
 
 const Home = () => {
-    const [recipes, setRecipes] = useState<IRecipe[]>([]);
+    const [recipes, setRecipes] = useState<IRecipeDTO[]>([]);
     const [errorMsg, setErrorMsg] = useState<string | null>(null);
     const [loading, setLoading] = useState(false);
 
@@ -21,8 +21,6 @@ const Home = () => {
         const fetchRecipes = async () => {
             try {
                 setLoading(true);
-                await new Promise(res => setTimeout(res, 1000));
-
                 const recipes = await getRecipes();
                 setRecipes(recipes);
             } catch (error) {
