@@ -12,8 +12,9 @@ export async function getAllUsers(req: Request, res: Response) {
 };
 //======= Modifier le Role d'un User (admin)==========
 export async function updateUserRole(req: Request, res: Response) {
-  const userId = parseInt(req.params.id, 10);
-  if (isNaN(userId)) {
+  const targetUserId = parseInt(req.params.id, 10);// l’utilisateur ciblé
+  const adminId = req.currentUserId;// l’admin connecté (du token)
+  if (isNaN(targetUserId)) {
     throw new BadRequestError("ID d'utilisateur invalide");
   }
   const { role } = req.body;
@@ -24,18 +25,18 @@ export async function updateUserRole(req: Request, res: Response) {
   }
 
   // Vérifier que l'utilisateur existe
-  const userToUpdate = await prisma.user.findUnique({ where: { id: userId } });
+  const userToUpdate = await prisma.user.findUnique({ where: { id: targetUserId } });
   if (!userToUpdate) {
     throw new NotFoundError("Utilisateur introuvable");
   }
   //  Empêcher un admin de modifier le rôle d’un autre admin
-  if (userToUpdate.role === Role.admin && userToUpdate.id !== req.userId) {
+  if (userToUpdate.role === Role.admin && userToUpdate.id !== adminId) {
     throw new ForbiddenError("Un administrateur ne peut pas modifier le rôle d’un autre administrateur.");
   }
 
   // Mettre à jour le rôle
   const updatedUser = await prisma.user.update({
-    where: { id: userId },
+    where: { id: targetUserId },
     data: { role },
     select: { id: true, username: true, email: true, role: true }
   });
@@ -47,16 +48,17 @@ export async function updateUserRole(req: Request, res: Response) {
 };
 //========Supprimer un utilisateur (admin)==============
 export async function deleteUser(req: Request, res: Response) {
-  const userId = parseInt(req.params.id, 10);
+  const targetUserId = parseInt(req.params.id, 10);// utilisateur à supprimer
+  const adminId = req.currentUserId; // admin connecté
   // Vérifie si l'ID est valide
-  if (isNaN(userId)) {
+  if (isNaN(targetUserId)) {
     throw new BadRequestError("ID d'utilisateur invalide");
   }
 
   // Vérifie si l'utilisateur existe
   const userToDelete = await prisma.user.findUnique({
     //select * from "user" where id = 9;
-    where: { id: userId },
+    where: { id: targetUserId },
   });
 
   if (!userToDelete) {
@@ -64,13 +66,13 @@ export async function deleteUser(req: Request, res: Response) {
   }
 
   // Empêcher un admin de supprimer un autre admin (sauf lui-même)
-  if (userToDelete.role === Role.admin && userToDelete.id !== req.userId) {
+  if (userToDelete.role === Role.admin && userToDelete.id !== adminId) {
     throw new ForbiddenError("Un administrateur ne peut pas supprimer un autre administrateur");
   }
 
   // Autoriser la suppression de soi-même ou d’un user
   await prisma.user.delete({
-    where: { id: userId },
+    where: { id: targetUserId },
   });
 
   res.status(200).json({

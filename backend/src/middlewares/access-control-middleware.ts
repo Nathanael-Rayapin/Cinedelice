@@ -28,8 +28,10 @@ export function checkRoles(roles: Role[]) {
     }
 
     // Ajoute les infos utiles à la requête (pour les middlewares suivants)
-    req.userId = userId;
-    req.userRole = role;
+    req.currentUserId = userId;
+
+    req.currentUserRole = role;
+
 
     next(); // on laisse passer la requête
   };

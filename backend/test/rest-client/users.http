@@ -30,7 +30,7 @@ GET {{apiBaseUrl}}/auth/me
 Authorization: Bearer {{token}}
 
 ### Modifier le role d'un utilisateur (Admin)
-PATCH {{apiBaseUrl}}/users/p
+PATCH {{apiBaseUrl}}/users/1
 Authorization: Bearer {{token_admin}}
 Content-Type: application/json
 
