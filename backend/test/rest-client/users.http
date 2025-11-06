@@ -1,17 +1,17 @@
 @apiBaseUrl = http://localhost:3000/api
-@token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjUsInJvbGUiOiJ1c2VyIiwiaWF0IjoxNzYyMzU3MzU1LCJleHAiOjE3NjIzNjA5NTV9.as7XmqtxfqkK3YvEQCms6buSdNjStEE1ogzvut-RMCs
-@token_admin=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjksInJvbGUiOiJhZG1pbiIsImlhdCI6MTc2MjM3MDI0OSwiZXhwIjoxNzYyMzczODQ5fQ.hAbdIX5sE26s7vit5I5E7ws65imYLFfW5H1-01mdZok
+@token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjksInJvbGUiOiJhZG1pbiIsImlhdCI6MTc2MjQyNDEzNCwiZXhwIjoxNzYyNDI3NzM0fQ.K7_S32iajLZUHCuiloXtbShmhYgWnprxESgTdFqYXY0
+@token_admin=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjksInJvbGUiOiJhZG1pbiIsImlhdCI6MTc2MjQyNDEzNCwiZXhwIjoxNzYyNDI3NzM0fQ.K7_S32iajLZUHCuiloXtbShmhYgWnprxESgTdFqYXY0
 GET {{apiBaseUrl}}/users
-Authorization: Bearer {{token_admin}}
+Authorization: Bearer {{token}}
 ### Inscription 
 POST {{apiBaseUrl}}/auth/register
 Content-Type:application/json
 
 {
-  "username": "bob",
-  "email": "bob@example.com",
-  "password": "bob",
-  "confirm_password":"bob",
+  "username": "julien",
+  "email": "julien@example.com",
+  "password": "julien",
+  "confirm_password":"julien",
   "age_declaration": true,
   "cgu_accepted":true
 }
@@ -27,10 +27,10 @@ Content-Type: application/json
 
 ### Mon profil 
 GET {{apiBaseUrl}}/auth/me
-Authorization: Bearer {{token_admin}}
+Authorization: Bearer {{token}}
 
 ### Modifier le role d'un utilisateur (Admin)
-PATCH {{apiBaseUrl}}/users/2
+PATCH {{apiBaseUrl}}/users/p
 Authorization: Bearer {{token_admin}}
 Content-Type: application/json
 
@@ -39,5 +39,5 @@ Content-Type: application/json
 }
 
 ### Supprimer un user (Admin)
-DELETE {{apiBaseUrl}}/users/7
+DELETE {{apiBaseUrl}}/users/A
 Authorization: Bearer {{token_admin}}

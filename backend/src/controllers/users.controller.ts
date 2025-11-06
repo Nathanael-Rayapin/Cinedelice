@@ -12,7 +12,10 @@ export async function getAllUsers(req: Request, res: Response) {
 };
 //======= Modifier le Role d'un User (admin)==========
 export async function updateUserRole(req: Request, res: Response) {
-  const userId = Number(req.params.id);
+  const userId = parseInt(req.params.id, 10);
+  if (isNaN(userId)) {
+    throw new BadRequestError("ID d'utilisateur invalide");
+  }
   const { role } = req.body;
 
   // Vérifier que le rôle est valide
@@ -44,8 +47,7 @@ export async function updateUserRole(req: Request, res: Response) {
 };
 //========Supprimer un utilisateur (admin)==============
 export async function deleteUser(req: Request, res: Response) {
-  const userId = Number(req.params.id);
-
+  const userId = parseInt(req.params.id, 10);
   // Vérifie si l'ID est valide
   if (isNaN(userId)) {
     throw new BadRequestError("ID d'utilisateur invalide");
@@ -53,6 +55,7 @@ export async function deleteUser(req: Request, res: Response) {
 
   // Vérifie si l'utilisateur existe
   const userToDelete = await prisma.user.findUnique({
+    //select * from "user" where id = 9;
     where: { id: userId },
   });
 
