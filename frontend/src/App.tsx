@@ -4,9 +4,9 @@ import Navbar from './components/Navbar/Navbar'
 import Home from './pages/Home/Home'
 import Signup from './pages/Signup/Signup'
 import Signin from './pages/Signin/Signin'
-import Footer from './pages/Footer/Footer'
+import Footer from './components/Footer/Footer'
 import CGU from './pages/CGU/CGU'
-import About from "./pages/About/about"
+import About from "./pages/About/About"
 import './App.css'
 
 function App() {

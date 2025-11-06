@@ -2,12 +2,10 @@ import Search from '../Search/Search';
 import ProfileDropdown from '../Profile-Dropdown/Profile-Dropdown';
 import BurgerMenuDropdown from '../Burger-Menu-Dropdown/Burger-Menu-Dropdown';
 import CategoriesDropdown from '../Categories-Dropdown/Categories-Dropdown';
-
 import { IoIosSearch } from "react-icons/io";
 import logo from '../../assets/logo.svg';
-
-import './Navbar.scss';
 import { NavLink } from 'react-router';
+import './Navbar.scss';
 
 const Navbar = () => {
   return (
