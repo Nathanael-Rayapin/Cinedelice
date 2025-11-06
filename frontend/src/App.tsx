@@ -7,6 +7,7 @@ import Signin from './pages/Signin/Signin'
 import Footer from './components/Footer/Footer'
 import CGU from './pages/CGU/CGU'
 import About from "./pages/About/About"
+import Recipes from './pages/Recipes/Recipes'
 import './App.css'
 
 function App() {
@@ -20,11 +21,13 @@ function App() {
           <Route path="/tendances" element={<Home />} />
           <Route path="/favoris" element={<Home />} />
 
+          <Route path="/recettes" element={<Recipes />} />
+
           <Route path="/inscription" element={<Signup />} />
           <Route path="/connexion" element={<Signin />} />
 
           <Route path="/cgu" element={<CGU />} />
-          <Route path="/about" element={<About />} />
+          <Route path="/a-propos" element={<About />} />
           
         </Routes>
       </Layout>

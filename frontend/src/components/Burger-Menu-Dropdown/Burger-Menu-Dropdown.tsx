@@ -15,8 +15,8 @@ const BurgerMenuDropdown = () => {
                         </svg>
                     </summary>
                 <ul className="menu dropdown-content bg-base-100 rounded-box z-1 w-52 p-2 shadow-sm">
-                    <li><a>Recettes</a></li>
-                    <li><a>Films</a></li>
+                    <li><a href='/recettes'>Recettes</a></li>
+                    <li><a href='/films'>Films</a></li>
                 </ul>
             </details>
         </div>
