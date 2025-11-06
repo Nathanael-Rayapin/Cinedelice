@@ -39,7 +39,7 @@ export async function createRecipe(req: Request, res: Response) {
   const { title, category_id, movie_id, number_of_person, preparation_time, description, image, ingredients, preparation_steps, status } = req.body;
   
   // Récupérer l'ID de l'utilisateur connecté depuis le token JWT
-  const user_id = req.user.id; 
+  const user_id = req.user.id;
 
   // Vérifier qu'une recette avec le même titre n'existe pas déjà pour cet utilisateur
   const existingRecipe = await prisma.recipe.findFirst({
@@ -71,6 +71,35 @@ export async function createRecipe(req: Request, res: Response) {
   });
 
   res.status(201).json(createdRecipe);
+}
+
+export async function updateRecipe(req: Request, res: Response) {
+  const recipeId = parseInt(req.params.id, 10);
+  if (isNaN(recipeId)) { throw new BadRequestError("Invalid ID format"); }
+
+  const recipe = await prisma.recipe.findUnique({ where: { id: recipeId }});
+  if (!recipe) { throw new NotFoundError("Recipe not found"); }
+
+  // Utilise prisma pour modifier la recette et sa data
+  const { title, category_id, movie_id, number_of_person, preparation_time, description, image, ingredients, preparation_steps, status } = req.body;
+  const updatedRecipe = await prisma.recipe.update({
+    where: { id: recipeId },
+    data: {
+      category_id,
+      movie_id,
+      title,
+      number_of_person,
+      preparation_time,
+      description,
+      image,
+      ingredients,
+      preparation_steps,
+      status: status || 'draft'
+    }
+  });
+
+  // Renvoyer la recette mise à jour
+  res.status(200).json(updatedRecipe);
 }
 
 export async function deleteRecipe(req: Request, res: Response) {
