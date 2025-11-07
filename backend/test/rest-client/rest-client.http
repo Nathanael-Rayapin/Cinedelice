@@ -1,5 +1,5 @@
 @apiBaseUrl = http://localhost:3000/api
-@token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjksInJvbGUiOiJhZG1pbiIsImlhdCI6MTc2MjUyOTY4MCwiZXhwIjoxNzYyNTMzMjgwfQ.UXZozj_ELdAwYrHEW-656Jtn0ih6A3MxZl1ABsRIMms
+@token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjE0LCJyb2xlIjoidXNlciIsImlhdCI6MTc2MjUzMjE1OCwiZXhwIjoxNzYyNTM1NzU4fQ.ziRwPKy6Fvp1FBwAg4j618EWxlr6fGqdU6J1s5AEU0Y
 # ========================
 # AUTHENTIFICATION
 # ========================
@@ -22,8 +22,8 @@ POST {{apiBaseUrl}}/auth/login
 Content-Type: application/json
 
 {
-  "email": "bob@example.com",
-  "password": "bob"
+  "email": "loic@example.com",
+  "password": "loic"
 }
 
 ### Mon profil ###
@@ -98,6 +98,9 @@ GET {{apiBaseUrl}}/recipes
 GET {{apiBaseUrl}}/recipes/1
 
 ### Lister mes recettes 
+GET {{apiBaseUrl}}/recipes/me
+Authorization: Bearer {{token}}
+
 ### Voir ma recette
 
 ### Créer une recette (user)
@@ -106,8 +109,8 @@ Authorization: Bearer {{token}}
 Content-Type: application/json
 
 {
-  "title": "Raclette",
-  "category_id": 1,
+  "title": "souppe",
+  "category_id": 2,
   "movie_id": 1234,
   "number_of_person": 2,
   "image":"http:kjijp",

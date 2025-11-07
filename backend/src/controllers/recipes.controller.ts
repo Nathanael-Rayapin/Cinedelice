@@ -51,17 +51,16 @@ export async function getOneRecipe(req: Request, res: Response) {
 };
 // Afficher uniquement toutes mes recettes (publié et brouillon)
 export async function getAllMyRecipes(req: Request, res: Response) {
-  // on récupère l'ID de la recette qui nous intéresse dans l'URL :
-  // Est-ce que l'utilisateur a envoyé un nombre valide dans l'URL ?
-  const recipeId = parseInt(req.params.id, 10);
-  if (isNaN(recipeId)) { throw new BadRequestError("Invalid ID format"); }
+  const user_id = req.currentUserId;
 
+  if(!user_id){
+    throw new UnauthorizedError("Vous devez être connecté pour voir vos recettes");
+  }
   // Est-ce que cette recette existe vraiment dans la base de données ?
   // On récupère l'objet complet de la recette dans la BDD, si elle n'existe pas => 404
-  const recipe = await prisma.recipe.findUnique({ 
-    where: {
-      id: recipeId,
-    },
+  const recipe = await prisma.recipe.findMany({ 
+    where: {user_id},
+  
     include: {
       user:{
         select:{username:true},
@@ -71,7 +70,7 @@ export async function getAllMyRecipes(req: Request, res: Response) {
       },
     }
   });
-  if (!recipe) { throw new NotFoundError("Recipe not found"); }
+  if (!recipe) { throw new NotFoundError("Aucune recette trouvée"); }
 
   res.status(200).json(recipe);
 };
