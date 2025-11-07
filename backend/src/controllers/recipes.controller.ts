@@ -147,14 +147,15 @@ export async function createRecipe(req: Request, res: Response) {
     }
   });
   res.status(201).json(createdRecipe);
-}
+};
 
-export async function updateRecipe(req: Request, res: Response) {
+// Modifier n'importe quel recette (admin)
+export async function updateAnyRecipe(req: Request, res: Response) {
   const recipeId = parseInt(req.params.id, 10);
-  if (isNaN(recipeId)) { throw new BadRequestError("Invalid ID format"); }
+  if (isNaN(recipeId)) { throw new BadRequestError(" ID Invalide"); }
 
   const recipe = await prisma.recipe.findUnique({ where: { id: recipeId }});
-  if (!recipe) { throw new NotFoundError("Recipe not found"); }
+  if (!recipe) { throw new NotFoundError("Recette introuvable"); }
 
   // Utilise prisma pour modifier la recette et sa data
   const { title, category_id, movie_id, number_of_person, preparation_time, description, image, ingredients, preparation_steps, status } = req.body;
@@ -170,12 +171,15 @@ export async function updateRecipe(req: Request, res: Response) {
       image,
       ingredients,
       preparation_steps,
-      status: status || 'draft'
+      status,
     }
   });
 
   // Renvoyer la recette mise à jour
-  res.status(200).json(updatedRecipe);
+  res.status(200).json({
+    message:`La recette "${updatedRecipe.title}" a été mise à jour avec succès par l'administrateur`,
+    recipe:updatedRecipe,
+  });
 }
 
 export async function deleteRecipe(req: Request, res: Response) {

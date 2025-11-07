@@ -1,5 +1,5 @@
 @apiBaseUrl = http://localhost:3000/api
-@token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjE0LCJyb2xlIjoidXNlciIsImlhdCI6MTc2MjUzMjE1OCwiZXhwIjoxNzYyNTM1NzU4fQ.ziRwPKy6Fvp1FBwAg4j618EWxlr6fGqdU6J1s5AEU0Y
+@token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjksInJvbGUiOiJhZG1pbiIsImlhdCI6MTc2MjUzNjU3NywiZXhwIjoxNzYyNTQwMTc3fQ.DLDw1xWOWKN29qdhFGbpj7flOXQL7CFAF3eLQeOz8WU
 # ========================
 # AUTHENTIFICATION
 # ========================
@@ -22,8 +22,8 @@ POST {{apiBaseUrl}}/auth/login
 Content-Type: application/json
 
 {
-  "email": "loic@example.com",
-  "password": "loic"
+  "email": "bob@example.com",
+  "password": "bob"
 }
 
 ### Mon profil ###
@@ -112,6 +112,24 @@ Content-Type: application/json
 
 {
   "title": "souppe",
+  "category_id": 2,
+  "movie_id": 1234,
+  "number_of_person": 2,
+  "image":"http:kjijp",
+  "preparation_time": 40,
+  "description": "raclette",
+  "ingredients": "fabien",
+  "preparation_steps": "rouler",
+  "status": "published"
+}
+
+### Modifier n'importe qu'elle recette (admin)
+PATCH {{apiBaseUrl}}/recipes/6
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "title": "souppe au choux",
   "category_id": 2,
   "movie_id": 1234,
   "number_of_person": 2,
