@@ -43,13 +43,13 @@ export const signin = async (userData: ISignin): Promise<IAuthDTO> => {
             }
         });
 
-        if (response.status !== 201) {
+        if (response.status !== 200) {
             throw new Error('Une erreur est survenue lors de la connexion');
         }
 
+        localStorage.setItem('token', response.data.token);
         showSnackbar('Connexion réussie', true);
 
-        console.log(response.data);
         return response.data;
     } catch (error) {
         console.error(error);
