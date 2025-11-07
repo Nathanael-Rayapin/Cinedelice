@@ -1,7 +1,6 @@
-// import * as z from "zod";
-import type { Request, Response } from "express";
 import { prisma } from "../models/index.ts";
-import { BadRequestError, NotFoundError } from "../lib/errors.ts";
+import type { Request,Response } from "express";
+import { BadRequestError, ConflictError, NotFoundError } from "../lib/errors.ts";
 
 export async function getAllRecipes(req:Request,res:Response){
   const recipes = await prisma.recipe.findMany({
@@ -23,13 +22,54 @@ export async function getAllRecipes(req:Request,res:Response){
 }
 
 export async function getOneRecipe(req: Request, res: Response) {
-  // On récupère l'ID de la recette en BDD
+  // on récupère l'ID de la recette qui nous intéresse dans l'URL :
+  // Est-ce que l'utilisateur a envoyé un nombre valide dans l'URL ?
   const recipeId = parseInt(req.params.id, 10);
   if (isNaN(recipeId)) { throw new BadRequestError("Invalid ID format"); }
 
-  // On récupère la recette en BDD
-  const recipe = await prisma.recipe.findUnique({ where: { id: recipeId }});
+  // Est-ce que cette recette existe vraiment dans la base de données ?
+  // On récupère l'objet complet de la recette dans la BDD, si elle n'existe pas => 404
+  const recipe = await prisma.recipe.findUnique({ where: {id: recipeId }});
   if (!recipe) { throw new NotFoundError("Recipe not found"); }
 
   res.status(200).json(recipe);
 }
+
+export async function createRecipe(req: Request, res: Response) {
+  const { title, category_id, movie_id, number_of_person, preparation_time, description, image, ingredients, preparation_steps, status } = req.body;
+  
+  // Récupérer l'ID de l'utilisateur connecté depuis le token JWT
+  const user_id = req.user.id; 
+
+  // Vérifier qu'une recette avec le même titre n'existe pas déjà pour cet utilisateur
+  const existingRecipe = await prisma.recipe.findFirst({
+    where: {
+      user_id: user_id,
+      title: title
+    }
+  });
+
+  if (existingRecipe) {
+    throw new ConflictError("You already have a recipe with this title");
+  }
+
+  // Créer la recette
+  const createdRecipe = await prisma.recipe.create({
+    data: {
+      user_id,
+      category_id,
+      movie_id,
+      title,
+      number_of_person,
+      preparation_time,
+      description,
+      image,
+      ingredients,
+      preparation_steps,
+      status: status || 'draft'
+    }
+  });
+
+  res.status(201).json(createdRecipe);
+}
+

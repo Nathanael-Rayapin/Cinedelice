@@ -6,3 +6,4 @@ export const router = Router();
 
 router.get("/recipes", checkRoles(["user", "admin"]), recipesController.getAllRecipes);
 router.get("/recipes/:id", checkRoles(["user", "admin"]), recipesController.getOneRecipe);
+router.post("/recipes", checkRoles(["user", "admin"]), recipesController.createRecipe);
