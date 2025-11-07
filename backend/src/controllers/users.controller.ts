@@ -31,7 +31,7 @@ export async function registerUser(req: Request, res: Response) {
   // Vérifier que l'email n'est pas déjà utilisé
   const alreadyExistingUser = await prisma.user.findFirst({ where: { email } });
   if (alreadyExistingUser) {
-    throw new ConflictError("L'email ou le mot de passe ne correspondent pas");
+    throw new ConflictError("Un problème est survenue !");
   }
 
   // Hasher le mot de passe (argon2) pour éviter de le stocker en clair
@@ -49,8 +49,7 @@ export async function registerUser(req: Request, res: Response) {
     }});
 
   // Renvoyer les infos de l'utilisateur au client (sans son MDP)
-  return res.status(201)
-    .location(`/api/users/${createdUser.id}`)
+  return res.status(201).location(`/api/users/${createdUser.id}`)
     .json({
       id: createdUser.id,
       username: createdUser.username,
