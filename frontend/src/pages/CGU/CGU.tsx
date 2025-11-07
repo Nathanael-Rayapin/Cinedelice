@@ -1,13 +1,7 @@
 import './CGU.scss';
 import logo from '../../assets/logo.svg';
-import { useEffect } from 'react';
 
 const CGU = () => {
-  // Remet la page en haut au chargement du composant
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, []);
-
   return (
     <div className="cgu-page">
       <img src={logo} alt="CinéDélices Logo" className="cgu-logo" /><br />

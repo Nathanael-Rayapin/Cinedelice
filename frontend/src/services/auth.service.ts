@@ -1,12 +1,12 @@
 import axios from 'axios';
-import type { IAuth, IAuthDTO } from '../interfaces/auth';
+import type { ISignup, IAuthDTO, ISignin } from '../interfaces/auth';
 import { showSnackbar } from '../utils/snackbar';
 
 const BASE_URL = import.meta.env.VITE_BACKEND_API
 
-export const signup = async (userData: IAuth): Promise<IAuthDTO> => {
+export const signup = async (userData: ISignup): Promise<IAuthDTO> => {
     try {
-        const response = await axios.post(`${BASE_URL}/auth/register`, {
+        const response = await axios.post(`${BASE_URL}/users`, {
             username: userData.username,
             email: userData.email,
             password: userData.password,
@@ -24,6 +24,32 @@ export const signup = async (userData: IAuth): Promise<IAuthDTO> => {
         }
 
         showSnackbar('Compte créé avec succès', true);
+        return response.data;
+    } catch (error) {
+        console.error(error);
+        showSnackbar('Oups ! Veuillez vérifier vos informations', false);
+        throw error;
+    }
+}
+
+export const signin = async (userData: ISignin): Promise<IAuthDTO> => {
+    try {
+        const response = await axios.post(`${BASE_URL}/auth/login`, {
+            email: userData.email,
+            password: userData.password
+        }, {
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
+
+        if (response.status !== 201) {
+            throw new Error('Une erreur est survenue lors de la connexion');
+        }
+
+        showSnackbar('Connexion réussie', true);
+
+        console.log(response.data);
         return response.data;
     } catch (error) {
         console.error(error);

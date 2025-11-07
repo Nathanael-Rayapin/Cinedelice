@@ -1,4 +1,3 @@
-import { useEffect } from 'react';
 import logo from '../../assets/logo.svg';
 import maxiburger from '../../assets/images/maxiburger.png';
 import director from '../../assets/images/director.jpg';
@@ -6,11 +5,6 @@ import chefHat from '../../assets/images/chef-hat.webp';
 import './About.scss';
 
 const About = () => {
-  // Remet la page en haut au chargement du composant
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, []);
-
   return (
     <div className="about-page">
 

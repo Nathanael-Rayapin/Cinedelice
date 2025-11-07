@@ -4,6 +4,8 @@ import type { IRecipeDTO } from '../../interfaces/recipe';
 import { useEffect, useState } from 'react';
 import { getOneRecipe } from '../../services/recipes.service';
 import PacmanLoader from 'react-spinners/PacmanLoader';
+import { PiTimerDuotone } from "react-icons/pi";
+import { TbPointFilled } from "react-icons/tb";
 import './Recipe-Detail.scss';
 
 const RecipeDetail = () => {
@@ -58,13 +60,41 @@ const RecipeDetail = () => {
                 <div className="preparation">
                     <div className="preparation-header">
                         <h2>Préparation</h2>
-                        <span>Test</span>
+                        <span className={`badge ${recipe.category}`}>
+                            {recipe.category.name}
+                        </span>
+                    </div>
+                    <div className="preparation-steps">
+                        {recipe.preparation_steps
+                            // On sépare les étapes par le caractère ';'
+                            .split(';')
+                            .map((step, index) => {
+                                // On supprime les espaces et les retours à la ligne
+                                const trimmedStep = step.trim();
+                                if (!trimmedStep) return null;
+                                return (
+                                    <div key={index} className="step">
+                                        <h3>Étape {index + 1}</h3>
+                                        <p>{trimmedStep}</p>
+                                    </div>
+                                );
+                            })}
                     </div>
                 </div>
                 <div className="ingredients">
                     <div className="ingredients-header">
                         <h2>Ingrédients</h2>
-                        <span>Test</span>
+                        <div className="preparation-time">
+                            <PiTimerDuotone size={24} color="#0d1b2a" />
+                            <span>{recipe.preparation_time} min</span>
+                        </div>
+                    </div>
+                    <div className="ingredients-list">
+                        <ul>
+                            {recipe.ingredients.split(';').map((ingredient, index) => (
+                                <li key={index}><TbPointFilled />{ingredient}</li>
+                            ))}
+                        </ul>
                     </div>
                 </div>
             </div>

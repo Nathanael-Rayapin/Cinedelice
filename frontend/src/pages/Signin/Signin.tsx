@@ -1,19 +1,45 @@
 import { Link } from 'react-router';
 import { LiaEyeSlashSolid, LiaEyeSolid } from 'react-icons/lia';
 import { useState } from 'react';
-import { useForm, type FieldValues, type SubmitHandler } from 'react-hook-form';
-
+import { useForm, type SubmitHandler } from 'react-hook-form';
+import type { ISignin } from '../../interfaces/auth';
+import { signin } from '../../services/auth.service';
+import PacmanLoader from 'react-spinners/PacmanLoader';
 import './Signin.scss';
 
 const emailPattern = /^.+@.+$/i;
 
 const Signin = () => {
-    const { register, handleSubmit, formState: { errors, isValid } } = useForm();
+    const { register, handleSubmit, formState: { errors, isValid } } = useForm<ISignin>();
+    const [loading, setLoading] = useState(false);
 
     // Un simple log en attendant d'avoir l'endpoint d'inscription
-    const onSubmit: SubmitHandler<FieldValues> = data => console.log(data);
+    const onSubmit: SubmitHandler<ISignin> = async data => {
+        const userData: ISignin = {
+            email: data.email,
+            password: data.password
+        }
+
+        try {
+            setLoading(true);
+            await signin(userData);
+        } catch (error) {
+            console.error('Erreur lors de la connexion au compte', error);
+        } finally {
+            setLoading(false);
+        }
+    };
 
     const [showPassword, setShowPassword] = useState(false);
+
+    // Loading State
+    if (loading) {
+        return (
+            <div className="loading-container">
+                <PacmanLoader color="#fB8b24" />
+            </div>
+        );
+    }
 
     return (
         <div className="signin">
@@ -25,28 +51,28 @@ const Signin = () => {
                 data-valid={isValid}>
 
                 <div className="email">
-                    <label htmlFor="Email">Email</label>
+                    <label htmlFor="email">Email</label>
                     <input
-                        id='Email'
+                        id='email'
                         type="email"
-                        className={`${errors.Email ? "input input-error" : "input-default"}`}
-                        {...register("Email", {
+                        className={`${errors.email ? "input input-error" : "input-default"}`}
+                        {...register("email", {
                             required: { value: true, message: "L'email est obligatoire" },
                             pattern: { value: emailPattern, message: "L'email doit être valide" },
                         })}
                     />
 
-                    {errors.Email && <p className="error" role="alert">{errors.Email.message as string}</p>}
+                    {errors.email && <p className="error" role="alert">{errors.email.message as string}</p>}
                 </div>
 
                 <div className="password">
-                    <label htmlFor="Password">Mot de passe</label>
+                    <label htmlFor="password">Mot de passe</label>
                     <div className="password-field">
                         <input
-                            id='Password'
+                            id='password'
                             type={showPassword ? "text" : "password"}
-                            className={`${errors.Password ? "input input-error" : "input-default"}`}
-                            {...register("Password", {
+                            className={`${errors.password ? "input input-error" : "input-default"}`}
+                            {...register("password", {
                                 required: { value: true, message: "Le mot de passe est obligatoire" },
                             })}
                         />
@@ -56,11 +82,11 @@ const Signin = () => {
                         }
                     </div>
 
-                    {errors.Password && <p className="error" role="alert">{errors.Password.message as string}</p>}
+                    {errors.password && <p className="error" role="alert">{errors.password.message as string}</p>}
                 </div>
 
                 <button type='submit' className="submit-btn btn m-1">
-                    Je me connecte
+                    Connexion
                 </button>
 
                 <div className="have-an-account">

@@ -9,9 +9,15 @@ import CGU from './pages/CGU/CGU'
 import About from "./pages/About/About"
 import Recipes from './pages/Recipes/Recipes'
 import RecipeDetail from './pages/Recipe-Detail/Recipe-Detail'
+import { useEffect } from 'react'
 import './App.css'
 
 function App() {
+  // Remet la page en haut au chargement du composant
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+  
   return (
     <>
       <Navbar />

@@ -24,7 +24,6 @@ const FeaturedCard = ({ recipe }: { recipe: IRecipeDTO }) => {
                     <span className={`badge ${recipe.category}`}>
                         {recipe.category.name}
                     </span>
-
                 </div>
             </div>
         </div>

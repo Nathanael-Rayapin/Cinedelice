@@ -1,13 +1,106 @@
 .recipe-detail {
     .detail {
-        display: flex;
-        justify-content: space-between;
+
+        .preparation,
+        .ingredients {
+            width: 100%;
+            margin-bottom: 64px;
+        }
 
         .preparation-header,
         .ingredients-header {
             display: flex;
             align-items: center;
             justify-content: space-between;
+
+            h2 {
+                font-size: 24px;
+                color: var(--color-black);
+            }
+        }
+
+        .preparation-header {
+            .badge {
+                border: 1px solid var(--color-secondary);
+                border-radius: 20px;
+                width: auto;
+                padding: 0 8px;
+                height: 40px;
+                font-size: 16px;
+                font-weight: 500;
+                color: var(--color-secondary);
+                cursor: default;
+            }
+        }
+
+        .preparation-steps {
+            margin-top: 24px;
+            padding: 16px;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            background-color: var(--color-gray);
+            border-radius: 16px;
+
+            h3 {
+                color: var(--color-black);
+                text-transform: uppercase;
+            }
+        }
+
+        .ingredients-header {
+            .preparation-time {
+                display: flex;
+                align-items: center;
+                gap: 16px;
+            }
+        }
+
+        .ingredients-list {
+            margin-top: 24px;
+            padding: 16px;
+            display: flex;
+            flex-direction: column;
+            background-color: var(--color-gray);
+            border-radius: 16px;
+
+            ul li {
+                display: flex;
+                align-items: center;
+
+                svg {
+                    position: relative;
+                    margin-right: 8px;
+                    top: 2px;
+                }
+            }
+        }
+    }
+}
+
+@media screen and (min-width: 992px) {
+    .recipe-detail {
+        .detail {
+            display: flex;
+            justify-content: space-between;
+
+            .preparation,
+            .ingredients {
+                width: 45%;
+            }
+
+            .preparation-header,
+            .ingredients-header {
+                h2 {
+                    font-size: 32px;
+                }
+            }
+
+            .preparation-header {
+                .badge {
+                    font-size: 20px;
+                }
+            }
         }
     }
 }

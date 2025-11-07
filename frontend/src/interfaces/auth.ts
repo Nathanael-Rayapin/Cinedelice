@@ -1,10 +1,15 @@
-export interface IAuth {
+export interface ISignup {
     username: string;
     email: string;
     password: string;
     confirmPassword: string;
     ageDeclaration: boolean;
     termOfUse: boolean;
+}
+
+export interface ISignin {
+    email: string;
+    password: string;
 }
 
 export interface IAuthDTO {

@@ -2,8 +2,8 @@ import { useForm, type SubmitHandler } from 'react-hook-form';
 import { LiaEyeSlashSolid } from "react-icons/lia";
 import { LiaEyeSolid } from "react-icons/lia";
 import { useState } from 'react';
-import { Link } from 'react-router';
-import type { IAuth } from '../../interfaces/auth';
+import { Link, useNavigate } from 'react-router';
+import type { ISignup } from '../../interfaces/auth';
 import { signup } from '../../services/auth.service';
 import PacmanLoader from 'react-spinners/PacmanLoader';
 import './Signup.scss';
@@ -13,12 +13,13 @@ const emailPattern = /^.+@.+$/i;
 const passwordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^a-zA-Z0-9]).+$/;
 
 const Signup = () => {
-    const { register, handleSubmit, getValues, formState: { errors, isValid } } = useForm<IAuth>();
+    const { register, handleSubmit, getValues, formState: { errors, isValid } } = useForm<ISignup>();
     const [loading, setLoading] = useState(false);
+    const navigate = useNavigate();
 
     // Un simple log en attendant d'avoir l'endpoint d'inscription
-    const onSubmit: SubmitHandler<IAuth> = async data => {
-        const userData: IAuth = {
+    const onSubmit: SubmitHandler<ISignup> = async data => {
+        const userData: ISignup = {
             username: data.username,
             email: data.email,
             password: data.password,
@@ -34,6 +35,7 @@ const Signup = () => {
             console.error('Erreur lors de la création du compte', error);
         } finally {
             setLoading(false);
+            navigate("/connexion");
         }
     };
 
@@ -56,7 +58,10 @@ const Signup = () => {
             <form
                 role='form'
                 onSubmit={handleSubmit(onSubmit)}
-                data-valid={isValid}>
+                data-valid={isValid}
+                autoComplete='off'
+                aria-autocomplete='none'
+                >
                 <div className="username">
                     <label htmlFor="username">Pseudo</label>
                     <input

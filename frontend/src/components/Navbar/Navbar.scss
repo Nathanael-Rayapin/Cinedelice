@@ -30,7 +30,7 @@
         display: flex;
 
         a:not(.profile li a) {
-            display: flex;
+            display: none;
         }
 
         a.active {
@@ -51,6 +51,7 @@
             display: flex;
             align-items: center;
             gap: 16px;
+            margin-right: 16px;
         }
 
         .sections {
@@ -96,7 +97,7 @@
         }
 
         .filters {
-            gap: 48px;
+            gap: 24px;
         }
 
         .sections {
