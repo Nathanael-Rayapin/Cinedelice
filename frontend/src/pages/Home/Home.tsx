@@ -18,31 +18,6 @@ const Home = () => {
 
     const tabs = ['Pour vous', 'Tendances', 'Favoris'];
 
-    // Détection de la taille d'écran pour ajuster le nombre de recettes ET de films
-    useEffect(() => {
-        const handleResize = () => {
-            if (window.innerWidth >= 992) {
-                setRecipesToShow(8); // Desktop
-                setMoviesToShow(4);  // Desktop - 4 films
-            } else if (window.innerWidth >= 769) {
-                setRecipesToShow(4); // Tablette
-                setMoviesToShow(4);  // Tablette - 4 films
-            } else {
-                setRecipesToShow(2); // Mobile
-                setMoviesToShow(2);  // Mobile - 2 films
-            }
-        };
-
-        // Appeler au chargement
-        handleResize();
-
-        // Écouter les changements de taille
-        window.addEventListener('resize', handleResize);
-
-        // Nettoyer l'écouteur
-        return () => window.removeEventListener('resize', handleResize);
-    }, []);
-
     useEffect(() => {
         const fetchRecipes = async () => {
             try {
