@@ -10,6 +10,7 @@ import About from "./pages/About/About"
 import Recipes from './pages/Recipes/Recipes'
 import RecipeDetail from './pages/Recipe-Detail/Recipe-Detail'
 import { useEffect } from 'react'
+import Movies from './pages/Movies/Movies'
 import './App.css'
 
 function App() {
@@ -30,6 +31,7 @@ function App() {
 
           <Route path="/recettes" element={<Recipes />} />
           <Route path="/recettes/:id" element={<RecipeDetail />} />
+          <Route path='/films' element={<Movies />} />
 
           <Route path="/inscription" element={<Signup />} />
           <Route path="/connexion" element={<Signin />} />

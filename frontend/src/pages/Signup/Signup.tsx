@@ -160,7 +160,7 @@ const Signup = () => {
                             required: { value: true, message: "Vous devez accepter les CGU" },
                         })}
                     />
-                    <label htmlFor="termOfUse">J’accepte les <a href='#'>CGU</a></label>
+                    <label htmlFor="termOfUse">J’accepte les <a href='/cgu'>CGU</a></label>
                 </div>
 
                 <button type='submit' className="submit-btn btn m-1">
