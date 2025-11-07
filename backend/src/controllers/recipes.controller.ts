@@ -1,6 +1,6 @@
 import { prisma } from "../models/index.ts";
 import type { Request,Response } from "express";
-import { BadRequestError, ConflictError, NotFoundError } from "../lib/errors.ts";
+import { BadRequestError, ConflictError, NotFoundError, UnauthorizedError } from "../lib/errors.ts";
 
 export async function getAllRecipes(req:Request,res:Response){
   const recipes = await prisma.recipe.findMany({
@@ -39,7 +39,11 @@ export async function createRecipe(req: Request, res: Response) {
   const { title, category_id, movie_id, number_of_person, preparation_time, description, image, ingredients, preparation_steps, status } = req.body;
   
   // Récupérer l'ID de l'utilisateur connecté depuis le token JWT
-  const user_id = req.user.id;
+  const user_id = req.currentUserId;
+
+  if (!user_id) {
+    throw new UnauthorizedError("Vous devez être connecté pour créer une recette");
+  }
 
   // Vérifier qu'une recette avec le même titre n'existe pas déjà pour cet utilisateur
   const existingRecipe = await prisma.recipe.findFirst({
