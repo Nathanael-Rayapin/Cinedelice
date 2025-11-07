@@ -1,13 +1,13 @@
 import './Recipes.scss'; //Import du fichier de styles spécifique à cette page
 import { useEffect, useState } from 'react'; //Hooks essentiels pour gérer l'état et les effets de bord
-import { getRecipes } from '../../services/recipes'; //Fonction asynchrone pour récupérer les recettes depuis un service
-import { type IRecipe } from '../../interfaces/recipe'; //Interface TypeScript pour typer les données des recettes
+import { getRecipes } from '../../services/recipes.service'; //Fonction asynchrone pour récupérer les recettes depuis un service
+import { type IRecipeDTO } from '../../interfaces/recipe'; //Interface TypeScript pour typer les données des recettes
 import PacmanLoader from 'react-spinners/PacmanLoader'; //Composant de chargement visuel
 import FeaturedCard from '../../components/Featured-Card/Featured-Card'; //Composant personnalisé pour afficher chaque recette    
  
 
 const Recipes = () => {
-    const [recipes, setRecipes] = useState<IRecipe[]>([]); //Tableau de recettes (initialisé comme tableau vide)
+    const [recipes, setRecipes] = useState<IRecipeDTO[]>([]); //Tableau de recettes (initialisé comme tableau vide)
     const [errorMsg, setErrorMsg] = useState<string | null>(null); //Message d'erreur (initialisé à null)
     const [loading, setLoading] = useState(true); //Booléen pour indiquer si les données sont en cours de chargement
     const [currentPage, setCurrentPage] = useState(1); //Page actuelle pour la pagination

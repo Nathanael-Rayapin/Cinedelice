@@ -32,4 +32,8 @@
         color: var(--color-deep-gray);
         cursor: default;
     }
+
+    li:not(.active) button {
+        cursor: default;
+    }
 }

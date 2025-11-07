@@ -7,12 +7,14 @@ const Footer = () => {
     <footer className="footer">
       <div className="footer-content">
 
-        <img src={logo} alt="Logo" />
+        <NavLink to="/">
+          <img src={logo} alt="Logo" />
+        </NavLink>
         <p className="footer-copyright">©Copyright 2025</p>
 
         <nav>
           <NavLink to="/cgu">CGU</NavLink>
-          <NavLink to="/about">À propos</NavLink>
+          <NavLink to="/à-propos">À propos</NavLink>
         </nav>
 
       </div>

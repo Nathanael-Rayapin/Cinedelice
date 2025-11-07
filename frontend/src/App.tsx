@@ -27,7 +27,7 @@ function App() {
           <Route path="/connexion" element={<Signin />} />
 
           <Route path="/cgu" element={<CGU />} />
-          <Route path="/a-propos" element={<About />} />
+          <Route path="/à-propos" element={<About />} />
           
         </Routes>
       </Layout>

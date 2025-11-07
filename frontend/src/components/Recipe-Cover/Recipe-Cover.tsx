@@ -25,7 +25,7 @@ const RecipeCover = ({ recipe }: { recipe: IRecipeDTO }) => {
         <div className="recipe-cover">
             <img src={recipe.image} alt="Image de la recette" />
             <div className="recipe-content">
-                <h1>Burger de Mehdi</h1>
+                <h1>{recipe.title}</h1>
 
                 <div className="recipe-infos">
                     <div className="info-item">
