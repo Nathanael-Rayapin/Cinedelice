@@ -29,7 +29,19 @@ export async function getOneRecipe(req: Request, res: Response) {
 
   // Est-ce que cette recette existe vraiment dans la base de données ?
   // On récupère l'objet complet de la recette dans la BDD, si elle n'existe pas => 404
-  const recipe = await prisma.recipe.findUnique({ where: {id: recipeId }});
+  const recipe = await prisma.recipe.findUnique({ 
+    where: {
+      id: recipeId 
+    },
+    include: {
+      user:{
+        select:{username:true},
+      },
+      category:{
+        select:{name:true},
+      },
+    }
+  });
   if (!recipe) { throw new NotFoundError("Recipe not found"); }
 
   res.status(200).json(recipe);
