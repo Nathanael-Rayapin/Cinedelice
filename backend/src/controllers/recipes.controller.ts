@@ -2,6 +2,7 @@ import { prisma } from "../models/index.ts";
 import type { Request,Response } from "express";
 import { BadRequestError, ConflictError, NotFoundError, UnauthorizedError } from "../lib/errors.ts";
 
+// Lister toutes les recettes publiées
 export async function getAllRecipes(req:Request,res:Response){
   const recipes = await prisma.recipe.findMany({
     where:{
@@ -19,8 +20,9 @@ export async function getAllRecipes(req:Request,res:Response){
     },
   });
   res.status(200).json(recipes);
-}
+};
 
+// Afficher une recette publiée
 export async function getOneRecipe(req: Request, res: Response) {
   // on récupère l'ID de la recette qui nous intéresse dans l'URL :
   // Est-ce que l'utilisateur a envoyé un nombre valide dans l'URL ?
@@ -31,7 +33,8 @@ export async function getOneRecipe(req: Request, res: Response) {
   // On récupère l'objet complet de la recette dans la BDD, si elle n'existe pas => 404
   const recipe = await prisma.recipe.findUnique({ 
     where: {
-      id: recipeId 
+      id: recipeId,
+      status: "published", //Que les published
     },
     include: {
       user:{
@@ -45,8 +48,34 @@ export async function getOneRecipe(req: Request, res: Response) {
   if (!recipe) { throw new NotFoundError("Recipe not found"); }
 
   res.status(200).json(recipe);
-}
+};
+// Afficher uniquement mes recettes (publié et brouillon)
+export async function getMyRecipe(req: Request, res: Response) {
+  // on récupère l'ID de la recette qui nous intéresse dans l'URL :
+  // Est-ce que l'utilisateur a envoyé un nombre valide dans l'URL ?
+  const recipeId = parseInt(req.params.id, 10);
+  if (isNaN(recipeId)) { throw new BadRequestError("Invalid ID format"); }
 
+  // Est-ce que cette recette existe vraiment dans la base de données ?
+  // On récupère l'objet complet de la recette dans la BDD, si elle n'existe pas => 404
+  const recipe = await prisma.recipe.findUnique({ 
+    where: {
+      id: recipeId,
+    },
+    include: {
+      user:{
+        select:{username:true},
+      },
+      category:{
+        select:{name:true},
+      },
+    }
+  });
+  if (!recipe) { throw new NotFoundError("Recipe not found"); }
+
+  res.status(200).json(recipe);
+};
+// Créer une recette
 export async function createRecipe(req: Request, res: Response) {
   const { title, category_id, movie_id, number_of_person, preparation_time, description, image, ingredients, preparation_steps, status } = req.body;
   
@@ -85,7 +114,6 @@ export async function createRecipe(req: Request, res: Response) {
       status: status || 'draft'
     }
   });
-
   res.status(201).json(createdRecipe);
 }
 

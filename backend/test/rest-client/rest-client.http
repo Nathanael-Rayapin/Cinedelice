@@ -1,5 +1,5 @@
 @apiBaseUrl = http://localhost:3000/api
-@token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjksInJvbGUiOiJhZG1pbiIsImlhdCI6MTc2MjQ0Nzc4NSwiZXhwIjoxNzYyNDUxMzg1fQ.RvV-aYXTvDW2IYK_Oc1p4yUmdkRlQUgd0Pr4_7GqQdo
+@token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjE0LCJyb2xlIjoidXNlciIsImlhdCI6MTc2MjUyNDk0MCwiZXhwIjoxNzYyNTI4NTQwfQ.zIZ9pWbbSidA05jiZFm5mNrLROHyq3Py-V3LlJHNJv0
 # ========================
 # AUTHENTIFICATION
 # ========================
@@ -22,8 +22,8 @@ POST {{apiBaseUrl}}/auth/login
 Content-Type: application/json
 
 {
-  "email": "bob@example.com",
-  "password": "bob"
+  "email": "loic@example.com",
+  "password": "loic"
 }
 
 ### Mon profil ###
@@ -72,26 +72,26 @@ Authorization: Bearer {{token}}
 # CATEGORIES
 # ========================
 
-### Lister toutes les catégories
+### Lister toutes les catégories ###
 GET {{apiBaseUrl}}/categories
 
-### Créer une catégorie (admin)
+### Créer une catégorie (admin) ###
 POST {{apiBaseUrl}}/categories
 Authorization: Bearer {{token}}
 Content-Type: application/json
 
 {
-  "name": "Entrée"
+  "name": "glace"
 }
 
 # ========================
 # RECIPES
 # ========================
 
-### Lister toutes les recettes
+### Lister toutes les recettes sauf draft ###
 GET {{apiBaseUrl}}/recipes
 
-### Voir une recette par ID
+### Voir une recette par ID sauf draft
 GET {{apiBaseUrl}}/recipes/1
 
 ### Créer une recette (user)
