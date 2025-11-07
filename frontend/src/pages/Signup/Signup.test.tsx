@@ -327,7 +327,7 @@ describe("Signup Form", () => {
         });
     });
 
-    it("should submit if all fields are valid", async () => {
+    it("should call signup if all fields are valid", async () => {
         const usernameInput = screen.getByLabelText(/Pseudo/);
         const emailInput = screen.getByLabelText(/Email/);
         const passwordInput = screen.getByLabelText(/Mot de passe/);

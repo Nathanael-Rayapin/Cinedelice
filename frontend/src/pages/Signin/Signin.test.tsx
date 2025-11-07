@@ -1,7 +1,8 @@
 import { fireEvent, render, screen, waitFor, type ByRoleMatcher, type ByRoleOptions } from "@testing-library/react";
-import { beforeEach, describe, expect, it } from "vitest";
+import { beforeEach, describe, expect, it, vi } from "vitest";
 import Signin from "./Signin";
 import { BrowserRouter } from "react-router";
+import * as services from '../../services/auth.service';
 
 describe("Signin Form", () => {
 
@@ -76,11 +77,13 @@ describe("Signin Form", () => {
         });
     });
 
-    it("should submit if the password is valid", async () => {
+    it("should call signin if the password is valid", async () => {
         const emailInput = screen.getByLabelText(/Email/);
         const passwordInput = screen.getByLabelText(/Mot de passe/);
 
         const submitButton = screen.getByRole("button", { name: /Je me connecte/ });
+
+        const signinSpy = vi.spyOn(services, "signin");
 
         fireEvent.change(emailInput, { target: { value: "john.doe@gmail.com" } });
         fireEvent.change(passwordInput, { target: { value: "Azerty123!!!" } });
@@ -88,7 +91,7 @@ describe("Signin Form", () => {
         fireEvent.click(submitButton);
 
         await waitFor(() => {
-            expect(isRoleAbsent('alert')).toBe(true);
+            expect(signinSpy).toHaveBeenCalled();
         });
     });
 });
