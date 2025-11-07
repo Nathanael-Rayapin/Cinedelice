@@ -13,19 +13,23 @@ const Home = () => {
     const [recipes, setRecipes] = useState<IRecipeDTO[]>([]);
     const [errorMsg, setErrorMsg] = useState<string | null>(null);
     const [loading, setLoading] = useState(false);
-    const [recipesToShow, setRecipesToShow] = useState(2); // État pour le nombre de recettes à afficher
+    const [recipesToShow, setRecipesToShow] = useState(2);
+    const [moviesToShow, setMoviesToShow] = useState(2); // Nouvel état pour les films
 
     const tabs = ['Pour vous', 'Tendances', 'Favoris'];
 
-    // Détection de la taille d'écran pour ajuster le nombre de recettes
+    // Détection de la taille d'écran pour ajuster le nombre de recettes ET de films
     useEffect(() => {
         const handleResize = () => {
             if (window.innerWidth >= 992) {
                 setRecipesToShow(8); // Desktop
+                setMoviesToShow(4);  // Desktop - 4 films
             } else if (window.innerWidth >= 769) {
                 setRecipesToShow(4); // Tablette
+                setMoviesToShow(4);  // Tablette - 4 films
             } else {
                 setRecipesToShow(2); // Mobile
+                setMoviesToShow(2);  // Mobile - 2 films
             }
         };
 
@@ -88,11 +92,11 @@ const Home = () => {
             <div className="featured-movies">
                 <div className="movies-header">
                     <h2>Parcourir par films</h2>
-                    <a href="#">Tout voir</a>
+                    <a href="/films">Tout voir</a>
                 </div>
 
                 <div className="movies-list">
-                    {movies.map((movie) => (
+                    {movies.slice(0, moviesToShow).map((movie) => (
                         <MovieCard key={movie.id} movie={movie} />
                     ))}
                 </div>
