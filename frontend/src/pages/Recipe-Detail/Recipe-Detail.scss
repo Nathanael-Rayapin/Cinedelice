@@ -1,0 +1,13 @@
+.recipe-detail {
+    .detail {
+        display: flex;
+        justify-content: space-between;
+
+        .preparation-header,
+        .ingredients-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+    }
+}

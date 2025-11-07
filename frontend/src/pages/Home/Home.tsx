@@ -7,7 +7,7 @@ import { getRecipes } from '../../services/recipes.service';
 import type { IRecipeDTO } from '../../interfaces/recipe';
 import { movies } from './data';
 import PacmanLoader from 'react-spinners/PacmanLoader';
-import './Home.scss'
+import './Home.scss';
 
 const Home = () => {
     const [recipes, setRecipes] = useState<IRecipeDTO[]>([]);
@@ -56,7 +56,7 @@ const Home = () => {
             <h2>Recettes à la une</h2>
             <section className="featured-recipes">
                 {recipes.map((recipe) => (
-                    <FeaturedCard key={recipe.id} recipe={recipe} />
+                    <FeaturedCard key={recipe.id} recipe={recipe}/>
                 ))}
             </section>
 
