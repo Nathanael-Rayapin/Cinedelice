@@ -13,13 +13,38 @@ const Home = () => {
     const [recipes, setRecipes] = useState<IRecipeDTO[]>([]);
     const [errorMsg, setErrorMsg] = useState<string | null>(null);
     const [loading, setLoading] = useState(false);
+    const [recipesToShow, setRecipesToShow] = useState(2); // État pour le nombre de recettes à afficher
 
     const tabs = ['Pour vous', 'Tendances', 'Favoris'];
+
+    // Détection de la taille d'écran pour ajuster le nombre de recettes
+    useEffect(() => {
+        const handleResize = () => {
+            if (window.innerWidth >= 992) {
+                setRecipesToShow(8); // Desktop
+            } else if (window.innerWidth >= 769) {
+                setRecipesToShow(4); // Tablette
+            } else {
+                setRecipesToShow(2); // Mobile
+            }
+        };
+
+        // Appeler au chargement
+        handleResize();
+
+        // Écouter les changements de taille
+        window.addEventListener('resize', handleResize);
+
+        // Nettoyer l'écouteur
+        return () => window.removeEventListener('resize', handleResize);
+    }, []);
 
     useEffect(() => {
         const fetchRecipes = async () => {
             try {
                 setLoading(true);
+                await new Promise(res => setTimeout(res, 1000));
+
                 const recipes = await getRecipes();
                 setRecipes(recipes);
             } catch (error) {
@@ -55,8 +80,8 @@ const Home = () => {
 
             <h2>Recettes à la une</h2>
             <section className="featured-recipes">
-                {recipes.map((recipe) => (
-                    <FeaturedCard key={recipe.id} recipe={recipe}/>
+                {recipes.slice(-recipesToShow).reverse().map((recipe) => (
+                    <FeaturedCard key={recipe.id} recipe={recipe} />
                 ))}
             </section>
 
