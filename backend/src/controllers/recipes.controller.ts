@@ -75,7 +75,37 @@ export async function getAllMyRecipes(req: Request, res: Response) {
   res.status(200).json(recipe);
 };
 // Afficher le détail de ma recette
-//export async function getMyRecipe);
+export async function getMyRecipe(req: Request, res: Response) {
+  const user_id = req.currentUserId;
+  const recipeId = parseInt(req.params.id, 10);
+
+  if (isNaN(recipeId)) { 
+    throw new BadRequestError(" ID Invalide"); }
+  if (!user_id) {
+    throw new UnauthorizedError("Vous devez être connecté pour créer une recette");
+  }
+
+
+  // Est-ce que cette recette existe vraiment dans la base de données ?
+  // On récupère l'objet complet de la recette dans la BDD, si elle n'existe pas => 404
+  const recipe = await prisma.recipe.findUnique({ 
+    where: {
+      id: recipeId,
+      user_id: user_id,
+    },
+    include: {
+      user:{
+        select:{username:true},
+      },
+      category:{
+        select:{name:true},
+      },
+    }
+  });
+  if (!recipe) { throw new NotFoundError("Aucune recette trouvé"); }
+
+  res.status(200).json(recipe);
+};
 
 // Créer une recette
 export async function createRecipe(req: Request, res: Response) {

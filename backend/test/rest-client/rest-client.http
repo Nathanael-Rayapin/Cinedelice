@@ -97,11 +97,13 @@ GET {{apiBaseUrl}}/recipes
 ### Voir une recette par ID sauf draft
 GET {{apiBaseUrl}}/recipes/1
 
-### Lister mes recettes 
+### Lister mes recettes ###
 GET {{apiBaseUrl}}/recipes/me
 Authorization: Bearer {{token}}
 
-### Voir ma recette
+### Voir ma recette ###
+GET {{apiBaseUrl}}/recipes/me/1
+Authorization: Bearer {{token}}
 
 ### Créer une recette (user)
 POST {{apiBaseUrl}}/recipes
