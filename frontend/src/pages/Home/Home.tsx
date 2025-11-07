@@ -16,7 +16,6 @@ const Home = () => {
 
     const tabs = ['Pour vous', 'Tendances', 'Favoris'];
 
-
     useEffect(() => {
         const fetchRecipes = async () => {
             try {

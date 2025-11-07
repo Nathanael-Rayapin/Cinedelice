@@ -1,24 +1,22 @@
-import './Recipes.scss'; //Import du fichier de styles spécifique à cette page
 import { useEffect, useState } from 'react'; //Hooks essentiels pour gérer l'état et les effets de bord
 import { getRecipes } from '../../services/recipes.service'; //Fonction asynchrone pour récupérer les recettes depuis un service
 import { type IRecipeDTO } from '../../interfaces/recipe'; //Interface TypeScript pour typer les données des recettes
 import PacmanLoader from 'react-spinners/PacmanLoader'; //Composant de chargement visuel
 import FeaturedCard from '../../components/Featured-Card/Featured-Card'; //Composant personnalisé pour afficher chaque recette    
- 
+import './Recipes.scss'; //Import du fichier de styles spécifique à cette page
 
 const Recipes = () => {
     const [recipes, setRecipes] = useState<IRecipeDTO[]>([]); //Tableau de recettes (initialisé comme tableau vide)
     const [errorMsg, setErrorMsg] = useState<string | null>(null); //Message d'erreur (initialisé à null)
     const [loading, setLoading] = useState(true); //Booléen pour indiquer si les données sont en cours de chargement
     const [currentPage, setCurrentPage] = useState(1); //Page actuelle pour la pagination
-    const recipesPerPage = 6; //Nombre de recettes à afficher par page
+    const recipesPerPage = 8; //Nombre de recettes à afficher par page
 
     //Le useEffect est utilisé pour charger les recettes au montage du composant (tableau de dépendances vide [])
     useEffect(() => {
         const fetchRecipes = async () => {
             try {
                 setLoading(true);
-                await new Promise(res => setTimeout(res, 1000)); // simule un délai de 1 seconde
                 const recipes = await getRecipes(); //Appel à getRecipes() pour obtenir les recettes
                 setRecipes(recipes);
             } catch (error) {
@@ -67,59 +65,62 @@ const Recipes = () => {
         return (
             <div className="error-container">
                 <p className="error-msg">{errorMsg}</p>
-                <button onClick={() => window.location.reload()}>Réessayer</button>
             </div>
         );
     }
 
     //Si tout va bien, les recettes sont affichées sous forme de cartes (FeaturedCard) en utilisant currentRecipes.map
     return (
-        <div className="recipes">
-            {currentRecipes.map((recipe) => (
-                <FeaturedCard key={recipe.id} recipe={recipe} />
-            ))}
+        <>
+            <h1>Catalogue de recettes</h1>
+            <div className="recipes-list">
 
-            
-             {/* Boutons de pagination */}
-            <div className="pagination">
-                <button
-                    onClick={goToPreviousPage}
-                    disabled={currentPage === 1}
-                    className="pagination-button"
-                >
-                    Précédent
-                </button>
+                {currentRecipes.map((recipe) => (
+                    <FeaturedCard key={recipe.id} recipe={recipe} />
+                ))}
 
-                {/* Génère dynamiquement un bouton pour chaque numéro de page (de 1 à totalPages) */}
-                {/* Crée un tableau de nombres de 1 à totalPages (ex: [1, 2, 3, ..., totalPages]) */}
-                {/* Parcourt ce tableau et génère un bouton pour chaque numéro de page */}
-                {/* key={number} : Clé unique pour chaque bouton (obligatoire dans une liste React).
+
+                {/* Boutons de pagination */}
+                <div className="pagination">
+                    <button
+                        onClick={goToPreviousPage}
+                        disabled={currentPage === 1}
+                        className="pagination-button"
+                    >
+                        Précédent
+                    </button>
+
+                    {/* Génère dynamiquement un bouton pour chaque numéro de page (de 1 à totalPages) */}
+                    {/* Crée un tableau de nombres de 1 à totalPages (ex: [1, 2, 3, ..., totalPages]) */}
+                    {/* Parcourt ce tableau et génère un bouton pour chaque numéro de page */}
+                    {/* key={number} : Clé unique pour chaque bouton (obligatoire dans une liste React).
                 onClick={() => paginate(number)} :
                 Appelle la fonction paginate avec le numéro de page (number) pour mettre à jour currentPage.
                 className={currentPage === number ? 'active' : ''} :
                 Applique la classe active au bouton si currentPage correspond au numéro de page (number).
                 Cela permet de mettre en évidence la page actuelle (ex: couleur de fond différente). */}
-                {Array.from({ length: totalPages }, (_, i) => i + 1).map((number) => (
+                    {Array.from({ length: totalPages }, (_, i) => i + 1).map((number) => (
+                        <button
+                            key={number}
+                            onClick={() => paginate(number)}
+                            className={currentPage === number ? 'active' : ''}
+                        >
+                            {number}
+                        </button>
+                    ))}
+
+
+                    {/* Permet à l'utilisateur d'aller à la page suivante */}
                     <button
-                        key={number}
-                        onClick={() => paginate(number)}
-                        className={currentPage === number ? 'active' : ''} 
+                        onClick={goToNextPage}
+                        disabled={currentPage === totalPages}
+                        className="pagination-button"
                     >
-                        {number}
+                        Suivant
                     </button>
-                ))}
-
-
-                {/* Permet à l'utilisateur d'aller à la page suivante */}
-                <button
-                    onClick={goToNextPage}
-                    disabled={currentPage === totalPages}
-                    className="pagination-button"
-                >
-                    Suivant
-                </button>
+                </div>
             </div>
-        </div>
+        </>
     );
 };
 
