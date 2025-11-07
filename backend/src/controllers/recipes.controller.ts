@@ -49,8 +49,8 @@ export async function getOneRecipe(req: Request, res: Response) {
 
   res.status(200).json(recipe);
 };
-// Afficher uniquement mes recettes (publié et brouillon)
-export async function getMyRecipe(req: Request, res: Response) {
+// Afficher uniquement toutes mes recettes (publié et brouillon)
+export async function getAllMyRecipes(req: Request, res: Response) {
   // on récupère l'ID de la recette qui nous intéresse dans l'URL :
   // Est-ce que l'utilisateur a envoyé un nombre valide dans l'URL ?
   const recipeId = parseInt(req.params.id, 10);
@@ -75,6 +75,9 @@ export async function getMyRecipe(req: Request, res: Response) {
 
   res.status(200).json(recipe);
 };
+// Afficher le détail de ma recette
+//export async function getMyRecipe);
+
 // Créer une recette
 export async function createRecipe(req: Request, res: Response) {
   const { title, category_id, movie_id, number_of_person, preparation_time, description, image, ingredients, preparation_steps, status } = req.body;

@@ -1,5 +1,5 @@
 @apiBaseUrl = http://localhost:3000/api
-@token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjE0LCJyb2xlIjoidXNlciIsImlhdCI6MTc2MjUyNDk0MCwiZXhwIjoxNzYyNTI4NTQwfQ.zIZ9pWbbSidA05jiZFm5mNrLROHyq3Py-V3LlJHNJv0
+@token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjksInJvbGUiOiJhZG1pbiIsImlhdCI6MTc2MjUyOTY4MCwiZXhwIjoxNzYyNTMzMjgwfQ.UXZozj_ELdAwYrHEW-656Jtn0ih6A3MxZl1ABsRIMms
 # ========================
 # AUTHENTIFICATION
 # ========================
@@ -22,8 +22,8 @@ POST {{apiBaseUrl}}/auth/login
 Content-Type: application/json
 
 {
-  "email": "loic@example.com",
-  "password": "loic"
+  "email": "bob@example.com",
+  "password": "bob"
 }
 
 ### Mon profil ###
@@ -83,6 +83,9 @@ Content-Type: application/json
 {
   "name": "glace"
 }
+### Supprimer une catégorie (admin) ###
+DELETE {{apiBaseUrl}}/categories/4
+Authorization: Bearer {{token}}
 
 # ========================
 # RECIPES
@@ -94,21 +97,25 @@ GET {{apiBaseUrl}}/recipes
 ### Voir une recette par ID sauf draft
 GET {{apiBaseUrl}}/recipes/1
 
+### Lister mes recettes 
+### Voir ma recette
+
 ### Créer une recette (user)
 POST {{apiBaseUrl}}/recipes
 Authorization: Bearer {{token}}
 Content-Type: application/json
 
 {
-  "title": "Pizza maison",
+  "title": "Raclette",
   "category_id": 1,
   "movie_id": 1234,
   "number_of_person": 2,
+  "image":"http:kjijp",
   "preparation_time": 40,
-  "description": "Une pizza inspirée du film Ratatouille 🍕",
-  "ingredients": "pâte, tomate, fromage",
-  "preparation_steps": "Pétrir, garnir, cuire",
-  "status": "draft"
+  "description": "raclette",
+  "ingredients": "fabien",
+  "preparation_steps": "rouler",
+  "status": "published"
 }
 
 ### Supprimer une recette (user)
