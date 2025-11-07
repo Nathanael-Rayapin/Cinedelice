@@ -13,7 +13,6 @@ const Home = () => {
     const [recipes, setRecipes] = useState<IRecipeDTO[]>([]);
     const [errorMsg, setErrorMsg] = useState<string | null>(null);
     const [loading, setLoading] = useState(false);
-    const [recipesToShow, setRecipesToShow] = useState(2);
     const [moviesToShow, setMoviesToShow] = useState(2); // Nouvel état pour les films
 
     const tabs = ['Pour vous', 'Tendances', 'Favoris'];
@@ -59,8 +58,8 @@ const Home = () => {
 
             <h2>Recettes à la une</h2>
             <section className="featured-recipes">
-                {recipes.slice(-recipesToShow).reverse().map((recipe) => (
-                    <FeaturedCard key={recipe.id} recipe={recipe} />
+                {recipes.map((recipe) => (
+                    <FeaturedCard key={recipe.id} recipe={recipe}/>
                 ))}
             </section>
 
