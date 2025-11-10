@@ -196,7 +196,7 @@ export async function updateMyRecipe(req: Request, res: Response) {
   //SELECT *FROM recipe WHERE id = <valeur_de_recipeId> AND user_id = <valeur_de_user_id> LIMIT 1;
     where: { id: recipeId, user_id },
   });
-  if (!recipe) { throw new NotFoundError("Recette introuvable ou vous n'avez pas les droits sur cette recettes."); }
+  if (!recipe) { throw new NotFoundError("Recette introuvable."); }
 
   // Utilise prisma pour modifier la recette et sa data
   const { title, category_id, movie_id, number_of_person, preparation_time, description, image, ingredients, preparation_steps, status } = req.body;
@@ -231,7 +231,7 @@ export async function deleteAnyRecipe(req: Request, res: Response) {
   const recipe = await prisma.recipe.findUnique({ 
     where: { id: recipeId }
   });
-  if (!recipe) { throw new NotFoundError("Catégorie non trouvée"); }
+  if (!recipe) { throw new NotFoundError("Recette introuvable ou vous n'avez pas les droits sur cette recettes."); }
 
   await prisma.recipe.delete({
     where: { id: recipeId }
@@ -253,7 +253,7 @@ export async function deleteMyRecipe(req: Request, res: Response) {
   const recipe = await prisma.recipe.findFirst({ 
     where: { id: recipeId, user_id }
   });
-  if (!recipe) { throw new NotFoundError("Catégorie non trouvée"); }
+  if (!recipe) { throw new NotFoundError("Recette introuvable ou vous n'avez pas les droits sur cette recettes."); }
 
   await prisma.recipe.delete({
     where: { id: recipeId }
