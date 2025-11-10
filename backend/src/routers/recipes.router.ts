@@ -11,7 +11,7 @@ router.get("/recipes", recipesController.getAllRecipes);
 router.get("/recipes/:id", recipesController.getOneRecipe);
 
 router.patch("/recipes/me/:id", checkRoles(["user", "admin"]), recipesController.updateMyRecipe);
-//router.delete("/recipes/:id", checkRoles(["admin"]), recipesController.deleteRecipe);
+router.delete("/recipes/:id", checkRoles(["admin"]), recipesController.deleteAnyRecipe);
 
 router.post("/recipes", checkRoles(["user", "admin"]), recipesController.createRecipe);
 

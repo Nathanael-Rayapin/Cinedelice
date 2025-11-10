@@ -223,7 +223,7 @@ export async function updateMyRecipe(req: Request, res: Response) {
   });
 };
 
-export async function deleteRecipe(req: Request, res: Response) {
+export async function deleteAnyRecipe(req: Request, res: Response) {
   const recipeId = parseInt(req.params.id, 10);
   if (isNaN(recipeId)) { throw new BadRequestError("Invalid ID format"); }
 
