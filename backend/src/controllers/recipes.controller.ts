@@ -27,7 +27,7 @@ export async function getOneRecipe(req: Request, res: Response) {
   // on récupère l'ID de la recette qui nous intéresse dans l'URL :
   // Est-ce que l'utilisateur a envoyé un nombre valide dans l'URL ?
   const recipeId = parseInt(req.params.id, 10);
-  if (isNaN(recipeId)) { throw new BadRequestError("Invalid ID format"); }
+  if (isNaN(recipeId)) { throw new BadRequestError("ID Invalide"); }
 
   // Est-ce que cette recette existe vraiment dans la base de données ?
   // On récupère l'objet complet de la recette dans la BDD, si elle n'existe pas => 404
@@ -45,7 +45,7 @@ export async function getOneRecipe(req: Request, res: Response) {
       },
     }
   });
-  if (!recipe) { throw new NotFoundError("Recipe not found"); }
+  if (!recipe) { throw new NotFoundError("Aucune recette trouvée"); }
 
   res.status(200).json(recipe);
 };
@@ -127,7 +127,7 @@ export async function createRecipe(req: Request, res: Response) {
   });
 
   if (existingRecipe) {
-    throw new ConflictError("You already have a recipe with this title");
+    throw new ConflictError("Vous avez déjà une recette avec ce titre");
   }
 
   // Créer la recette
@@ -223,12 +223,37 @@ export async function updateMyRecipe(req: Request, res: Response) {
   });
 };
 
+// Supprimer n'importe quelle recette (admin)
 export async function deleteAnyRecipe(req: Request, res: Response) {
   const recipeId = parseInt(req.params.id, 10);
-  if (isNaN(recipeId)) { throw new BadRequestError("Invalid ID format"); }
+  if (isNaN(recipeId)) { throw new BadRequestError("ID invalide"); }
 
-  const recipe = await prisma.recipe.findUnique({ where: { id: recipeId }});
-  if (!recipe) { throw new NotFoundError("Category not found"); }
+  const recipe = await prisma.recipe.findUnique({ 
+    where: { id: recipeId }
+  });
+  if (!recipe) { throw new NotFoundError("Catégorie non trouvée"); }
+
+  await prisma.recipe.delete({
+    where: { id: recipeId }
+  });
+
+  res.status(204).end();
+};
+
+// Supprimer ma recette (admin et user)
+export async function deleteMyRecipe(req: Request, res: Response) {
+  const user_id = req.currentUserId;
+  const recipeId = parseInt(req.params.id, 10);
+
+  if (isNaN(recipeId)) { throw new BadRequestError("ID invalide"); }
+  if (!user_id) {
+    throw new UnauthorizedError("Vous devez être connecté pour créer une recette");
+  }
+
+  const recipe = await prisma.recipe.findFirst({ 
+    where: { id: recipeId, user_id }
+  });
+  if (!recipe) { throw new NotFoundError("Catégorie non trouvée"); }
 
   await prisma.recipe.delete({
     where: { id: recipeId }

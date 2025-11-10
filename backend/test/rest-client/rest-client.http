@@ -159,6 +159,10 @@ Content-Type: application/json
   "status": "published"
 }
 
-### Supprimer une recette (user)
+### Supprimer n'importe quelle recette (admin)
 DELETE {{apiBaseUrl}}/recipes/1
+Authorization: Bearer {{token}}
+
+### Supprimer ma recette (user et admin)
+DELETE {{apiBaseUrl}}/recipes/me/1
 Authorization: Bearer {{token}}
