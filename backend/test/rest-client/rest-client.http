@@ -1,5 +1,5 @@
 @apiBaseUrl = http://localhost:3000/api
-@token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjksInJvbGUiOiJhZG1pbiIsImlhdCI6MTc2MjUzNjU3NywiZXhwIjoxNzYyNTQwMTc3fQ.DLDw1xWOWKN29qdhFGbpj7flOXQL7CFAF3eLQeOz8WU
+@token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjE0LCJyb2xlIjoidXNlciIsImlhdCI6MTc2Mjc2NjExNiwiZXhwIjoxNzYyNzY5NzE2fQ.AutxINjDPKzgDdJuNnhRcU0o2vJPeSc1KT3Fe0uY6mY
 # ========================
 # AUTHENTIFICATION
 # ========================
@@ -22,8 +22,8 @@ POST {{apiBaseUrl}}/auth/login
 Content-Type: application/json
 
 {
-  "email": "bob@example.com",
-  "password": "bob"
+  "email": "loic@example.com",
+  "password": "loic"
 }
 
 ### Mon profil ###
@@ -95,17 +95,17 @@ Authorization: Bearer {{token}}
 GET {{apiBaseUrl}}/recipes
 
 ### Voir une recette par ID sauf draft
-GET {{apiBaseUrl}}/recipes/1
+GET {{apiBaseUrl}}/recipes/4
 
 ### Lister mes recettes ###
 GET {{apiBaseUrl}}/recipes/me
 Authorization: Bearer {{token}}
 
-### Voir ma recette ###
-GET {{apiBaseUrl}}/recipes/me/1
+### Voir le detail de ma recette ###
+GET {{apiBaseUrl}}/recipes/me/6
 Authorization: Bearer {{token}}
 
-### Créer une recette (user)
+### Créer une recette (user) ###
 POST {{apiBaseUrl}}/recipes
 Authorization: Bearer {{token}}
 Content-Type: application/json
@@ -123,13 +123,31 @@ Content-Type: application/json
   "status": "published"
 }
 
-### Modifier n'importe qu'elle recette (admin)
-PATCH {{apiBaseUrl}}/recipes/6
+### Modifier n'importe qu'elle recette (admin) 
+PATCH {{apiBaseUrl}}/recipes/4
 Authorization: Bearer {{token}}
 Content-Type: application/json
 
 {
-  "title": "souppe au choux",
+  "title": "raclette de loic",
+  "category_id": 2,
+  "movie_id": 1234,
+  "number_of_person": 2,
+  "image":"http:kjijp",
+  "preparation_time": 40,
+  "description": "raclette",
+  "ingredients": "fabien",
+  "preparation_steps": "rouler",
+  "status": "published"
+}
+
+### Modifier mes recette (admin et user) 
+PATCH {{apiBaseUrl}}/recipes/4
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "title": "raclette de loic",
   "category_id": 2,
   "movie_id": 1234,
   "number_of_person": 2,
