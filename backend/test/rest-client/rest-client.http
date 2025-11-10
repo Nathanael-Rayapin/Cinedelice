@@ -95,7 +95,7 @@ Authorization: Bearer {{token}}
 GET {{apiBaseUrl}}/recipes
 
 ### Voir une recette par ID sauf draft
-GET {{apiBaseUrl}}/recipes/4
+GET {{apiBaseUrl}}/recipes/7
 
 ### Lister mes recettes ###
 GET {{apiBaseUrl}}/recipes/me
