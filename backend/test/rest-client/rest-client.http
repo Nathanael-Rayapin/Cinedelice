@@ -123,7 +123,7 @@ Content-Type: application/json
   "status": "published"
 }
 
-### Modifier n'importe qu'elle recette (admin) 
+### Modifier n'importe qu'elle recette (admin) ###
 PATCH {{apiBaseUrl}}/recipes/4
 Authorization: Bearer {{token}}
 Content-Type: application/json
@@ -141,8 +141,8 @@ Content-Type: application/json
   "status": "published"
 }
 
-### Modifier mes recette (admin et user) 
-PATCH {{apiBaseUrl}}/recipes/4
+### Modifier mes recette (admin et user) ###
+PATCH {{apiBaseUrl}}/recipes/me/1
 Authorization: Bearer {{token}}
 Content-Type: application/json
 
