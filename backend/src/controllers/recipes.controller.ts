@@ -229,7 +229,9 @@ export async function deleteAnyRecipe(req: Request, res: Response) {
   if (isNaN(recipeId)) { throw new BadRequestError("ID invalide"); }
 
   const recipe = await prisma.recipe.findUnique({ 
-    where: { id: recipeId }
+    where: { id: recipeId,
+      NOT:{status:"draft"}, //exclure brouillon
+    }
   });
   if (!recipe) { throw new NotFoundError("Recette introuvable ou vous n'avez pas les droits sur cette recettes."); }
 
