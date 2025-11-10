@@ -2,7 +2,7 @@
 import type { Request, Response } from "express";
 import { prisma } from "../models/index.ts";
 import { BadRequestError, ConflictError, NotFoundError } from "../lib/errors.ts";
-import { parseIdFromParams } from "./validations.ts";
+import { parseIdFromParams, validateCategoryName } from "../validations/index.ts";
 
 export async function getAllCategories(req: Request, res: Response) {
   const categories = await prisma.category.findMany();
@@ -11,19 +11,20 @@ export async function getAllCategories(req: Request, res: Response) {
 
 export async function getOneCategory(req: Request, res: Response) {
   // on récupère l'ID de la categorie qui nous intéresse dans l'URL :
-  // Est-ce que l'utilisateur a envoyé un nombre valide dans l'URL ?
+  // Est-ce que l'utilisateur a envoyé un nombre valide dans l'URL ? :
+  // => Zod pour convertir string ID en number et valider
   const categoryId = await parseIdFromParams(req.params.id);
 
   // Est-ce que cette catégorie existe vraiment dans la base de données ?
   // On récupère l'objet complet de la catégorie dans la BDD, si elle n'existe pas => 404
-  const category = await prisma.category.findUnique({ where: {id: categoryId }});
+  const category = await prisma.category.findUnique({ where: { id: categoryId }});
   if (!category) { throw new NotFoundError("Category not found"); }
 
   res.status(200).json(category);
 }
 
 export async function createCategory(req: Request, res: Response) {
-  const { name } = req.body;
+  const { name } = await validateCategoryName(req.body);
 
   // Vérifier que la nouvelle catégorie n'existe pas déjà dans la BDD
   const nbOfCategoryWithSameName = await prisma.category.count({ where: { name } });
@@ -38,7 +39,7 @@ export async function createCategory(req: Request, res: Response) {
 export async function updateCategory(req: Request, res: Response) {
   const categoryId = await parseIdFromParams(req.params.id);
 
-  const { name } = req.body;
+  const { name } = await validateCategoryName(req.body);
 
   const category = await prisma.category.findUnique({ where: { id: categoryId }});
   if (!category) { throw new NotFoundError("Category not found"); }

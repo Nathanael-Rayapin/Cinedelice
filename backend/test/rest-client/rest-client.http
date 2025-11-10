@@ -83,6 +83,16 @@ Content-Type: application/json
 {
   "name": "glace"
 }
+
+### Modifier une catégorie (admin) ###
+PATCH {{apiBaseUrl}}/categories
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "name": "glace"
+}
+
 ### Supprimer une catégorie (admin) ###
 DELETE {{apiBaseUrl}}/categories/4
 Authorization: Bearer {{token}}
