@@ -70,7 +70,7 @@ export async function getAllMyRecipes(req: Request, res: Response) {
       },
     }
   });
-  if (!recipe) { throw new NotFoundError("Aucune recette trouvée"); }
+  if (recipe.length === 0) { throw new NotFoundError("Aucune recette trouvée"); }
 
   res.status(200).json(recipe);
 };

@@ -1,5 +1,5 @@
 @apiBaseUrl = http://localhost:3000/api
-@token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjksInJvbGUiOiJhZG1pbiIsImlhdCI6MTc2Mjc3MDk2OCwiZXhwIjoxNzYyNzc0NTY4fQ.T1WVs8dKGrw_dYWLEd8307mr0ZaQyffGaZXKYAJriVE
+@token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjE1LCJyb2xlIjoidXNlciIsImlhdCI6MTc2Mjc3NTk2OSwiZXhwIjoxNzYyNzc5NTY5fQ.f_a3W6QTRIEU2Et8zJDLWJ5fEVneWJshnlCG_b781vI
 # ========================
 # AUTHENTIFICATION
 # ========================
@@ -9,10 +9,10 @@ POST {{apiBaseUrl}}/users
 Content-Type: application/json
 
 {
-  "username": "loic",
-  "email": "loic@example.com",
-  "password": "loic",
-  "confirm_password": "loic",
+  "username": "vincent",
+  "email": "vincent@example.com",
+  "password": "vincent",
+  "confirm_password": "vincent",
   "age_declaration": true,
   "cgu_accepted": true
 }
@@ -22,8 +22,8 @@ POST {{apiBaseUrl}}/auth/login
 Content-Type: application/json
 
 {
-  "email": "bob@example.com",
-  "password": "bob"
+  "email": "vincent@example.com",
+  "password": "vincent"
 }
 
 ### Mon profil ###
