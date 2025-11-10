@@ -1,5 +1,5 @@
 @apiBaseUrl = http://localhost:3000/api
-@token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjE0LCJyb2xlIjoidXNlciIsImlhdCI6MTc2Mjc3MDI3MSwiZXhwIjoxNzYyNzczODcxfQ.YIDYp77BgCeJWrh9LH07FfYASwcW4R3oljjsKU4derM
+@token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjksInJvbGUiOiJhZG1pbiIsImlhdCI6MTc2Mjc3MDk2OCwiZXhwIjoxNzYyNzc0NTY4fQ.T1WVs8dKGrw_dYWLEd8307mr0ZaQyffGaZXKYAJriVE
 # ========================
 # AUTHENTIFICATION
 # ========================
@@ -22,8 +22,8 @@ POST {{apiBaseUrl}}/auth/login
 Content-Type: application/json
 
 {
-  "email": "loic@example.com",
-  "password": "loic"
+  "email": "bob@example.com",
+  "password": "bob"
 }
 
 ### Mon profil ###
@@ -120,7 +120,7 @@ Content-Type: application/json
   "description": "raclette",
   "ingredients": "fabien",
   "preparation_steps": "rouler",
-  "status": "published"
+  "status": "draft"
 }
 
 ### Modifier n'importe qu'elle recette (admin) ###
@@ -160,9 +160,9 @@ Content-Type: application/json
 }
 
 ### Supprimer n'importe quelle recette (admin) ###
-DELETE {{apiBaseUrl}}/recipes/1
+DELETE {{apiBaseUrl}}/recipes/8
 Authorization: Bearer {{token}}
 
 ### Supprimer ma recette (user et admin) ###
-DELETE {{apiBaseUrl}}/recipes/me/3
+DELETE {{apiBaseUrl}}/recipes/me/8
 Authorization: Bearer {{token}}
