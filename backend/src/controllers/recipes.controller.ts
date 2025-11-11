@@ -1,6 +1,7 @@
 import { prisma } from "../models/index.ts";
 import type { Request, Response } from "express";
 import { Prisma } from "@prisma/client";
+
 import {
   BadRequestError,
   ConflictError,
@@ -28,14 +29,28 @@ export async function getAllRecipes(req: Request, res: Response) {
   // "contains" signifie qu'on cherche un mot ou une partie du mot dans le titre
   // "mode: 'insensitive'" veut dire qu'on ne fait pas attention aux majuscules/minuscules
   if (rawSearch !== "") {
-    where.title = {
-      contains: rawSearch,
-      mode: "insensitive",
-    };
+    where.OR = [
+      {
+        title:{
+          contains: rawSearch,
+          mode: "insensitive",// ignore majuscules/minuscules
+        },
+      },
+      {
+        movie:{
+          is:{
+            title:{ 
+              contains: rawSearch,
+              mode:"insensitive",
+            },
+          },
+        },
+      },
+    ];
   }
 
   // recherche dans le titre du film
-  //{movie:{title:{ contains: String(search),mode:"insensitive"}}},
+  //
   // Filtre par categorie
   if (rawCategorie !== "") {
     where.category = {
@@ -47,12 +62,11 @@ export async function getAllRecipes(req: Request, res: Response) {
     where,
     include: {
       user: {
-        select: { username: true }, //on ne garde que le nom
-      },
-      //on inclut les le nom de la categorie
+        select: { username: true } }, //on ne garde que le nom
       category: {
-        select: { name: true },
-      },
+        select: { name: true } },//on inclut les le nom de la categorie
+      movie: { 
+        select: { title: true } }, //on affiche aussi le titre du film
     },
   });
   res.status(200).json(recipes);
@@ -89,6 +103,7 @@ export async function getOneRecipe(req: Request, res: Response) {
 
   res.status(200).json(recipe);
 }
+
 // Afficher uniquement toutes mes recettes (publié et brouillon)
 export async function getAllMyRecipes(req: Request, res: Response) {
   const user_id = req.currentUserId;

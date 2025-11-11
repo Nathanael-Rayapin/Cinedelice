@@ -1,7 +1,7 @@
 import type { Request, Response } from "express";
 import { prisma } from "../models/index.ts";
 import { BadRequestError,NotFoundError,ForbiddenError,ConflictError,UnauthorizedError} from "../lib/errors.ts";
-import { Role } from "../models/index.ts";
+import { Role } from "@prisma/client";
 import * as argon2 from "argon2";
 
 // Lister tous les utilisateurs

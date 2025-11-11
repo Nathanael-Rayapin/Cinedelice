@@ -1,7 +1,6 @@
 // Pour générer le code permettant de requêter la BDD (client Prisma)
 generator client {
-  provider = "prisma-client"
-  output   = "./generated"
+  provider = "prisma-client-js"
 }
 
 // Pour choisir la bonne base de données
