@@ -45,12 +45,29 @@ model Category {
 
   @@map("category")
 }
+model Movie {
+  id            Int      @id @default(autoincrement())
+  id_movie_tmdb Int      @unique // chaque film TMDb n'existe qu'une fois
+  title         String
+  synopsis      String?
+  image         String
+  release_year  Int?
+  director      String?
+
+  created_at DateTime @default(now())
+  updated_at DateTime @default(now()) @updatedAt
+
+  // Un film peut inspirer plusieurs recettes
+  recipes Recipe[]
+
+  @@map("movie")
+}
 
 model Recipe{
   id Int @id @default(autoincrement())
   user_id Int
   category_id Int? // clé étrangère vers la catégorie optionnel
-  movie_id Int // id du film (lié à l'API externe TMDb)
+  movie_id Int // id du film 
   title String
   number_of_person Int
   preparation_time Int
@@ -64,6 +81,7 @@ model Recipe{
 
   user User @relation(fields: [user_id], references: [id], onDelete: Cascade) //une recette appartient à un utilisateur
   category Category? @relation(fields: [category_id], references: [id], onDelete: SetNull) // une recette appartient à une catégorie (ou aucune si supprimé)
+  movie Movie @relation(fields: [movie_id], references: [id], onDelete: Cascade) // une recette appartient a un film
   @@map("recipe")
 
 }

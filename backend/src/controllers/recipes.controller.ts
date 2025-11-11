@@ -11,6 +11,9 @@ import {
 // Lister toutes les recettes publiées
 export async function getAllRecipes(req: Request, res: Response) {
 
+  // Vérifie si la requête contient un paramètre "search" sous forme de texte
+  // Si oui, on enlève les espaces au début et à la fin avec .trim()
+  // Sinon, on met une chaîne vide ("") par défaut
   const rawSearch =
     typeof req.query.search === "string" ? req.query.search.trim() : "";
   const rawCategorie =
@@ -20,7 +23,10 @@ export async function getAllRecipes(req: Request, res: Response) {
   const where: Prisma.RecipeWhereInput = {
     status: "published", // seulement les recettes publiées
   };
-  // Recherche par titre de recette ou par film
+  // Si l'utilisateur a tapé quelque chose dans la barre de recherche...
+  // ...alors on ajoute une condition pour chercher dans le titre de la recette
+  // "contains" signifie qu'on cherche un mot ou une partie du mot dans le titre
+  // "mode: 'insensitive'" veut dire qu'on ne fait pas attention aux majuscules/minuscules
   if (rawSearch !== "") {
     where.title = {
       contains: rawSearch,

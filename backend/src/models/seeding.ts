@@ -1,7 +1,4 @@
 import { prisma } from './index.ts';
-// Pour hasher les mots de pass
-//import * as argon2 from"argon2";
-
 
 async function main() {
   console.log('🌱 Démarrage du seeding...');
@@ -23,11 +20,30 @@ async function main() {
       username: 'admin',
       email: 'admin@example.com',
       password: 'password',
-      //password: await argon2.hash('password'),
       age_declaration: true,
       cgu_accepted: true,
       role: 'admin',
     },
+  });
+
+  // ==== Création de films (Movie) ====
+  await prisma.movie.createMany({
+    data: [
+      { id_movie_tmdb: 550, title: "Le Parrain", image: "https://image.tmdb.org/t/p/w500/3bhkrj58Vtu7enYsRolD1fZdja1.jpg" },
+      { id_movie_tmdb: 200, title: "Don Corleone", image: "https://www.quick-toy.fr/img/p/071013_115143_8bd7nFnt_imagePrincipale.jpg" },
+      { id_movie_tmdb: 13, title: "Ratatouille", image: "https://image.tmdb.org/t/p/w1280/iFcWBdTPeHQDS3OQxBcH3QaYXYv.jpg" },
+      { id_movie_tmdb: 680, title: "Pulp Fiction", image: "https://image.tmdb.org/t/p/w1280/4TBdF7nFw2aKNM0gPOlDNq3v3se.jpg" },
+      { id_movie_tmdb: 120, title: "Le Seigneur des Anneaux", image: "https://image.tmdb.org/t/p/w1280/5OPg6M0yHr21Ovs1fni2H1xpKuF.jpg" },
+      { id_movie_tmdb: 11, title: "Julie & Julia", image: "https://image.tmdb.org/t/p/w1280/rtZquHKuEntFq3YTO3v4L5RtANw.jpg" },
+      { id_movie_tmdb: 194, title: "Amélie Poulain", image: "https://image.tmdb.org/t/p/w1280/tdXtLG6L1QMwrv0MNdW6B9IwC8B.jpg" },
+      { id_movie_tmdb: 475557, title: "Parasite", image: "https://image.tmdb.org/t/p/w1280/tzMIFRvXLdjSMJbm6lQohWQE49Q.jpg" },
+      { id_movie_tmdb: 245891, title: "John Wick", image: "https://image.tmdb.org/t/p/w1280/n1YTIyhAqqqFyDGFTzV7WaU1JfK.jpg" },
+      { id_movie_tmdb: 299536, title: "Avengers", image: "https://image.tmdb.org/t/p/w1280/ylsAO88v2tF0iXRFojPa0UaAJf1.jpg" },
+      { id_movie_tmdb: 129, title: "Le Voyage de Chihiro", image: "https://image.tmdb.org/t/p/w1280/12TAqK0AUgdcYE9ZYZ9r7ASbH5Q.jpg" },
+      { id_movie_tmdb: 49026, title: "Inglourious Basterds", image: "https://image.tmdb.org/t/p/w1280/lPKwFzX4TiWLA4Mo5Bnf8aIIrJm.jpg" },
+      { id_movie_tmdb: 157336, title: "Interstellar", image: "https://image.tmdb.org/t/p/w1280/1pnigkWWy8W032o9TKDneBa3eVK.jpg" },
+      { id_movie_tmdb: 767, title: "Harry Potter", image: "https://image.tmdb.org/t/p/w1280/fbxQ44VRdM2PVzHSNajUseUteem.jpg" },
+    ],
   });
 
   // ==== Création de catégories ====
@@ -45,7 +61,7 @@ async function main() {
       {
         user_id: user1.id,
         category_id: category1.id,
-        movie_id: 550,
+        movie_id: 1,
         title: 'Tiramisu du Parrain',
         number_of_person: 4,
         preparation_time: 45,
@@ -58,7 +74,7 @@ async function main() {
       {
         user_id: admin.id,
         category_id: category2.id,
-        movie_id: 200,
+        movie_id: 2,
         title: 'Spaghetti à la sauce Don Corleone',
         number_of_person: 2,
         preparation_time: 30,
@@ -71,7 +87,7 @@ async function main() {
       {
         user_id: user1.id,
         category_id: category1.id,
-        movie_id: 13,
+        movie_id: 3,
         title: 'Ratatouille de Rémy',
         number_of_person: 4,
         preparation_time: 90,
@@ -84,7 +100,7 @@ async function main() {
       {
         user_id: admin.id,
         category_id: category2.id,
-        movie_id: 680,
+        movie_id: 4,
         title: 'Big Kahuna Burger',
         number_of_person: 4,
         preparation_time: 30,
@@ -97,7 +113,7 @@ async function main() {
       {
         user_id: user1.id,
         category_id: category1.id,
-        movie_id: 120,
+        movie_id: 5,
         title: 'Lembas Elfique',
         number_of_person: 8,
         preparation_time: 40,
@@ -110,7 +126,7 @@ async function main() {
       {
         user_id: admin.id,
         category_id: category2.id,
-        movie_id: 11,
+        movie_id: 6,
         title: 'Bœuf Bourguignon de Julie',
         number_of_person: 6,
         preparation_time: 180,
@@ -123,7 +139,7 @@ async function main() {
       {
         user_id: user1.id,
         category_id: category1.id,
-        movie_id: 194,
+        movie_id: 7,
         title: 'Tarte aux Pommes d\'Amélie',
         number_of_person: 6,
         preparation_time: 50,
@@ -136,7 +152,7 @@ async function main() {
       {
         user_id: admin.id,
         category_id: category2.id,
-        movie_id: 475557,
+        movie_id: 8,
         title: 'Chapaguri de Parasite',
         number_of_person: 4,
         preparation_time: 15,
@@ -149,7 +165,7 @@ async function main() {
       {
         user_id: user1.id,
         category_id: category1.id,
-        movie_id: 245891,
+        movie_id: 9,
         title: 'Beignets de John Wick',
         number_of_person: 12,
         preparation_time: 60,
@@ -162,7 +178,7 @@ async function main() {
       {
         user_id: admin.id,
         category_id: category2.id,
-        movie_id: 299536,
+        movie_id: 10,
         title: 'Shawarma des Avengers',
         number_of_person: 4,
         preparation_time: 45,
@@ -175,7 +191,7 @@ async function main() {
       {
         user_id: user1.id,
         category_id: category1.id,
-        movie_id: 129,
+        movie_id: 11,
         title: 'Gâteau du Voyage de Chihiro',
         number_of_person: 8,
         preparation_time: 35,
@@ -188,7 +204,7 @@ async function main() {
       {
         user_id: admin.id,
         category_id: category2.id,
-        movie_id: 49026,
+        movie_id: 12,
         title: 'Strudel d\'Inglourious Basterds',
         number_of_person: 6,
         preparation_time: 70,
@@ -201,7 +217,7 @@ async function main() {
       {
         user_id: user1.id,
         category_id: category2.id,
-        movie_id: 157336,
+        movie_id: 13,
         title: 'Soupe de Paddington',
         number_of_person: 4,
         preparation_time: 40,
@@ -214,7 +230,7 @@ async function main() {
       {
         user_id: admin.id,
         category_id: category1.id,
-        movie_id: 767,
+        movie_id: 14,
         title: 'Gâteau de Harry Potter',
         number_of_person: 10,
         preparation_time: 55,
