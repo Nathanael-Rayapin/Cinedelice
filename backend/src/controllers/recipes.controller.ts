@@ -347,8 +347,8 @@ export async function deleteAnyRecipe(req: Request, res: Response) {
   if (isNaN(recipeId)) {
     throw new BadRequestError("ID invalide");
   }
-
-  const recipe = await prisma.recipe.findUnique({
+  //findUnique n’accepte pas NOT.
+  const recipe = await prisma.recipe.findFirst({
     where: {
       id: recipeId,
       NOT: { status: "draft" }, //exclure brouillon
