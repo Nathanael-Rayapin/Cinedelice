@@ -1,4 +1,5 @@
 import { prisma } from "../models/index.ts";
+import { Prisma } from "@prisma/client";
 import type { Request,Response } from "express";
 import { BadRequestError, ConflictError, NotFoundError, UnauthorizedError } from "../lib/errors.ts";
 import { parseIdFromParams, validateCreateRecipe, validateUpdateRecipe } from "../validations/index.ts";

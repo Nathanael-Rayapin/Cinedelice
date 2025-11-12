@@ -9,10 +9,10 @@ POST {{apiBaseUrl}}/users
 Content-Type: application/json
 
 {
-  "username": "vincent",
-  "email": "vincent@example.com",
-  "password": "vincent",
-  "confirm_password": "vincent",
+  "username": "nib",
+  "email": "nib@example.com",
+  "password": "Nib12345!",
+  "confirm_password": "Nib12345!",
   "age_declaration": true,
   "cgu_accepted": true
 }
@@ -22,8 +22,8 @@ POST {{apiBaseUrl}}/auth/login
 Content-Type: application/json
 
 {
-  "email": "vincent@example.com",
-  "password": "vincent"
+  "email": "admin@example.com",
+  "password": "password"
 }
 
 ### Mon profil ###

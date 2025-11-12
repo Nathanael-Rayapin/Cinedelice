@@ -1,14 +1,18 @@
 import { prisma } from './index.ts';
-
+import * as argon2 from "argon2";
 async function main() {
   console.log('🌱 Démarrage du seeding...');
+
+  // Hash des mots de passe
+  const userPassword = await argon2.hash("password");
+  const adminPassword = await argon2.hash("password");
 
   // ==== Création d'utilisateurs ====
   const user1 = await prisma.user.create({
     data: {
       username: 'luc',
       email: 'luc@example.com',
-      password: 'password',
+      password: userPassword,// mot de passe hashé
       age_declaration: true,
       cgu_accepted: true,
       role: 'user',
@@ -19,7 +23,7 @@ async function main() {
     data: {
       username: 'admin',
       email: 'admin@example.com',
-      password: 'password',
+      password: adminPassword, // mot de passe hashé
       age_declaration: true,
       cgu_accepted: true,
       role: 'admin',
