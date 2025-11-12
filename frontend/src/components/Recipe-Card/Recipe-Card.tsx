@@ -1,9 +1,9 @@
 import { FcLike } from "react-icons/fc"
 import type { IRecipeDTO } from "../../interfaces/recipe"
 import { useNavigate } from "react-router";
-import './Featured-Card.scss';
+import './Recipe-Card.scss';
 
-const FeaturedCard = ({ recipe }: { recipe: IRecipeDTO }) => {
+const RecipeCard = ({ recipe }: { recipe: IRecipeDTO }) => {
     const navigate = useNavigate();
     
     const handleClick = () => {
@@ -11,12 +11,12 @@ const FeaturedCard = ({ recipe }: { recipe: IRecipeDTO }) => {
     };
 
     return (
-        <div key={recipe.id} className="featured-card" onClick={handleClick}>
+        <div key={recipe.id} className="recipe-card" onClick={handleClick}>
             <img src={recipe.image} alt={recipe.title} />
-            <div className="featured-content">
+            <div className="recipe-content">
                 <h3>{recipe.title}</h3>
                 <p className="author">{recipe.user.username}</p>
-                <div className="featured-footer">
+                <div className="recipe-footer">
                     <div className="likes">
                         <FcLike />
                         <span>2456</span>
@@ -30,4 +30,4 @@ const FeaturedCard = ({ recipe }: { recipe: IRecipeDTO }) => {
     )
 }
 
-export default FeaturedCard
+export default RecipeCard

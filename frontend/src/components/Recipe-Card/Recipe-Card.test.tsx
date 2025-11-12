@@ -1,10 +1,10 @@
 import { describe, it, expect } from 'vitest';
 import { render } from '@testing-library/react'
-import FeaturedCard from './Featured-Card';
+import RecipeCard from './Recipe-Card';
 import { BrowserRouter } from 'react-router';
 import type { IRecipeDTO } from '../../interfaces/recipe';
 
-describe('FeaturedCard', () => {
+describe('RecipeCard', () => {
     it('should render', () => {
         const recipe: IRecipeDTO = {
             id: 1,
@@ -27,11 +27,11 @@ describe('FeaturedCard', () => {
 
         const { container } = render(
             <BrowserRouter>
-                <FeaturedCard recipe={recipe} />
+                <RecipeCard recipe={recipe} />
             </BrowserRouter>
         );
 
-        const card = container.querySelector('.featured-card');
+        const card = container.querySelector('.recipe-card');
         expect(card).toBeInTheDocument();
 
         const badge = container.querySelector('.badge');

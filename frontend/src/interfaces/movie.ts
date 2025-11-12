@@ -1,5 +1,9 @@
 export interface IMovieProps {
     id: number;
-    img: string;
+    id_movie_tmdb?: number;
     title: string;
+    synopsis?: string;
+    img: string;
+    release_year?: string;
+    director?: string;
 }

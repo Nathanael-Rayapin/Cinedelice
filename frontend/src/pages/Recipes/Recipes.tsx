@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'; //Hooks essentiels pour gérer l'é
 import { getRecipes } from '../../services/recipes.service'; //Fonction asynchrone pour récupérer les recettes depuis un service
 import { type IRecipeDTO } from '../../interfaces/recipe'; //Interface TypeScript pour typer les données des recettes
 import PacmanLoader from 'react-spinners/PacmanLoader'; //Composant de chargement visuel
-import FeaturedCard from '../../components/Featured-Card/Featured-Card'; //Composant personnalisé pour afficher chaque recette    
+import RecipeCard from '../../components/Recipe-Card/Recipe-Card'; //Composant personnalisé pour afficher chaque recette    
 import './Recipes.scss'; //Import du fichier de styles spécifique à cette page
 
 const Recipes = () => {
@@ -69,13 +69,13 @@ const Recipes = () => {
         );
     }
 
-    //Si tout va bien, les recettes sont affichées sous forme de cartes (FeaturedCard) en utilisant currentRecipes.map
+    //Si tout va bien, les recettes sont affichées sous forme de cartes (RecipeCard) en utilisant currentRecipes.map
     return (
         <>
             <h1>Catalogue de recettes</h1>
             <div className="recipes-list">
                 {currentRecipes.map((recipe) => (
-                    <FeaturedCard key={recipe.id} recipe={recipe} />
+                    <RecipeCard key={recipe.id} recipe={recipe} />
                 ))}
             </div>
 
