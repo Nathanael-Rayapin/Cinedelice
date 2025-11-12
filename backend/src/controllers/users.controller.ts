@@ -4,6 +4,7 @@ import { BadRequestError,NotFoundError,ForbiddenError,ConflictError,Unauthorized
 import { Role } from "@prisma/client";
 import * as argon2 from "argon2";
 import { parseIdFromParams } from "../validations/common.validation.ts";
+import { validatePassword } from "../validations/user.validation.ts";
 
 // Lister tous les utilisateurs
 export async function getAllUsers(req: Request, res: Response) {
@@ -28,6 +29,10 @@ export async function registerUser(req: Request, res: Response) {
   if (!username || !email || !password || !confirm_password  || age_declaration !== true || cgu_accepted !== true) {
     throw new BadRequestError("Tous les champs sont obligatoires.");
   }
+  if(password !== confirm_password){
+    throw new BadRequestError("Les mots de passe ne correspondent pas.");
+  }
+  await validatePassword(password);
 
   // Vérifier que l'email n'est pas déjà utilisé
   const alreadyExistingUser = await prisma.user.findFirst({ where: { email } });
