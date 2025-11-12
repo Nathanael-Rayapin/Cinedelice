@@ -13,6 +13,11 @@ import ratatouilleFilm from "../../assets/images/ratatouille_film.jpg";
 import charlieEtLaChocolaterie from "../../assets/images/charlie-et-la-chocolaterie.jpg";
 import pulpFiction from "../../assets/images/pulp_fiction.jpg";
 import leParrain from "../../assets/images/le_parrain.jpg";
+import americanPie from "../../assets/images/american_pie.jpg";
+import bienvenueChezLesChtis from "../../assets/images/bienvenue_chez_les_chtis.jpg";
+import harryPotter from "../../assets/images/harry_potter.jpg"; 
+import kungFuPanda from "../../assets/images/Kung_fu_panda.webp"; 
+import laSoupeAuxChouxFilm from "../../assets/images/soupe_aux_choux_film.webp"
 
 export const coverRecipe = burger1;
 
@@ -31,5 +36,10 @@ export const movies = [
     { id: 1, img: ratatouilleFilm, title: "Ratatouille" },
     { id: 2, img: charlieEtLaChocolaterie, title: "Charlie et la chocolaterie" },
     { id: 3, img: pulpFiction, title: "Pulp Fiction" },
-    { id: 4, img: leParrain, title: "Le Parrain" }
+    { id: 4, img: leParrain, title: "Le Parrain" },
+    { id: 5, img: americanPie, title: "American Pie" },
+    { id: 6, img: bienvenueChezLesChtis, title: "Bienvenue chez les Ch'tis" }, 
+    { id: 7, img: harryPotter, title: "Harry Potter" }, 
+    { id: 8, img: kungFuPanda, title: "Kung Fu Panda" }, 
+    { id: 9, img: laSoupeAuxChouxFilm, title: "La Soupe aux choux" }
 ];

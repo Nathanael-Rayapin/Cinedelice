@@ -46,11 +46,11 @@ const Movies = () => {
         );
     }
 
+
     if (errorMsg) {
         return (
             <div className="error-container">
                 <p className="error-msg">{errorMsg}</p>
-                <button onClick={() => window.location.reload()}>Réessayer</button>
             </div>
         );
     }
