@@ -3,6 +3,7 @@ import { prisma } from "../models/index.ts";
 import { BadRequestError,NotFoundError,ForbiddenError,ConflictError,UnauthorizedError} from "../lib/errors.ts";
 import { Role } from "@prisma/client";
 import * as argon2 from "argon2";
+import { parseIdFromParams } from "../validations/common.validation.ts";
 
 // Lister tous les utilisateurs
 export async function getAllUsers(req: Request, res: Response) {
@@ -61,11 +62,9 @@ export async function registerUser(req: Request, res: Response) {
 
 // Modifier le rôle d'un utilisateur
 export async function updateUserRole(req: Request, res: Response) {
-  const targetUserId = parseInt(req.params.id, 10);// l’utilisateur ciblé
-  const adminId = req.currentUserId;// l’admin connecté (du token)
-  if (isNaN(targetUserId)) {
-    throw new BadRequestError("ID d'utilisateur invalide");
-  }
+  const targetUserId = await parseIdFromParams(req.params.id); // l’utilisateur ciblé
+  const adminId = req.currentUserId; // l’admin connecté (du token)
+
   const { role } = req.body;
 
   // Vérifier que le rôle est valide
@@ -96,12 +95,8 @@ export async function updateUserRole(req: Request, res: Response) {
 
 // Supprimer un utilisateur (Admin)
 export async function deleteUser(req: Request, res: Response) {
-  const targetUserId = parseInt(req.params.id, 10);// utilisateur à supprimer
+  const targetUserId = await parseIdFromParams(req.params.id); // utilisateur à supprimer
   const adminId = req.currentUserId; // admin connecté
-  // Vérifie si l'ID est valide
-  if (isNaN(targetUserId)) {
-    throw new BadRequestError("ID d'utilisateur invalide");
-  }
 
   // Vérifie si l'utilisateur existe
   const userToDelete = await prisma.user.findUnique({

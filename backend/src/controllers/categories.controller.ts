@@ -1,6 +1,6 @@
 import type { Request, Response } from "express";
 import { prisma } from "../models/index.ts";
-import { BadRequestError, ConflictError, NotFoundError } from "../lib/errors.ts";
+import { ConflictError, NotFoundError } from "../lib/errors.ts";
 import { parseIdFromParams, validateCategoryName } from "../validations/index.ts";
 
 export async function getAllCategories(req: Request, res: Response) {
@@ -61,8 +61,7 @@ export async function updateCategory(req: Request, res: Response) {
 }
 
 export async function deleteCategory(req: Request, res: Response) {
-  const categoryId = parseInt(req.params.id, 10);
-  if (isNaN(categoryId)) { throw new BadRequestError("Invalid ID format"); }
+  const categoryId = await parseIdFromParams(req.params.id);
 
   const category = await prisma.category.findUnique({ where: { id: categoryId }});
   if (!category) { throw new NotFoundError("Category not found"); }

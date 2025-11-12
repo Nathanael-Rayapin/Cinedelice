@@ -1,7 +1,7 @@
 import { prisma } from "../models/index.ts";
 import type { Request,Response } from "express";
 import { BadRequestError, ConflictError, NotFoundError, UnauthorizedError } from "../lib/errors.ts";
-import { parseIdFromParams } from "../validations/common.validation.ts";
+import { parseIdFromParams, validateCreateRecipe, validateUpdateRecipe } from "../validations/index.ts";
 
 // Lister toutes les recettes publiées
 export async function getAllRecipes(req: Request, res: Response) {
@@ -174,19 +174,8 @@ export async function getMyRecipe(req: Request, res: Response) {
 
 // Créer une recette
 export async function createRecipe(req: Request, res: Response) {
-  const {
-    title,
-    category_id,
-    movie_id,
-    number_of_person,
-    preparation_time,
-    description,
-    image,
-    ingredients,
-    preparation_steps,
-    status,
-  } = req.body;
-
+  const { title, category_id, movie_id, number_of_person, preparation_time, description, image, ingredients, preparation_steps, status } = await validateCreateRecipe(req.body);
+  
   // Récupérer l'ID de l'utilisateur connecté depuis le token JWT
   const user_id = req.currentUserId;
 
@@ -237,18 +226,8 @@ export async function updateAnyRecipe(req: Request, res: Response) {
   }
 
   // Utilise prisma pour modifier la recette et sa data
-  const {
-    title,
-    category_id,
-    movie_id,
-    number_of_person,
-    preparation_time,
-    description,
-    image,
-    ingredients,
-    preparation_steps,
-    status,
-  } = req.body;
+  const { title, category_id, movie_id, number_of_person, preparation_time, description, image, ingredients, preparation_steps, status } = await validateUpdateRecipe(req.body);
+
   const updatedRecipe = await prisma.recipe.update({
     where: { id: recipeId },
     data: {
@@ -292,18 +271,7 @@ export async function updateMyRecipe(req: Request, res: Response) {
   }
 
   // Utilise prisma pour modifier la recette et sa data
-  const {
-    title,
-    category_id,
-    movie_id,
-    number_of_person,
-    preparation_time,
-    description,
-    image,
-    ingredients,
-    preparation_steps,
-    status,
-  } = req.body;
+  const { title, category_id, movie_id, number_of_person, preparation_time, description, image, ingredients, preparation_steps, status } = await validateUpdateRecipe(req.body);
   const updatedRecipe = await prisma.recipe.update({
     where: { id: recipeId },
     data: {

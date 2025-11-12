@@ -2,8 +2,8 @@ import z from "zod";
 import { BadRequestError } from "../lib/errors.ts";
 
 export const createRecipeSchema = z.object({
-  categoryId: z.number().int().positive().optional(),
-  movieId: z.number()
+  category_id: z.number().int().positive(),
+  movie_id: z.number()
     .int("L'ID du film doit être un entier")
     .positive("L'ID du film doit être positif"),
   title: z.string()
@@ -14,11 +14,11 @@ export const createRecipeSchema = z.object({
       "Le titre ne peut contenir que des lettres, chiffres, espaces et caractères basiques (- ' , . ())"
     )
     .trim(), // Supprime les espaces au début et à la fin
-  numberOfPerson: z.number()
+  number_of_person: z.number()
     .int("Le nombre de personnes doit être un entier")
     .min(1, "La recette doit servir au moins 1 personne")
     .max(50, "Le nombre de personnes ne peut pas dépasser 50"),
-  preparationTime: z.number()
+  preparation_time: z.number()
     .int("Le temps de préparation doit être un entier")
     .min(1, "Le temps de préparation doit être d'au moins 1 minute")
     .max(240, "Le temps de préparation ne peut pas dépasser 4 heures (240 minutes)"),
@@ -41,7 +41,7 @@ export const createRecipeSchema = z.object({
       (val) => val.split('\n').filter(line => line.trim().length > 0).length >= 2,
       "La recette doit contenir au moins 2 ingrédients (un par ligne)"
     ),
-  preparationSteps: z.string()
+  preparation_steps: z.string()
     .min(20, "Les étapes de préparation doivent contenir au minimum 20 caractères")
     .max(10000, "Les étapes de préparation ne peuvent pas dépasser 10000 caractères")
     .trim()
@@ -69,17 +69,5 @@ export async function validateUpdateRecipe(body: unknown) {
   } catch (error: unknown) {
     console.error("Erreur de validation:", error);
     throw new BadRequestError("Données de mise à jour invalides");
-  }
-}
-
-export async function validateGetAllRecipesQueryParams(query: unknown) {
-  try {
-    return await z.object({ 
-      userId: z.coerce.number().int().positive().optional(),
-      categoryId: z.coerce.number().int().positive().optional(),
-      movieId: z.coerce.number().int().positive().optional(),
-    }).parseAsync(query);
-  } catch {
-    throw new BadRequestError("Paramètres de recherches invalides");
   }
 }
