@@ -13,7 +13,6 @@ const Home = () => {
     const [recipes, setRecipes] = useState<IRecipeDTO[]>([]);
     const [errorMsg, setErrorMsg] = useState<string | null>(null);
     const [loading, setLoading] = useState(false);
-    const [moviesToShow, setMoviesToShow] = useState(2); // Nouvel état pour les films
 
     const tabs = ['Pour vous', 'Tendances', 'Favoris'];
 
@@ -58,7 +57,7 @@ const Home = () => {
 
             <h2>Recettes à la une</h2>
             <section className="featured-recipes">
-                {recipes.map((recipe) => (
+                {recipes.slice(0).map((recipe) => (
                     <FeaturedCard key={recipe.id} recipe={recipe}/>
                 ))}
             </section>
@@ -70,7 +69,7 @@ const Home = () => {
                 </div>
 
                 <div className="movies-list">
-                    {movies.slice(0, moviesToShow).map((movie) => (
+                    {movies.slice(0).map((movie) => (
                         <MovieCard key={movie.id} movie={movie} />
                     ))}
                 </div>

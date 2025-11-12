@@ -10,7 +10,7 @@ const Movies = () => {
     const [errorMsg, setErrorMsg] = useState<string | null>(null);
     const [loading, setLoading] = useState(true);
     const [currentPage, setCurrentPage] = useState(1);
-    const moviesPerPage = 6;
+    const moviesPerPage = 8;
 
     useEffect(() => {
         const fetchMovies = async () => {

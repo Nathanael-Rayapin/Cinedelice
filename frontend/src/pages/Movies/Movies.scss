@@ -50,19 +50,15 @@
 }
 
 @media screen and (min-width: 769px) {
-
-    .recipes {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 20px;
-    }
+  .movies {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
   }
+}
 
-
-@media (min-width: 1200px) {
-  .home {
-    .recipes {
-      grid-template-columns: repeat(4, 1fr);
-    }
+@media screen and (min-width: 1200px) {
+  .movies {
+    grid-template-columns: repeat(4, 1fr);
   }
 }
