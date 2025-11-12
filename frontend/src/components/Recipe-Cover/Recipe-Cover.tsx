@@ -3,23 +3,12 @@ import { TbChefHat } from "react-icons/tb"
 import { IoMdTime } from "react-icons/io"
 import { FcLike } from "react-icons/fc"
 import { IoChatbubbles } from "react-icons/io5"
-import { useEffect, useState } from "react"
 import type { IRecipeDTO } from "../../interfaces/recipe"
+import { useNavigate } from "react-router"
 import './Recipe-Cover.scss';
 
-const RecipeCover = ({ recipe }: { recipe: IRecipeDTO }) => {
-    const [iconSize, setIconSize] = useState(16);
-
-    // We use useEffect to update the icon size when the window is resized
-    useEffect(() => {
-        const handleResize = () => {
-            setIconSize(window.innerWidth > 769 ? 24 : 16);
-        };
-
-        handleResize();
-        window.addEventListener("resize", handleResize);
-        return () => window.removeEventListener("resize", handleResize);
-    }, [recipe]);
+const RecipeCover = ({ recipe, isSeeRecipeVisible }: { recipe: IRecipeDTO, isSeeRecipeVisible: boolean }) => {
+    const navigate = useNavigate();
 
     return (
         <div className="recipe-cover">
@@ -29,29 +18,29 @@ const RecipeCover = ({ recipe }: { recipe: IRecipeDTO }) => {
 
                 <div className="recipe-infos">
                     <div className="info-item">
-                        <LuClapperboard color="#fff" size={iconSize} />
+                        <LuClapperboard color="#fff" size={24} />
                         <p>{recipe.title}</p>
                     </div>
                     <div className="info-item">
-                        <TbChefHat color="#fff" size={iconSize} />
+                        <TbChefHat color="#fff" size={24} />
                         <p>{recipe.user.username}</p>
                     </div>
                     <div className="info-item">
-                        <IoMdTime color="#fff" size={iconSize} />
+                        <IoMdTime color="#fff" size={24} />
                         <p>{recipe.preparation_time}</p>
                     </div>
                 </div>
 
-                <div className="recipe-infos">
+                <div className={`recipe-infos ${isSeeRecipeVisible ? 'with-button' : 'no-button'}`}>
                     <div className="info-item">
-                        <FcLike size={iconSize} />
+                        <FcLike size={24} />
                         <p>3000</p>
                     </div>
                     <div className="info-item">
-                        <IoChatbubbles color="#fff" size={iconSize} />
+                        <IoChatbubbles color="#fff" size={24} />
                         <p>48</p>
                     </div>
-                    <button className="btn m-1">Voir la recette</button>
+                    {isSeeRecipeVisible && <button className="btn m-1" onClick={() => navigate(`/recettes/${recipe.id}`)}>Voir la recette</button>}
                 </div>
             </div>
         </div>

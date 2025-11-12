@@ -1,4 +1,4 @@
-import { Navigate, Route, Routes } from 'react-router'
+import { Navigate, Route, Routes, useLocation } from 'react-router'
 import Layout from './components/Layout/Layout'
 import Navbar from './components/Navbar/Navbar'
 import Home from './pages/Home/Home'
@@ -14,10 +14,12 @@ import Movies from './pages/Movies/Movies'
 import './App.css'
 
 function App() {
+   const location = useLocation();
+   
   // Remet la page en haut au chargement du composant
   useEffect(() => {
     window.scrollTo(0, 0);
-  }, []);
+  }, [location.pathname]);
   
   return (
     <>

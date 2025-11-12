@@ -36,3 +36,8 @@ p, span, a, button, label, li, input, textarea, select {
     margin-top: 10px;
 }
 
+a {
+  text-decoration: none;
+  color: var(--color-black);
+}
+

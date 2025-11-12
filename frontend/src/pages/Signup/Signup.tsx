@@ -1,7 +1,7 @@
-import { useForm, type SubmitHandler } from 'react-hook-form';
+import { useForm, type FieldErrors, type SubmitHandler } from 'react-hook-form';
 import { LiaEyeSlashSolid } from "react-icons/lia";
 import { LiaEyeSolid } from "react-icons/lia";
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import { Link, useNavigate } from 'react-router';
 import type { ISignup } from '../../interfaces/auth';
 import { signup } from '../../services/auth.service';
@@ -13,8 +13,9 @@ const emailPattern = /^.+@.+$/i;
 const passwordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^a-zA-Z0-9]).+$/;
 
 const Signup = () => {
-    const { register, handleSubmit, getValues, formState: { errors, isValid } } = useForm<ISignup>();
+    const { register, handleSubmit, getValues, trigger, formState: { errors, isValid } } = useForm<ISignup>();
     const [loading, setLoading] = useState(false);
+    const submitCountRef = useRef(0);
     const navigate = useNavigate();
 
     // Un simple log en attendant d'avoir l'endpoint d'inscription
@@ -39,6 +40,11 @@ const Signup = () => {
         }
     };
 
+    const onInvalid = (errors: FieldErrors<ISignup>) => {
+        submitCountRef.current += 1;
+        console.error(errors);
+    };
+
     const [showPassword, setShowPassword] = useState(false);
     const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
@@ -50,18 +56,18 @@ const Signup = () => {
             </div>
         );
     }
-    
+
     return (
         <div className="signup">
             <h1>Inscription</h1>
 
             <form
                 role='form'
-                onSubmit={handleSubmit(onSubmit)}
+                onSubmit={handleSubmit(onSubmit, onInvalid)}
                 data-valid={isValid}
                 autoComplete='off'
                 aria-autocomplete='none'
-                >
+            >
                 <div className="username">
                     <label htmlFor="username">Pseudo</label>
                     <input
@@ -105,7 +111,12 @@ const Signup = () => {
                             {...register("password", {
                                 required: { value: true, message: "Le mot de passe est obligatoire" },
                                 minLength: { value: 8, message: "Le mot de passe doit contenir au moins 8 caractères" },
-                                pattern: { value: passwordPattern, message: "Le mot de passe doit contenir au moins un chiffre, une lettre et un caractère spécial" }
+                                pattern: { value: passwordPattern, message: "Le mot de passe doit contenir au moins un chiffre, une lettre et un caractère spécial" },
+                                onChange: () => {
+                                    if (submitCountRef.current > 0) {
+                                        void trigger("confirmPassword");
+                                    }
+                                }
                             })}
                         />
                         {showPassword

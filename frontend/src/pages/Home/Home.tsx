@@ -7,6 +7,7 @@ import { getRecipes } from '../../services/recipes.service';
 import type { IRecipeDTO } from '../../interfaces/recipe';
 import { movies } from './data';
 import PacmanLoader from 'react-spinners/PacmanLoader';
+import { NavLink } from 'react-router';
 import './Home.scss';
 
 const Home = () => {
@@ -15,13 +16,12 @@ const Home = () => {
     const [loading, setLoading] = useState(false);
 
     const tabs = ['Pour vous', 'Tendances', 'Favoris'];
+    const nbrMovieToShow = 4;
 
     useEffect(() => {
         const fetchRecipes = async () => {
             try {
                 setLoading(true);
-                await new Promise(res => setTimeout(res, 1000));
-
                 const recipes = await getRecipes();
                 setRecipes(recipes);
             } catch (error) {
@@ -53,26 +53,35 @@ const Home = () => {
     return recipes && recipes.length > 0 &&
         <div className="home">
             <TabBar tabs={tabs} />
-            <RecipeCover recipe={recipes[0]} />
+            <RecipeCover recipe={recipes[0]} isSeeRecipeVisible={true} />
 
-            <h2>Recettes à la une</h2>
-            <section className="featured-recipes">
-                {recipes.slice(0).map((recipe) => (
-                    <FeaturedCard key={recipe.id} recipe={recipe}/>
-                ))}
-            </section>
+            <div className="featured-recipes">
+                <div className="recipes-header">
+                    <h2>Recettes à la une</h2>
+                    <NavLink to="/recettes">
+                        Tout voir
+                    </NavLink>
+                </div>
+                <section className="recipes-list">
+                    {recipes.map((recipe) => (
+                        <FeaturedCard key={recipe.id} recipe={recipe} />
+                    ))}
+                </section>
+            </div>
 
             <div className="featured-movies">
                 <div className="movies-header">
                     <h2>Parcourir par films</h2>
-                    <a href="/films">Tout voir</a>
+                    <NavLink to="/films">
+                        Tout voir
+                    </NavLink>
                 </div>
 
-                <div className="movies-list">
-                    {movies.slice(0).map((movie) => (
+                <section className="movies-list">
+                    {movies.slice(0, nbrMovieToShow).map((movie) => (
                         <MovieCard key={movie.id} movie={movie} />
                     ))}
-                </div>
+                </section>
             </div>
         </div>
 }

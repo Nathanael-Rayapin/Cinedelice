@@ -17,7 +17,7 @@ describe("Signin Form", () => {
     it("should not submit if the email is empty", async () => {
         const emailInput = screen.getByLabelText(/Email/);
 
-        const submitButton = screen.getByRole("button", { name: /Je me connecte/ });
+        const submitButton = screen.getByRole("button", { name: /Connexion/ });
 
         fireEvent.change(emailInput, { target: { value: "" } });
 
@@ -33,7 +33,7 @@ describe("Signin Form", () => {
         const form = screen.getByRole("form");
         const emailInput = screen.getByLabelText(/Email/);
 
-        const submitButton = screen.getByRole("button", { name: /Je me connecte/ });
+        const submitButton = screen.getByRole("button", { name: /Connexion/ });
 
         fireEvent.change(emailInput, { target: { value: "john.com" } });
 
@@ -49,7 +49,7 @@ describe("Signin Form", () => {
     it("should submit if the email is valid", async () => {
         const emailInput = screen.getByLabelText(/Email/);
 
-        const submitButton = screen.getByRole("button", { name: /Je me connecte/ });
+        const submitButton = screen.getByRole("button", { name: /Connexion/ });
 
         fireEvent.change(emailInput, { target: { value: "john.doe@gmail.com" } });
 
@@ -64,7 +64,7 @@ describe("Signin Form", () => {
         const emailInput = screen.getByLabelText(/Email/);
         const passwordInput = screen.getByLabelText(/Mot de passe/);
 
-        const submitButton = screen.getByRole("button", { name: /Je me connecte/ });
+        const submitButton = screen.getByRole("button", { name: /Connexion/ });
 
         fireEvent.change(emailInput, { target: { value: "john.doe@gmail.com" } });
         fireEvent.change(passwordInput, { target: { value: "" } });
@@ -81,7 +81,7 @@ describe("Signin Form", () => {
         const emailInput = screen.getByLabelText(/Email/);
         const passwordInput = screen.getByLabelText(/Mot de passe/);
 
-        const submitButton = screen.getByRole("button", { name: /Je me connecte/ });
+        const submitButton = screen.getByRole("button", { name: /Connexion/ });
 
         const signinSpy = vi.spyOn(services, "signin");
 

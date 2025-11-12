@@ -54,7 +54,7 @@ const RecipeDetail = () => {
 
     return recipe &&
         <div className="recipe-detail">
-            <RecipeCover recipe={recipe!} />
+            <RecipeCover recipe={recipe!} isSeeRecipeVisible={false} />
 
             <div className="detail">
                 <div className="preparation">

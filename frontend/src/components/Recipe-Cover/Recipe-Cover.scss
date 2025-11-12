@@ -76,6 +76,15 @@
             box-shadow: none;
         }
     }
+
+    .recipe-infos.with-button {
+        justify-content: space-between;
+    }
+
+    .recipe-infos.no-button {
+        justify-content: flex-start;
+        gap: 24px;
+    }
 }
 
 @media screen and (min-width: 769px) {
