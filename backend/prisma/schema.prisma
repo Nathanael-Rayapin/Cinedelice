@@ -48,10 +48,10 @@ model Movie {
   id            Int      @id @default(autoincrement())
   id_movie_tmdb Int      @unique // chaque film TMDb n'existe qu'une fois
   title         String
-  synopsis      String?
+  synopsis      String
   image         String
-  release_year  Int?
-  director      String?
+  release_year  String
+  director      String
 
   created_at DateTime @default(now())
   updated_at DateTime @default(now()) @updatedAt

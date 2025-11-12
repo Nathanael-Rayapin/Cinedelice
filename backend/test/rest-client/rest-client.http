@@ -1,5 +1,5 @@
 @apiBaseUrl = http://localhost:3000/api
-@token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjMsInJvbGUiOiJ1c2VyIiwiaWF0IjoxNzYyODcyNTc2LCJleHAiOjE3NjI4NzYxNzZ9.g036Iecbl9AHYnt3WjCbpwfnR2NjtjKyJOA7YuyebsY
+@token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjMsInJvbGUiOiJ1c2VyIiwiaWF0IjoxNzYyOTQ0MTcwLCJleHAiOjE3NjI5NDc3NzB9.5hWkv2kWmUeKot41DEsHF_WvfjFSPwIRe1lPWcAPdLQ
 # ========================
 # AUTHENTIFICATION
 # ========================
@@ -92,7 +92,7 @@ Authorization: Bearer {{token}}
 # ========================
 
 ### Lister toutes les recettes sauf draft ###
-GET {{apiBaseUrl}}/recipes?search=interstellar
+GET {{apiBaseUrl}}/recipes?categorie=dessert
 
 ### Voir une recette par ID sauf draft
 GET {{apiBaseUrl}}/recipes/7

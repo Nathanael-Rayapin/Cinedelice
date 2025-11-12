@@ -1,6 +1,6 @@
 import type { Request, Response, NextFunction } from "express";
 import { UnauthorizedError, ForbiddenError } from "../lib/errors.ts";
-import type { Role } from "../models/index.ts";
+import { Role } from "@prisma/client";
 import { verifyAndDecodeJWT } from "../lib/tokens.ts";
 
 export function checkRoles(roles: Role[]) {

@@ -83,7 +83,7 @@ export async function getOneRecipe(req: Request, res: Response) {
 
   // Est-ce que cette recette existe vraiment dans la base de données ?
   // On récupère l'objet complet de la recette dans la BDD, si elle n'existe pas => 404
-  const recipe = await prisma.recipe.findFirst({
+  const recipe = await prisma.recipe.findUnique({
     where: {
       id: recipeId,
       status: "published", //Que les published
@@ -297,7 +297,7 @@ export async function updateMyRecipe(req: Request, res: Response) {
     );
   }
 
-  const recipe = await prisma.recipe.findFirst({
+  const recipe = await prisma.recipe.findUnique({
     //SELECT *FROM recipe WHERE id = <valeur_de_recipeId> AND user_id = <valeur_de_user_id> LIMIT 1;
     where: { id: recipeId, user_id },
   });
@@ -348,7 +348,7 @@ export async function deleteAnyRecipe(req: Request, res: Response) {
     throw new BadRequestError("ID invalide");
   }
 
-  const recipe = await prisma.recipe.findFirst({
+  const recipe = await prisma.recipe.findUnique({
     where: {
       id: recipeId,
       NOT: { status: "draft" }, //exclure brouillon
@@ -381,7 +381,7 @@ export async function deleteMyRecipe(req: Request, res: Response) {
     );
   }
 
-  const recipe = await prisma.recipe.findFirst({
+  const recipe = await prisma.recipe.findUnique({
     where: { id: recipeId, user_id },
   });
   if (!recipe) {
