@@ -20,7 +20,7 @@ export async function getAllRecipes(req: Request, res: Response) {
   const rawCategorie =
     typeof req.query.categorie === "string" ? req.query.categorie.trim() : "";
 
-  // On construit un filtre "where" vide au départ dont le type est generé par prisma
+  // On construit un filtre "where" avec les recettes publiées
   const where: Prisma.RecipeWhereInput = {
     status: "published", // seulement les recettes publiées
   };
@@ -95,8 +95,12 @@ export async function getOneRecipe(req: Request, res: Response) {
       category: {
         select: { name: true },
       },
+      movie:{
+        select: { title: true },
+      },
     },
-  });
+  },
+  );
   if (!recipe) {
     throw new NotFoundError("Aucune recette trouvée");
   }
@@ -125,10 +129,13 @@ export async function getAllMyRecipes(req: Request, res: Response) {
       category: {
         select: { name: true },
       },
+      movie:{
+        select: { title: true },
+      },
     },
   });
   if (recipe.length === 0) {
-    throw new NotFoundError("Aucune recette trouvée");
+    return res.status(200).json([]);
   }
 
   res.status(200).json(recipe);
@@ -160,6 +167,9 @@ export async function getMyRecipe(req: Request, res: Response) {
       },
       category: {
         select: { name: true },
+      },
+      movie:{
+        select: { title: true },
       },
     },
   });
