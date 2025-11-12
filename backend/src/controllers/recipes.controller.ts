@@ -88,9 +88,7 @@ export async function getOneRecipe(req: Request, res: Response) {
       category: {
         select: { name: true },
       },
-      movie:{
-        select: { title: true },
-      },
+      movie:true ,
     },
   },
   );
