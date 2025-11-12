@@ -3,8 +3,7 @@ import { prisma } from "../models/index.ts";
 import { BadRequestError,NotFoundError,ForbiddenError,ConflictError,UnauthorizedError} from "../lib/errors.ts";
 import { Role } from "@prisma/client";
 import * as argon2 from "argon2";
-import { parseIdFromParams } from "../validations/common.validation.ts";
-import { validatePassword } from "../validations/user.validation.ts";
+import { parseIdFromParams, validatePassword } from "../validations/index.ts";
 
 // Lister tous les utilisateurs
 export async function getAllUsers(req: Request, res: Response) {
