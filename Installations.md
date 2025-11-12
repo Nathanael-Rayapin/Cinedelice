@@ -22,6 +22,7 @@ npm i eslint
 npm i --save-dev @types/express
 npm i cors
 npm i --save-dev @types/cors
+npm i axios
 
 
 # BDD
