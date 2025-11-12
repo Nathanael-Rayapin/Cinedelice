@@ -1,4 +1,3 @@
-// import * as z from "zod";
 import type { Request, Response } from "express";
 import { prisma } from "../models/index.ts";
 import { BadRequestError, ConflictError, NotFoundError } from "../lib/errors.ts";

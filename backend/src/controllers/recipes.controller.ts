@@ -1,13 +1,7 @@
 import { prisma } from "../models/index.ts";
-import type { Request, Response } from "express";
-import { Prisma } from "@prisma/client";
-
-import {
-  BadRequestError,
-  ConflictError,
-  NotFoundError,
-  UnauthorizedError,
-} from "../lib/errors.ts";
+import type { Request,Response } from "express";
+import { BadRequestError, ConflictError, NotFoundError, UnauthorizedError } from "../lib/errors.ts";
+import { parseIdFromParams } from "../validations/common.validation.ts";
 
 // Lister toutes les recettes publiées
 export async function getAllRecipes(req: Request, res: Response) {
@@ -76,10 +70,8 @@ export async function getAllRecipes(req: Request, res: Response) {
 export async function getOneRecipe(req: Request, res: Response) {
   // on récupère l'ID de la recette qui nous intéresse dans l'URL :
   // Est-ce que l'utilisateur a envoyé un nombre valide dans l'URL ?
-  const recipeId = parseInt(req.params.id, 10);
-  if (isNaN(recipeId)) {
-    throw new BadRequestError("ID Invalide");
-  }
+  // => Zod pour convertir string ID en number et valider
+  const recipeId = await parseIdFromParams(req.params.id);
 
   // Est-ce que cette recette existe vraiment dans la base de données ?
   // On récupère l'objet complet de la recette dans la BDD, si elle n'existe pas => 404
@@ -143,7 +135,7 @@ export async function getAllMyRecipes(req: Request, res: Response) {
 // Afficher le détail de ma recette
 export async function getMyRecipe(req: Request, res: Response) {
   const user_id = req.currentUserId;
-  const recipeId = parseInt(req.params.id, 10);
+  const recipeId = await parseIdFromParams(req.params.id);
 
   if (isNaN(recipeId)) {
     throw new BadRequestError(" ID Invalide");
@@ -237,10 +229,7 @@ export async function createRecipe(req: Request, res: Response) {
 
 // Modifier n'importe quel recette (admin)
 export async function updateAnyRecipe(req: Request, res: Response) {
-  const recipeId = parseInt(req.params.id, 10);
-  if (isNaN(recipeId)) {
-    throw new BadRequestError(" ID Invalide");
-  }
+  const recipeId = await parseIdFromParams(req.params.id);
 
   const recipe = await prisma.recipe.findUnique({ where: { id: recipeId } });
   if (!recipe) {
@@ -286,11 +275,8 @@ export async function updateAnyRecipe(req: Request, res: Response) {
 // Modifier ma recette (admin et user)
 export async function updateMyRecipe(req: Request, res: Response) {
   const user_id = req.currentUserId;
-  const recipeId = parseInt(req.params.id, 10);
+  const recipeId = await parseIdFromParams(req.params.id);
 
-  if (isNaN(recipeId)) {
-    throw new BadRequestError(" ID Invalide");
-  }
   if (!user_id) {
     throw new UnauthorizedError(
       "Vous devez être connecté pour créer une recette"
@@ -343,16 +329,12 @@ export async function updateMyRecipe(req: Request, res: Response) {
 
 // Supprimer n'importe quelle recette (admin)
 export async function deleteAnyRecipe(req: Request, res: Response) {
-  const recipeId = parseInt(req.params.id, 10);
-  if (isNaN(recipeId)) {
-    throw new BadRequestError("ID invalide");
-  }
-  //findUnique n’accepte pas NOT.
-  const recipe = await prisma.recipe.findFirst({
-    where: {
-      id: recipeId,
-      NOT: { status: "draft" }, //exclure brouillon
-    },
+  const recipeId = await parseIdFromParams(req.params.id);
+
+  const recipe = await prisma.recipe.findUnique({ 
+    where: { id: recipeId,
+      NOT:{status:"draft"}, //exclure brouillon
+    }
   });
   if (!recipe) {
     throw new NotFoundError(
@@ -370,11 +352,8 @@ export async function deleteAnyRecipe(req: Request, res: Response) {
 // Supprimer ma recette (admin et user)
 export async function deleteMyRecipe(req: Request, res: Response) {
   const user_id = req.currentUserId;
-  const recipeId = parseInt(req.params.id, 10);
+  const recipeId = await parseIdFromParams(req.params.id);
 
-  if (isNaN(recipeId)) {
-    throw new BadRequestError("ID invalide");
-  }
   if (!user_id) {
     throw new UnauthorizedError(
       "Vous devez être connecté pour créer une recette"
