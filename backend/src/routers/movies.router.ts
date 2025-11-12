@@ -6,4 +6,3 @@ export const router = Router();
 
 router.get("/movies", checkRoles(["user", "admin"]), moviesController.getAllMovies);
 router.get("/movies/:id", checkRoles(["user", "admin"]), moviesController.getOneMovie);
-router.delete("/movies/:id", checkRoles(["user", "admin"]), moviesController.deleteMovie);
