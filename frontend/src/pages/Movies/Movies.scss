@@ -16,15 +16,15 @@
 
   button {
     padding: 8px 12px;
-    border: 1px solid #ddd;
-    background-color: #fff;
+    border: 1px solid var(--color-deep-gray);
+    background-color: var(--color-white);
     cursor: pointer;
     border-radius: 4px;
 
       &.active {
-        background-color: #fB8b24;
-        color: white;
-        border-color: #fB8b24;
+        background-color: var(--color-primary);
+        color: var(--color-white);
+        border-color: var(--color-primary);
       }
 
       &:hover:not(.active):not(:disabled) {
@@ -37,17 +37,17 @@
       }
   }
 
-  .pagination-button {
-    background-color: #fB8b24;
-    color: white;
-    border-color: #fB8b24;
+   .pagination-button {
+      background-color: var(--color-primary);
+      color: var(--color-white);
+      border-color: var(--color-primary);
 
       &:disabled {
-        background-color: #ccc;
-        border-color: #ccc;
+        background-color:var(--color-deep-gray);
+        border-color: var(--color-deep-gray);
       }
+    }
   }
-}
 
 @media screen and (min-width: 769px) {
   .movies {
@@ -57,7 +57,7 @@
   }
 }
 
-@media screen and (min-width: 1200px) {
+@media screen and (min-width: 992px) {
   .movies {
     grid-template-columns: repeat(4, 1fr);
   }

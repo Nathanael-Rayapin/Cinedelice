@@ -16,7 +16,6 @@ const Home = () => {
     const [loading, setLoading] = useState(false);
 
     const tabs = ['Pour vous', 'Tendances', 'Favoris'];
-    const nbrMovieToShow = 4;
 
     useEffect(() => {
         const fetchRecipes = async () => {
@@ -52,6 +51,7 @@ const Home = () => {
 
     return recipes && recipes.length > 0 &&
         <div className="home">
+            <h1 className='slogan projector-light'>Quand le cinéma met la main à la pâte</h1>
             <TabBar tabs={tabs} />
             <RecipeCover recipe={recipes[0]} isSeeRecipeVisible={true} />
 
@@ -63,7 +63,7 @@ const Home = () => {
                     </NavLink>
                 </div>
                 <section className="recipes-list">
-                    {recipes.map((recipe) => (
+                    {recipes.slice(0,8).map((recipe) => (
                         <FeaturedCard key={recipe.id} recipe={recipe} />
                     ))}
                 </section>
@@ -78,7 +78,7 @@ const Home = () => {
                 </div>
 
                 <section className="movies-list">
-                    {movies.slice(0, nbrMovieToShow).map((movie) => (
+                    {movies.slice(0, 4).map((movie) => (
                         <MovieCard key={movie.id} movie={movie} />
                     ))}
                 </section>

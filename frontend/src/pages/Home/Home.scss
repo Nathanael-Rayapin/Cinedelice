@@ -1,12 +1,59 @@
 .home {
-  margin-bottom: 256px;
+  margin-bottom: 60px;
+
+  .slogan {
+    font-size: 2.5rem;
+    font-weight: 800;
+    color: var(--color-primary);
+    -webkit-text-stroke: 0.5px black;
+    text-shadow: black 5px 5px 10px;
+    letter-spacing: 1.5px;
+    font-style: italic;
+    white-space: nowrap;
+    overflow: hidden;
+    border-right: 3px solid #f5c518;
+    width: 0;
+    margin: 20px auto 20px;
+    text-align: center;
+    animation:
+      typingRevealCenter 4s steps(40, end) forwards,
+      cursorBlink 0.7s step-end infinite;
+  }
+
+  @keyframes typingRevealCenter {
+    from {
+      width: 0;
+    }
+    to {
+      width: 100%;
+      border-right: none;
+    }
+  }
+
+  @keyframes cursorBlink {
+    50% {
+      border-color: transparent;
+    }
+  }
 
   h2 {
     font-size: 24px;
     font-weight: 600;
   }
 
-  .featured-recipes,
+  /* Mobile: 4 recettes en colonne */
+  .featured-recipes {
+    display: flex;
+    flex-direction: column;
+    gap: 28px;
+    margin-top: 24px;
+
+    /* Afficher seulement 4 recettes sur mobile */
+    > *:nth-child(n + 5) {
+      display: none;
+    }
+  }
+
   .featured-movies {
     margin-top: 64px;
 
@@ -23,46 +70,87 @@
         text-decoration: none;
         font-weight: 500;
         transition: all 0.3s ease;
-      }
 
-      a:hover {
-        text-decoration: underline;
+        &:hover {
+          text-decoration: underline;
+        }
       }
     }
 
-    .recipes-list,
+    /* Mobile: 2 films en colonne */
     .movies-list {
       display: flex;
       flex-direction: column;
       gap: 24px;
-      margin-top: 0;
+
+      /* Afficher seulement 2 films sur mobile */
+      > *:nth-child(n + 3) {
+        display: none;
+      }
     }
   }
 }
 
-@media screen and (min-width: 769px) {
+/* Tablette (768px - 1199px) */
+@media screen and (min-width: 768px) {
   .home {
     h2 {
       font-size: 32px;
     }
 
-    .featured-recipes .recipes-list,
+    /* Tablette: 4 recettes sur 2 lignes (2x2) */
+    .featured-recipes {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 20px;
+
+      /* Afficher 4 recettes sur tablette */
+      > *:nth-child(n + 5) {
+        display: none;
+      }
+    }
+
+    /* Tablette: 4 films sur 2 lignes (2x2) */
     .featured-movies .movies-list {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
       gap: 20px;
-    }
 
+      /* Afficher 4 films sur tablette */
+      > *:nth-child(n + 3) {
+        display: block;
+      }
+      > *:nth-child(n + 5) {
+        display: none;
+      }
+    }
   }
 }
 
+/* Desktop (1200px et plus) */
 @media (min-width: 1200px) {
   .home {
+    /* Desktop: 8 recettes sur 2 lignes (4x2) */
+    .featured-recipes {
+      grid-template-columns: repeat(4, 1fr);
 
-    .featured-recipes .recipes-list,
+      /* Afficher 8 recettes sur desktop */
+      > *:nth-child(n + 5) {
+        display: block;
+      }
+      > *:nth-child(n + 9) {
+        display: none;
+      }
+    }
+
+    /* Desktop: 4 films sur 1 ligne (4x1) */
     .featured-movies .movies-list {
       grid-template-columns: repeat(4, 1fr);
+
+      /* Afficher 4 films sur desktop */
+      > *:nth-child(n + 5) {
+        display: none;
+      }
     }
   }
-
 }
