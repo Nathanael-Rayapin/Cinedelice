@@ -29,20 +29,76 @@ async function main() {
   // ==== Création de films (Movie) ====
   await prisma.movie.createMany({
     data: [
-      { id_movie_tmdb: 550, title: "Le Parrain", image: "https://image.tmdb.org/t/p/w500/3bhkrj58Vtu7enYsRolD1fZdja1.jpg" },
-      { id_movie_tmdb: 200, title: "Don Corleone", image: "https://www.quick-toy.fr/img/p/071013_115143_8bd7nFnt_imagePrincipale.jpg" },
-      { id_movie_tmdb: 13, title: "Ratatouille", image: "https://image.tmdb.org/t/p/w1280/iFcWBdTPeHQDS3OQxBcH3QaYXYv.jpg" },
-      { id_movie_tmdb: 680, title: "Pulp Fiction", image: "https://image.tmdb.org/t/p/w1280/4TBdF7nFw2aKNM0gPOlDNq3v3se.jpg" },
-      { id_movie_tmdb: 120, title: "Le Seigneur des Anneaux", image: "https://image.tmdb.org/t/p/w1280/5OPg6M0yHr21Ovs1fni2H1xpKuF.jpg" },
-      { id_movie_tmdb: 11, title: "Julie & Julia", image: "https://image.tmdb.org/t/p/w1280/rtZquHKuEntFq3YTO3v4L5RtANw.jpg" },
-      { id_movie_tmdb: 194, title: "Amélie Poulain", image: "https://image.tmdb.org/t/p/w1280/tdXtLG6L1QMwrv0MNdW6B9IwC8B.jpg" },
-      { id_movie_tmdb: 475557, title: "Parasite", image: "https://image.tmdb.org/t/p/w1280/tzMIFRvXLdjSMJbm6lQohWQE49Q.jpg" },
-      { id_movie_tmdb: 245891, title: "John Wick", image: "https://image.tmdb.org/t/p/w1280/n1YTIyhAqqqFyDGFTzV7WaU1JfK.jpg" },
-      { id_movie_tmdb: 299536, title: "Avengers", image: "https://image.tmdb.org/t/p/w1280/ylsAO88v2tF0iXRFojPa0UaAJf1.jpg" },
-      { id_movie_tmdb: 129, title: "Le Voyage de Chihiro", image: "https://image.tmdb.org/t/p/w1280/12TAqK0AUgdcYE9ZYZ9r7ASbH5Q.jpg" },
-      { id_movie_tmdb: 49026, title: "Inglourious Basterds", image: "https://image.tmdb.org/t/p/w1280/lPKwFzX4TiWLA4Mo5Bnf8aIIrJm.jpg" },
-      { id_movie_tmdb: 157336, title: "Interstellar", image: "https://image.tmdb.org/t/p/w1280/1pnigkWWy8W032o9TKDneBa3eVK.jpg" },
-      { id_movie_tmdb: 767, title: "Harry Potter", image: "https://image.tmdb.org/t/p/w1280/fbxQ44VRdM2PVzHSNajUseUteem.jpg" },
+      { id_movie_tmdb: 550, title: "Le Parrain",synopsis: "L’ascension d’une famille mafieuse dans l’Amérique des années 40.",
+        image: "https://image.tmdb.org/t/p/w500/3bhkrj58Vtu7enYsRolD1fZdja1.jpg",
+        release_year:"12.11.1977",director: "Francis Ford Coppola"
+      },
+      { id_movie_tmdb: 200, title: "Don Corleone",
+        synopsis: "Un puissant chef de la mafia italienne impose son autorité tout en protégeant sa famille dans un monde de loyautés et de trahisons.", 
+        image: "https://www.quick-toy.fr/img/p/071013_115143_8bd7nFnt_imagePrincipale.jpg",
+        release_year:"12.12.1972",director: "Francis Ford Coppola"
+      },
+      { id_movie_tmdb: 13, title: "Ratatouille",
+        synopsis: "Un rat passionné de cuisine tente de devenir chef à Paris.",
+        image: "https://image.tmdb.org/t/p/w1280/iFcWBdTPeHQDS3OQxBcH3QaYXYv.jpg",
+        release_year:"07.10.2007",director: "Brad Bird"
+      },
+      { id_movie_tmdb: 680, title: "Pulp Fiction",
+        synopsis: "Des histoires entremêlées dans le Los Angeles des années 90.",
+        image: "https://image.tmdb.org/t/p/w1280/4TBdF7nFw2aKNM0gPOlDNq3v3se.jpg",
+        release_year:"03.18.1994",director: "Quentin Tarantino"
+      },
+      { id_movie_tmdb: 120, title: "Le Seigneur des Anneaux",
+        synopsis: "La quête de l’Anneau unique pour sauver la Terre du Milieu.",
+        
+        image: "https://image.tmdb.org/t/p/w1280/5OPg6M0yHr21Ovs1fni2H1xpKuF.jpg",
+        release_year:"06.22.2001",director: "Peter Jackson"
+      },
+      { id_movie_tmdb: 11, title: "Julie & Julia", 
+        synopsis: "L’histoire croisée d’une jeune blogueuse qui se lance le défi de cuisiner toutes les recettes de Julia Child, et du parcours de la célèbre cheffe américaine.", 
+        image: "https://image.tmdb.org/t/p/w1280/rtZquHKuEntFq3YTO3v4L5RtANw.jpg",
+        release_year:"04.09.2009",director: "Nora Ephron"
+      },
+      { id_movie_tmdb: 194, title: "Amélie Poulain",
+        synopsis: "À Montmartre, une jeune femme rêveuse décide de changer la vie des gens autour d’elle par de petits gestes poétiques.",
+        image: "https://image.tmdb.org/t/p/w1280/tdXtLG6L1QMwrv0MNdW6B9IwC8B.jpg",
+        release_year:"25.04.2001",director: "Jean Pierre Jeunet"
+      },
+      { id_movie_tmdb: 475557, title: "Parasite",
+        synopsis: "Une satire sociale sur deux familles opposées.", 
+        image: "https://image.tmdb.org/t/p/w1280/tzMIFRvXLdjSMJbm6lQohWQE49Q.jpg",
+        release_year:"07.10.2014",director: "Bong Joon-ho"
+      },
+      { id_movie_tmdb: 245891, title: "John Wick",
+        synopsis: "Un ancien tueur à gages reprend du service.", 
+        image: "https://image.tmdb.org/t/p/w1280/n1YTIyhAqqqFyDGFTzV7WaU1JfK.jpg",
+        release_year:"07.08.2014",director: "Chad Stahelski"
+      },
+      { id_movie_tmdb: 299536, title: "Avengers",
+        synopsis: "Les super-héros s’unissent pour sauver la Terre.", 
+        image: "https://image.tmdb.org/t/p/w1280/ylsAO88v2tF0iXRFojPa0UaAJf1.jpg",
+        release_year:"09.11.2012",director: "Joss Whedon"
+      },
+      { id_movie_tmdb: 129, title: "Le Voyage de Chihiro",
+        synopsis: "Une fillette se retrouve dans un monde magique.", 
+        image: "https://image.tmdb.org/t/p/w1280/12TAqK0AUgdcYE9ZYZ9r7ASbH5Q.jpg",
+        release_year:"25.01.2001",director: "Hayao Miyazaki"
+      },
+      { id_movie_tmdb: 49026, title: "Inglourious Basterds",
+        synopsis: "Des soldats juifs américains traquent les nazis.", 
+        image: "https://image.tmdb.org/t/p/w1280/lPKwFzX4TiWLA4Mo5Bnf8aIIrJm.jpg",
+        release_year:"14.01.2009",director: "Quentin Tarantino"
+      },
+      { id_movie_tmdb: 157336, title: "Interstellar", 
+        synopsis: "Un groupe d’explorateurs traverse un trou de ver pour trouver une nouvelle planète habitable et sauver l’humanité.", 
+        image: "https://image.tmdb.org/t/p/w1280/1pnigkWWy8W032o9TKDneBa3eVK.jpg",
+        release_year:"05.11.2014",director: "Christopher Nolan"
+      },
+      { id_movie_tmdb: 767, title: "Harry Potter",
+        synopsis: "Un jeune sorcier découvre ses pouvoirs.", 
+        image: "https://image.tmdb.org/t/p/w1280/fbxQ44VRdM2PVzHSNajUseUteem.jpg",
+        release_year:"05.11.2001",director: "Chris Columbus"
+      },
     ],
   });
 

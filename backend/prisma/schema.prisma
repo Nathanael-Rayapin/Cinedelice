@@ -50,7 +50,7 @@ model Movie {
   title         String
   synopsis      String
   image         String
-  release_year  String
+  release_year  String  
   director      String
 
   created_at DateTime @default(now())
