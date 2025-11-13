@@ -1,10 +1,10 @@
 import axios from 'axios';
-import type { ISignup, IAuthDTO, ISignin } from '../interfaces/auth';
+import type { ISignup, ISignin, ISignupDTO, ISigninDTO } from '../interfaces/auth';
 import { showSnackbar } from '../utils/snackbar';
 
 const BASE_URL = import.meta.env.VITE_BACKEND_API
 
-export const signup = async (userData: ISignup): Promise<IAuthDTO> => {
+export const signup = async (userData: ISignup): Promise<ISignupDTO> => {
     try {
         const response = await axios.post(`${BASE_URL}/users`, {
             username: userData.username,
@@ -32,7 +32,7 @@ export const signup = async (userData: ISignup): Promise<IAuthDTO> => {
     }
 }
 
-export const signin = async (userData: ISignin): Promise<IAuthDTO> => {
+export const signin = async (userData: ISignin): Promise<ISigninDTO> => {
     try {
         const response = await axios.post(`${BASE_URL}/auth/login`, {
             email: userData.email,
@@ -46,11 +46,8 @@ export const signin = async (userData: ISignin): Promise<IAuthDTO> => {
         if (response.status !== 200) {
             throw new Error('Une erreur est survenue lors de la connexion');
         }
-
-        console.log(response.data);
         
         showSnackbar('Connexion réussie', true);
-
         return response.data;
     } catch (error) {
         console.error(error);

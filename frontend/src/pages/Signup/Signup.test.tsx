@@ -334,11 +334,18 @@ describe("Signup Form", () => {
         const confirmPasswordInput = screen.getByLabelText(/Confirmation du mot de passe/);
         const ageCheckbox = screen.getByLabelText(/Je certifie avoir 15 ans ou plus/);
         const termCheckbox = screen.getByLabelText(/J’accepte les CGU/);
-        
+
         const submitButton = screen.getByRole("button", { name: /Je m'inscris/ });
 
         // Ici on espionne la fonction de signup pour savoir si elle a été appelée
-        const signupSpy = vi.spyOn(services, "signup");
+        // Et on mock la réponse pour ne pas réellement appeler le service
+        const signupSpy = vi.spyOn(services, "signup").mockResolvedValue({
+            id: 1,
+            username: "John",
+            email: "john.doe@gmail.com",
+            role: "user",
+            created_at: new Date()
+        });
 
         fireEvent.change(usernameInput, { target: { value: "John" } });
         fireEvent.change(emailInput, { target: { value: "john.doe@gmail.com" } });

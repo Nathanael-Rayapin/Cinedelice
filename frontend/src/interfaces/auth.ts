@@ -12,7 +12,15 @@ export interface ISignin {
     password: string;
 }
 
-export interface IAuthDTO {
+export interface ISignupDTO {
+    id: number;
+    username: string;
+    email: string;
+    role: Role;
+    created_at: Date;
+}
+
+export interface ISigninDTO {
     user: IConnectedUserDTO;
     token: string;
 }

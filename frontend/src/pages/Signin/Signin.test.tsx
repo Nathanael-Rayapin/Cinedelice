@@ -83,7 +83,16 @@ describe("Signin Form", () => {
 
         const submitButton = screen.getByRole("button", { name: /Connexion/ });
 
-        const signinSpy = vi.spyOn(services, "signin");
+        const signinSpy = vi.spyOn(services, "signin").mockResolvedValue({
+            user: {
+                id: 1,
+                username: "John",
+                email: "john.doe@gmail.com",
+                role: "user",
+                created_at: new Date()
+            },
+            token: "fake-token",
+        });
 
         fireEvent.change(emailInput, { target: { value: "john.doe@gmail.com" } });
         fireEvent.change(passwordInput, { target: { value: "Azerty123!!!" } });
