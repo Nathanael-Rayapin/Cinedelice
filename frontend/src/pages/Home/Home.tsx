@@ -74,7 +74,7 @@ const Home = () => {
                         Tout voir
                     </NavLink>
                 </div>
-                <section className="recipes-list">
+                <div className="recipes-list">
                     {recipes.slice(0,8).map((recipe) => (
                         <RecipeCard key={recipe.id} recipe={recipe} />
                     ))}

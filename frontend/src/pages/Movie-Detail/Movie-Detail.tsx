@@ -1,16 +1,17 @@
 import "./Movie-Detail.scss";
-import FeaturedCard from "../../components/Featured-Card/Featured-Card";
+import RecipeCard from "../../components/Recipe-Card/Recipe-Card"; 
 import { useParams, useNavigate } from "react-router";
 import { useEffect, useState } from "react";
 import { recipes, movies } from "../Home/data"; 
-import type { IMovieProps } from "../../interfaces/movie";
-import type { IRecipeDTO } from "../../interfaces/recipe";
+import type { IMovieDTO } from "../../interfaces/movie"; 
+import type { IRecipeDTO } from "../../interfaces/recipe"; 
 import PacmanLoader from "react-spinners/PacmanLoader";
 
 const MovieDetail = () => {
     const { id } = useParams<{ id: string }>();
     const navigate = useNavigate();
-    const [movie, setMovie] = useState<IMovieProps | null>(null);
+    // Le state utilise directement le type des données (IMovieDTO)
+    const [movie, setMovie] = useState<IMovieDTO | null>(null);
     const [loading, setLoading] = useState(false);
     const [errorMsg, setErrorMsg] = useState<string | null>(null);
 
@@ -18,14 +19,12 @@ const MovieDetail = () => {
         const fetchMovie = () => {
             try {
                 setLoading(true);
-                const allMovies = movies; 
-                
+                const allMovies = movies as IMovieDTO[]; 
                 const foundMovie = allMovies.find((m) => String(m.id) === id);
-                
                 if (!foundMovie) {
                     setErrorMsg("Film non trouvé");
                 } else {
-                    setMovie(foundMovie);
+                    setMovie(foundMovie);   
                 }
             } catch (error) {
                 if (error instanceof Error) {
@@ -51,10 +50,10 @@ const MovieDetail = () => {
         return <p className="error-msg">{errorMsg || "Film non trouvé"}</p>;
     }
 
-    // Type local minimal pour les recettes (basé sur le data local)
+    // Réintroduction du type local pour les recettes
     interface ILocalRecipe {
         id: number;
-        img: string;
+        img: string; 
         title: string;
         author: string;
         badge?: string;
@@ -73,7 +72,7 @@ const MovieDetail = () => {
         category: { name: recipe.badge || "Autre" },
         category_id: 0,
         description: recipe.description || "",
-        image: recipe.img,
+        image: recipe.img, 
         ingredients: "",
         movie_id: recipe.movieId,
         number_of_person: 1,
@@ -85,6 +84,7 @@ const MovieDetail = () => {
         updated_at: "",
         user_id: 0,
         user: { username: recipe.author || "Inconnu" },
+        movie: movie, 
     });
 
     return (
@@ -98,7 +98,7 @@ const MovieDetail = () => {
                     </div>
                     
                     <img
-                        src={movie.img}
+                        src={movie.image} 
                         alt={movie.title}
                         className="movie-poster"
                     />
@@ -124,7 +124,7 @@ const MovieDetail = () => {
                         </div>
                         <div className="recipes-grid">
                             {associatedRecipes.map((recipe) => (
-                                <FeaturedCard
+                                <RecipeCard
                                     key={recipe.id}
                                     recipe={adaptRecipeToIRecipeDTO(recipe)}
                                 />
