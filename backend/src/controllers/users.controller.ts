@@ -22,15 +22,13 @@ export async function getAllUsers(req: Request, res: Response) {
 // Créer un nouvel utilisateur
 export async function registerUser(req: Request, res: Response) {
   // On récupère les données envoyées par le client dans le corps de la requête
-  const { username, email, password, confirm_password, age_declaration, cgu_accepted } = req.body;
+  const { username, email, password, age_declaration, cgu_accepted } = req.body;
  
   // Vérifier que tous les champs obligatoires sont bien présents
-  if (!username || !email || !password || !confirm_password  || age_declaration !== true || cgu_accepted !== true) {
+  if (!username || !email || !password || age_declaration !== true || cgu_accepted !== true) {
     throw new BadRequestError("Tous les champs sont obligatoires.");
   }
-  if(password !== confirm_password){
-    throw new BadRequestError("Les mots de passe ne correspondent pas.");
-  }
+
   await validatePassword(password);
 
   // Vérifier que l'email n'est pas déjà utilisé
