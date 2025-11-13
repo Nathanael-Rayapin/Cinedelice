@@ -3,6 +3,7 @@ import { Prisma } from "@prisma/client";
 import type { Request,Response } from "express";
 import { BadRequestError, ConflictError, NotFoundError, UnauthorizedError } from "../lib/errors.ts";
 import { parseIdFromParams, validateCreateRecipe, validateUpdateRecipe } from "../validations/index.ts";
+import { findOrCreateMovieFromTmdb } from "../services/movie.service.ts";
 
 // Lister toutes les recettes publiées
 export async function getAllRecipes(req: Request, res: Response) {
@@ -131,6 +132,7 @@ export async function getAllMyRecipes(req: Request, res: Response) {
 
   res.status(200).json(recipe);
 }
+
 // Afficher le détail de ma recette
 export async function getMyRecipe(req: Request, res: Response) {
   const user_id = req.currentUserId;
@@ -171,9 +173,9 @@ export async function getMyRecipe(req: Request, res: Response) {
   res.status(200).json(recipe);
 }
 
-// Créer une recette
+// Créer une recette avec un film associé
 export async function createRecipe(req: Request, res: Response) {
-  const { title, category_id, movie_id, number_of_person, preparation_time, description, image, ingredients, preparation_steps, status } = await validateCreateRecipe(req.body);
+  const { title, category_id, movie_title, number_of_person, preparation_time, description, image, ingredients, preparation_steps, status } = await validateCreateRecipe(req.body);
   
   // Récupérer l'ID de l'utilisateur connecté depuis le token JWT
   const user_id = req.currentUserId;
@@ -196,12 +198,18 @@ export async function createRecipe(req: Request, res: Response) {
     throw new ConflictError("Vous avez déjà une recette avec ce titre");
   }
 
-  // Créer la recette
+  // on utilise notre service pour trouver ou créer le film dans la BDD
+  const movie = await findOrCreateMovieFromTmdb(movie_title);
+
+  if(!movie){
+    throw new NotFoundError(`Aucun film trouvé avec le titre "${movie_title}"`);
+  }
+  // Créer la recette avec le film associé
   const createdRecipe = await prisma.recipe.create({
     data: {
       user_id,
       category_id,
-      movie_id,
+      movie_id:movie.id, // on relie la recette au film trouvé/créé
       title,
       number_of_person,
       preparation_time,
@@ -225,13 +233,24 @@ export async function updateAnyRecipe(req: Request, res: Response) {
   }
 
   // Utilise prisma pour modifier la recette et sa data
-  const { title, category_id, movie_id, number_of_person, preparation_time, description, image, ingredients, preparation_steps, status } = await validateUpdateRecipe(req.body);
+  const { title, category_id, movie_title, number_of_person, preparation_time, description, image, ingredients, preparation_steps, status } = await validateUpdateRecipe(req.body);
+  let movie_id = recipe.movie_id; // par défaut on garde l'ancien film
 
+  // si le titre du film a changé, on cherche/crée le nouveau film
+  if(movie_title){
+    const movie = await findOrCreateMovieFromTmdb(movie_title);
+    if (!movie) {
+      return res
+        .status(404)
+        .json({ message: `Aucun film trouvé avec le titre "${movie_title}"` });
+    }
+    movie_id = movie.id; // nouveau film/créé
+  }
   const updatedRecipe = await prisma.recipe.update({
     where: { id: recipeId },
     data: {
       category_id,
-      movie_id,
+      movie_id:movie_id, 
       title,
       number_of_person,
       preparation_time,
@@ -270,12 +289,23 @@ export async function updateMyRecipe(req: Request, res: Response) {
   }
 
   // Utilise prisma pour modifier la recette et sa data
-  const { title, category_id, movie_id, number_of_person, preparation_time, description, image, ingredients, preparation_steps, status } = await validateUpdateRecipe(req.body);
+  const { title, category_id, movie_title, number_of_person, preparation_time, description, image, ingredients, preparation_steps, status } = await validateUpdateRecipe(req.body);
+  let movie_id = recipe.movie_id; // par défaut on garde l'ancien film
+  // si le titre du film a changé, on cherche/crée le nouveau film
+  if(movie_title){
+    const movie = await findOrCreateMovieFromTmdb(movie_title);
+    if (!movie) {
+      return res
+        .status(404)
+        .json({ message: `Aucun film trouvé avec le titre "${movie_title}"` });
+    }
+    movie_id = movie.id; // nouveau film/créé
+  }
   const updatedRecipe = await prisma.recipe.update({
     where: { id: recipeId },
     data: {
       category_id,
-      movie_id,
+      movie_id:movie_id,
       title,
       number_of_person,
       preparation_time,
