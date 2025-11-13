@@ -98,6 +98,9 @@ const RecipeDetail = () => {
                     </div>
                 </div>
             </div>
+            <div className="details-footer">
+                <h2>{recipe.movie.title}</h2>
+            </div>
         </div>
 };
 

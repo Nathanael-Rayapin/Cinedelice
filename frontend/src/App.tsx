@@ -9,18 +9,25 @@ import CGU from './pages/CGU/CGU'
 import About from "./pages/About/About"
 import Recipes from './pages/Recipes/Recipes'
 import RecipeDetail from './pages/Recipe-Detail/Recipe-Detail'
-import { useEffect } from 'react'
+import { useContext, useEffect } from 'react'
 import Movies from './pages/Movies/Movies'
+import { AuthContext } from './store/interface'
 import './App.css'
 
 function App() {
-   const location = useLocation();
-   
+  const authContext = useContext(AuthContext)
+  const location = useLocation();
+
   // Remet la page en haut au chargement du composant
   useEffect(() => {
     window.scrollTo(0, 0);
-  }, [location.pathname]);
-  
+
+    const token = localStorage.getItem('token');
+    if (token) {
+      authContext.setIsAuth(true);
+    }
+  }, [location.pathname, authContext]);
+
   return (
     <>
       <Navbar />
@@ -40,7 +47,7 @@ function App() {
 
           <Route path="/cgu" element={<CGU />} />
           <Route path="/à-propos" element={<About />} />
-          
+
         </Routes>
       </Layout>
       <Footer />

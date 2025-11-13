@@ -1,10 +1,11 @@
-import { Link } from 'react-router';
+import { Link, useNavigate } from 'react-router';
 import { LiaEyeSlashSolid, LiaEyeSolid } from 'react-icons/lia';
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import { useForm, type SubmitHandler } from 'react-hook-form';
 import type { ISignin } from '../../interfaces/auth';
 import { signin } from '../../services/auth.service';
 import PacmanLoader from 'react-spinners/PacmanLoader';
+import { AuthContext } from '../../store/interface';
 import './Signin.scss';
 
 const emailPattern = /^.+@.+$/i;
@@ -12,6 +13,8 @@ const emailPattern = /^.+@.+$/i;
 const Signin = () => {
     const { register, handleSubmit, formState: { errors, isValid } } = useForm<ISignin>();
     const [loading, setLoading] = useState(false);
+    const authContext = useContext(AuthContext)
+    const navigate = useNavigate()
 
     // Un simple log en attendant d'avoir l'endpoint d'inscription
     const onSubmit: SubmitHandler<ISignin> = async data => {
@@ -22,7 +25,17 @@ const Signin = () => {
 
         try {
             setLoading(true);
-            await signin(userData);
+            const data = await signin(userData);
+            
+            // On stocke le token dans le localStorage
+            localStorage.setItem('token', data.token);
+
+            // On met à jour le contexte Auth
+            authContext.setIsAuth(true);
+
+            // On redirige (à terme on redirigera vers le profil)
+            navigate('/pour-vous')
+
         } catch (error) {
             console.error('Erreur lors de la connexion au compte', error);
         } finally {

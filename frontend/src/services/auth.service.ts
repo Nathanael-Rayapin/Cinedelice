@@ -47,7 +47,6 @@ export const signin = async (userData: ISignin): Promise<IAuthDTO> => {
             throw new Error('Une erreur est survenue lors de la connexion');
         }
 
-        localStorage.setItem('token', response.data.token);
         showSnackbar('Connexion réussie', true);
 
         return response.data;

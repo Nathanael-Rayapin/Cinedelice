@@ -1,9 +1,11 @@
 import { HiOutlineUserCircle } from "react-icons/hi2";
-import './Profile-Dropdown.scss';
 import { NavLink } from "react-router";
-import { useEffect, useRef } from "react";
+import { useContext, useEffect, useRef } from "react";
+import { AuthContext } from "../../store/interface";
+import './Profile-Dropdown.scss';
 
 const ProfileDropdown = () => {
+    const authContext = useContext(AuthContext)
     const detailsRef = useRef<HTMLDetailsElement>(null);
 
     useEffect(() => {
@@ -30,7 +32,7 @@ const ProfileDropdown = () => {
                     <HiOutlineUserCircle size={42} color="#fff" />
                 </summary>
 
-                <ul className="menu dropdown-content bg-base-100 rounded-box z-1 w-52 p-2 shadow-sm">
+                {!authContext.isAuth && <ul className="menu dropdown-content bg-base-100 rounded-box z-1 w-52 p-2 shadow-sm">
                     <li>
                         <NavLink to="/connexion"
                             className={({ isActive }) => isActive ? "active" : ""}
@@ -45,7 +47,24 @@ const ProfileDropdown = () => {
                             Inscription
                         </NavLink>
                     </li>
-                </ul>
+                </ul>}
+
+                {authContext.isAuth && <ul className="menu dropdown-content bg-base-100 rounded-box z-1 w-52 p-2 shadow-sm">
+                    <li>
+                        <NavLink to="/connexion"
+                            className={({ isActive }) => isActive ? "active" : ""}
+                         onClick={handleClose}>
+                            Mon profil
+                        </NavLink>
+                    </li>
+                    <li>
+                        <NavLink to="/inscription"
+                            className={({ isActive }) => isActive ? "active" : ""}
+                         onClick={handleClose}>
+                            Déconnexion
+                        </NavLink>
+                    </li>
+                </ul>}
             </details>
         </div>
     )

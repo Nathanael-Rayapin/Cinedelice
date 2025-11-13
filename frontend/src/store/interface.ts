@@ -1,0 +1,15 @@
+import { createContext, type ReactNode } from "react";
+
+interface IAuthContextType {
+  isAuth: boolean;
+  setIsAuth: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+export interface IAuthContextProviderProps {
+  children: ReactNode;
+}
+
+export const AuthContext = createContext<IAuthContextType>({
+    isAuth: false,
+    setIsAuth: () => {},
+});

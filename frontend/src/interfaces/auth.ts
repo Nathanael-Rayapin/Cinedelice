@@ -13,6 +13,11 @@ export interface ISignin {
 }
 
 export interface IAuthDTO {
+    user: IConnectedUserDTO;
+    token: string;
+}
+
+interface IConnectedUserDTO {
     id: number;
     username: string;
     email: string;

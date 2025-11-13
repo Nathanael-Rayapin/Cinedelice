@@ -15,14 +15,19 @@ export interface IRecipeDTO {
     updated_at: string;
     user_id: number;
     user: IUserDTO;
+    movie: IMovieDTO;
 }
 
-export interface IUserDTO {
+interface IUserDTO {
     username: string;
 }
 
 interface ICategoryDTO {
     name: string;
+}
+
+interface IMovieDTO {
+    title: string;
 }
 
 // type CategoryType = "Entrées" | "Plats" | "Desserts";
