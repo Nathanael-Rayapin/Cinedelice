@@ -8,6 +8,7 @@ import type { IRecipeDTO } from '../../interfaces/recipe';
 import { movies } from './data';
 import PacmanLoader from 'react-spinners/PacmanLoader';
 import { NavLink } from 'react-router';
+import Typewriter from 'typewriter-effect';
 import './Home.scss';
 
 const Home = () => {
@@ -51,7 +52,18 @@ const Home = () => {
 
     return recipes && recipes.length > 0 &&
         <div className="home">
-            <h1 className='slogan projector-light'>Quand le cinéma met la main à la pâte</h1>
+            <h1 className='slogan'>
+            <Typewriter
+            options={{
+                autoStart: true,
+                loop: true,
+                strings: ['Quand le cinéma met la main à la pâte'],
+                cursor: '_',
+                cursorClassName: 'cursor',
+            }}
+            />
+            </h1>
+            
             <TabBar tabs={tabs} />
             <RecipeCover recipe={recipes[0]} isSeeRecipeVisible={true} />
 
@@ -64,7 +76,7 @@ const Home = () => {
                 </div>
                 <section className="recipes-list">
                     {recipes.slice(0,8).map((recipe) => (
-                        <FeaturedCard key={recipe.id} recipe={recipe} />
+                        <RecipeCard key={recipe.id} recipe={recipe} />
                     ))}
                 </section>
             </div>

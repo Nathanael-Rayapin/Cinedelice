@@ -5,34 +5,13 @@
     font-size: 2.5rem;
     font-weight: 800;
     color: var(--color-primary);
-    -webkit-text-stroke: 0.5px black;
-    text-shadow: black 5px 5px 10px;
     letter-spacing: 1.5px;
     font-style: italic;
-    white-space: nowrap;
-    overflow: hidden;
-    border-right: 3px solid #f5c518;
-    width: 0;
-    margin: 20px auto 20px;
+    margin: 20px 0 48px 0;
     text-align: center;
-    animation:
-      typingRevealCenter 4s steps(40, end) forwards,
-      cursorBlink 0.7s step-end infinite;
-  }
 
-  @keyframes typingRevealCenter {
-    from {
-      width: 0;
-    }
-    to {
-      width: 100%;
-      border-right: none;
-    }
-  }
-
-  @keyframes cursorBlink {
-    50% {
-      border-color: transparent;
+    .cursor {
+      margin-left: -8px;
     }
   }
 
@@ -41,21 +20,14 @@
     font-weight: 600;
   }
 
-  /* Mobile: 4 recettes en colonne */
-  .featured-recipes {
-    display: flex;
-    flex-direction: column;
-    gap: 28px;
-    margin-top: 24px;
+  .featured-recipes,
+  .featured-movies {
+    margin-top: 48px;
 
-    /* Afficher seulement 4 recettes sur mobile */
-    > *:nth-child(n + 5) {
+    /* Mobile: 4 éléments en colonne */
+    >*:nth-child(n + 5) {
       display: none;
     }
-  }
-
-  .featured-movies {
-    margin-top: 64px;
 
     .recipes-header,
     .movies-header {
@@ -65,10 +37,10 @@
       margin-bottom: 24px;
 
       a {
-        color: #fb8b24;
-        font-size: 18px;
+        color: var(--color-primary);
+        font-size: 24px;
         text-decoration: none;
-        font-weight: 500;
+        font-weight: 600;
         transition: all 0.3s ease;
 
         &:hover {
@@ -77,14 +49,14 @@
       }
     }
 
-    /* Mobile: 2 films en colonne */
+    .recipes-list,
     .movies-list {
       display: flex;
       flex-direction: column;
       gap: 24px;
 
-      /* Afficher seulement 2 films sur mobile */
-      > *:nth-child(n + 3) {
+      /* Mobile: 2 éléments en colonne */
+      >*:nth-child(n + 3) {
         display: none;
       }
     }
@@ -98,29 +70,19 @@
       font-size: 32px;
     }
 
-    /* Tablette: 4 recettes sur 2 lignes (2x2) */
-    .featured-recipes {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 20px;
-
-      /* Afficher 4 recettes sur tablette */
-      > *:nth-child(n + 5) {
-        display: none;
-      }
-    }
-
     /* Tablette: 4 films sur 2 lignes (2x2) */
+    .featured-recipes .recipes-list,
     .featured-movies .movies-list {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
       gap: 20px;
 
       /* Afficher 4 films sur tablette */
-      > *:nth-child(n + 3) {
+      >*:nth-child(n + 3) {
         display: block;
       }
-      > *:nth-child(n + 5) {
+
+      >*:nth-child(n + 5) {
         display: none;
       }
     }
@@ -130,15 +92,17 @@
 /* Desktop (1200px et plus) */
 @media (min-width: 1200px) {
   .home {
+
     /* Desktop: 8 recettes sur 2 lignes (4x2) */
-    .featured-recipes {
+    .featured-recipes .recipes-list {
       grid-template-columns: repeat(4, 1fr);
 
       /* Afficher 8 recettes sur desktop */
-      > *:nth-child(n + 5) {
+      >*:nth-child(n + 5) {
         display: block;
       }
-      > *:nth-child(n + 9) {
+
+      >*:nth-child(n + 9) {
         display: none;
       }
     }
@@ -148,7 +112,7 @@
       grid-template-columns: repeat(4, 1fr);
 
       /* Afficher 4 films sur desktop */
-      > *:nth-child(n + 5) {
+      >*:nth-child(n + 5) {
         display: none;
       }
     }
