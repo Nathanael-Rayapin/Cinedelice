@@ -50,7 +50,7 @@ const Home = () => {
         return <p className="error-msg">{errorMsg}</p>;
     }
 
-    return recipes && recipes.length > 0 &&
+    return recipes && recipes.length > 0 && (
         <div className="home">
             <h1 className='slogan'>
             <Typewriter
@@ -67,7 +67,7 @@ const Home = () => {
             <TabBar tabs={tabs} />
             <RecipeCover recipe={recipes[0]} isSeeRecipeVisible={true} />
 
-            <div className="featured-recipes">
+            <section>
                 <div className="recipes-header">
                     <h2>Recettes à la une</h2>
                     <NavLink to="/recettes">
@@ -78,8 +78,8 @@ const Home = () => {
                     {recipes.slice(0,8).map((recipe) => (
                         <RecipeCard key={recipe.id} recipe={recipe} />
                     ))}
-                </section>
-            </div>
+                </div>
+            </section>
 
             <div className="featured-movies">
                 <div className="movies-header">
@@ -96,6 +96,7 @@ const Home = () => {
                 </section>
             </div>
         </div>
+    );
 }
 
-export default Home
+export default Home;

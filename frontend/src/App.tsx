@@ -12,6 +12,7 @@ import RecipeDetail from './pages/Recipe-Detail/Recipe-Detail'
 import { useContext, useEffect } from 'react'
 import Movies from './pages/Movies/Movies'
 import { AuthContext } from './store/interface'
+import MovieDetail from './pages/Movie-Detail/Movie-Detail'
 import './App.css'
 
 function App() {
@@ -41,6 +42,7 @@ function App() {
           <Route path="/recettes" element={<Recipes />} />
           <Route path="/recettes/:id" element={<RecipeDetail />} />
           <Route path='/films' element={<Movies />} />
+          <Route path="/films/:id" element={<MovieDetail />} />
 
           <Route path="/inscription" element={<Signup />} />
           <Route path="/connexion" element={<Signin />} />
