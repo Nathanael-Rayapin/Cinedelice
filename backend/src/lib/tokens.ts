@@ -1,7 +1,7 @@
 import jwt, { type JwtPayload } from "jsonwebtoken";
 import { config } from "../../config.ts";
 import { UnauthorizedError } from "./errors.ts";
-import type { Role } from "../models/index.ts";
+import type { Role } from "@prisma/client";
 
 // === Configuration ===
 const ONE_HOUR_IN_MILLISECONDS = 1 * 60 * 60 * 1000;
@@ -13,10 +13,12 @@ export function generateAccessToken(userId: number, role: Role) {
   const token = jwt.sign(payload, config.jwtSecret, {//creation du token chiffré
     expiresIn: `${ONE_HOUR_IN_MILLISECONDS}ms`, // expire dans 1h
   });
+  const expiresAt = Date.now() + ONE_HOUR_IN_MILLISECONDS;
 
   return {
     token,
     expiresInMS: ONE_HOUR_IN_MILLISECONDS,
+    expiresAt
   };
 }
 

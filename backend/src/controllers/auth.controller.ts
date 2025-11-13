@@ -26,12 +26,13 @@ export async function loginUser(req: Request, res: Response) {
     throw new UnauthorizedError("L'email ou le mot de passe ne correspondent pas");
   }
   //  Génère le token JWT 
-  const { token } = generateAccessToken(user.id, user.role);
+  const { token, expiresAt } = generateAccessToken(user.id, user.role);
 
   // Retourner les informations de l'utilisateur (sans mot de passe)
   res.status(200).json({
     message:"connexion réussie",
     token,
+    expiresAt,
     user:{
       id: user.id,
       username: user.username,
