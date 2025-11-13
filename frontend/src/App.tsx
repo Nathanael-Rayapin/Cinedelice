@@ -1,4 +1,6 @@
 import { Navigate, Route, Routes, useLocation } from 'react-router'
+import { useContext, useEffect } from 'react'
+import { AuthContext } from './store/interface'
 import Layout from './components/Layout/Layout'
 import Navbar from './components/Navbar/Navbar'
 import Home from './pages/Home/Home'
@@ -9,10 +11,11 @@ import CGU from './pages/CGU/CGU'
 import About from "./pages/About/About"
 import Recipes from './pages/Recipes/Recipes'
 import RecipeDetail from './pages/Recipe-Detail/Recipe-Detail'
-import { useContext, useEffect } from 'react'
 import Movies from './pages/Movies/Movies'
-import { AuthContext } from './store/interface'
-import MovieDetail from './pages/Movie-Detail/Movie-Detail'
+import Profile from './pages/Profile/Profile'
+import MyRecipe from './pages/My-Recipes/My-Recipe'
+import ForYou from './pages/For-You/For-You'
+import MyInformations from './pages/My-Informations/My-Informations'
 import './App.css'
 
 function App() {
@@ -34,10 +37,10 @@ function App() {
       <Navbar />
       <Layout>
         <Routes>
-          <Route path="/" element={<Navigate to="/pour-vous" replace />} />
-          <Route path="/pour-vous" element={<Home />} />
-          <Route path="/tendances" element={<Home />} />
-          <Route path="/favoris" element={<Home />} />
+          <Route path="/" element={<Home />}>
+            <Route index element={<Navigate to="pour-vous" replace />} />
+            <Route path="pour-vous" element={<ForYou />} />
+          </Route>
 
           <Route path="/recettes" element={<Recipes />} />
           <Route path="/recettes/:id" element={<RecipeDetail />} />
@@ -46,6 +49,12 @@ function App() {
 
           <Route path="/inscription" element={<Signup />} />
           <Route path="/connexion" element={<Signin />} />
+
+          <Route path="/profil" element={<Profile />}>
+            <Route index element={<Navigate to="mes-recettes" replace />} />
+            <Route path="mes-recettes" element={<MyRecipe />} />
+            <Route path="mes-informations" element={<MyInformations />} />
+          </Route>
 
           <Route path="/cgu" element={<CGU />} />
           <Route path="/à-propos" element={<About />} />

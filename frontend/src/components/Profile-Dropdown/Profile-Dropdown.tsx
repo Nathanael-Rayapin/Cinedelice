@@ -55,14 +55,13 @@ const ProfileDropdown = () => {
                 </ul>}
 
                 {authContext.isAuth && <ul className="menu dropdown-content bg-base-100 rounded-box z-1 w-52 p-2 shadow-sm">
-                    {/* On garde ce code pour plus tard */}
-                    {/* <li>
-                        <NavLink to="#"
+                    <li>
+                        <NavLink to="/profil/mes-recettes"
                             className={({ isActive }) => isActive ? "active" : ""}
                          onClick={handleClose}>
                             Mon profil
                         </NavLink>
-                    </li> */}
+                    </li>
                     <li>
                         <NavLink to="/connexion"
                             className={({ isActive }) => isActive ? "active" : ""}

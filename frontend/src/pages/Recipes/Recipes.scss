@@ -5,10 +5,24 @@ h1 {
 }
 
 .recipes-list {
+  position: relative;
   display: flex;
   flex-direction: column;
   gap: 28px;
   margin-top: 48px;
+}
+
+.no-data-found {
+  position: absolute;
+  top: 70%;
+  left: 50%;
+  transform: translate(-50%, calc(-50% - 50px));
+
+  h2 {
+    font-weight: 400;
+    color: var(--color-deep-gray);
+    text-align: center;
+  }
 }
 
 @media screen and (min-width: 769px) {

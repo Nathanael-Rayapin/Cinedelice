@@ -1,9 +1,16 @@
 import { useState } from 'react';
 import { AuthContext, type IAuthContextProviderProps } from './interface';
+import type { ISigninDTO } from '../interfaces/auth';
 
 export default function AuthContextProvider({ children }: IAuthContextProviderProps) {
   // Utiliser pour mettre à jour mon authentification
   const [isAuth, setIsAuth] = useState(false);
+
+  // Utiliser pour me conencter
+  const login = (data: ISigninDTO) => {
+    setIsAuth(true);
+    localStorage.setItem('token', data.token);
+  }
 
   // Utiliser pour me déconnecter
   const logout = () => {
@@ -15,6 +22,7 @@ export default function AuthContextProvider({ children }: IAuthContextProviderPr
   const ctxValue = {
     isAuth,
     setIsAuth,
+    login,
     logout,
   };
 

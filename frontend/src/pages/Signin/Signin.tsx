@@ -26,12 +26,7 @@ const Signin = () => {
         try {
             setLoading(true);
             const data = await signin(userData);
-            
-            // On stocke le token dans le localStorage
-            localStorage.setItem('token', data.token);
-
-            // On met à jour le contexte Auth
-            authContext.setIsAuth(true);
+            authContext.login(data);
 
             // On redirige (à terme on redirigera vers le profil)
             navigate('/pour-vous')

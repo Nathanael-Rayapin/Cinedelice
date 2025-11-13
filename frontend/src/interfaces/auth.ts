@@ -21,11 +21,15 @@ export interface ISignupDTO {
 }
 
 export interface ISigninDTO {
-    user: IConnectedUserDTO;
+    user: IConnectedUser;
     token: string;
 }
 
-interface IConnectedUserDTO {
+export interface IProfileDTO {
+    user: IConnectedUser;
+}
+
+export interface IConnectedUser {
     id: number;
     username: string;
     email: string;

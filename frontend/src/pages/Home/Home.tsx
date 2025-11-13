@@ -1,5 +1,4 @@
 import TabBar from '../../components/Tab-Bar/Tab-Bar';
-import RecipeCover from '../../components/Recipe-Cover/Recipe-Cover';
 import RecipeCard from '../../components/Recipe-Card/Recipe-Card';
 import MovieCard from '../../components/Movie-Card/Movie-Card';
 import { useEffect, useState } from 'react';
@@ -7,7 +6,7 @@ import { getRecipes } from '../../services/recipes.service';
 import type { IRecipeDTO } from '../../interfaces/recipe';
 import { movies } from './data';
 import PacmanLoader from 'react-spinners/PacmanLoader';
-import { NavLink } from 'react-router';
+import { NavLink, Outlet } from 'react-router';
 import Typewriter from 'typewriter-effect';
 import './Home.scss';
 
@@ -65,7 +64,7 @@ const Home = () => {
             </h1>
             
             <TabBar tabs={tabs} />
-            <RecipeCover recipe={recipes[0]} isSeeRecipeVisible={true} />
+            <Outlet context={{ recipes }} />
 
             <section>
                 <div className="recipes-header">

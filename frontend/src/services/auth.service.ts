@@ -1,5 +1,5 @@
 import axios from 'axios';
-import type { ISignup, ISignin, ISignupDTO, ISigninDTO } from '../interfaces/auth';
+import type { ISignup, ISignin, ISignupDTO, ISigninDTO, IProfileDTO } from '../interfaces/auth';
 import { showSnackbar } from '../utils/snackbar';
 
 const BASE_URL = import.meta.env.VITE_BACKEND_API
@@ -52,6 +52,27 @@ export const signin = async (userData: ISignin): Promise<ISigninDTO> => {
     } catch (error) {
         console.error(error);
         showSnackbar('Oups ! Veuillez vérifier vos informations', false);
+        throw error;
+    }
+}
+
+export const getProfile = async (): Promise<IProfileDTO> => {
+    try {
+        const response = await axios.get(`${BASE_URL}/auth/me`, {
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${localStorage.getItem('token')}`
+            }
+        });
+
+        if (response.status !== 200) {
+            throw new Error('Une erreur est survenue lors de la récupération du profil');
+        }
+                
+        return response.data;
+    } catch (error) {
+        console.error(error);
+        showSnackbar('Oups ! Une erreur est survenue, veuillez réessayer plus tard.', false);
         throw error;
     }
 }
