@@ -3,7 +3,7 @@ import { router as authRouter} from "../routers/auth.router.ts";
 import { router as categoriesRouter } from "../routers/categories.router.ts";
 import { router as usersRouter} from "./users.router.ts";
 import { router as recipesRouter} from "./recipes.router.ts";
-import movieRouter from "./movies.router.ts";
+import { router as movieRouter } from "./movies.router.ts";
 export const router=Router();
 
 router.use(recipesRouter);

@@ -1,11 +1,11 @@
 @apiBaseUrl = http://localhost:3000/api
-@token=eyJ
+@token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjMsInJvbGUiOiJ1c2VyIiwiaWF0IjoxNzYzMDQ0OTE2LCJleHAiOjE3NjMwNDg1MTZ9.8rxEtsRvak1ExqqBBho-Ib2tWctMBk_1CK8xKHdGkoM
 
 ### Lister toutes les recettes
 GET {{apiBaseUrl}}/recipes
 
 ### Voir une recette par ID
-GET {{apiBaseUrl}}/recipes/1
+GET {{apiBaseUrl}}/recipes/16
 
 ### Créer une recette (user)
 POST {{apiBaseUrl}}/recipes
@@ -13,17 +13,18 @@ Authorization: Bearer {{token}}
 Content-Type: application/json
 
 {
-  "title": "Pizza maison",
+  "title": "la pizza de toy storie",
   "category_id": 1,
-  "movie_id": 1234,
-  "number_of_person": 2,
-  "preparation_time": 40,
-  "description": "Une pizza inspirée du film Ratatouille 🍕",
-  "ingredients": "pâte, tomate, fromage",
-  "preparation_steps": "Pétrir, garnir, cuire",
+  "movie_title": "les simpson",
+  "number_of_person": 3,
+  "preparation_time": 45,
+  "image": "http://example.com/donuts-roses.jpg",
+  "description": "Les délicieux donuts roses préférés d'Homer Simpson, inspirés du film.",
+  "ingredients": "Farine\nSucre\nBeurre\nLait\nLevure\nColorant rose\nVermicelles",
+  "preparation_steps": "Préparer la pâte\nFormer les donuts\nFaire frire\nAjouter le glaçage rose\nDécorer avec des vermicelles",
   "status": "draft"
 }
 
 ### Supprimer une recette (user)
-DELETE {{apiBaseUrl}}/recipes/1
+DELETE {{apiBaseUrl}}/recipes/7
 Authorization: Bearer {{token}}

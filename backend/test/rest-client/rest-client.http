@@ -1,5 +1,5 @@
 @apiBaseUrl = http://localhost:3000/api
-@token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTc2MzAyNDQ3OCwiZXhwIjoxNzYzMDI4MDc4fQ.KVff-Rd_bvsoY9Xf8eTMgfJ2HC0U5Ld8KIOkFP2em8c
+@token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTc2MzA0Nzk3NiwiZXhwIjoxNzYzMDUxNTc2fQ.1gsyxvaG0Hl2AYn0uvRIHU5OZiQT36GaLFqeG1JuS4w
 # ========================
 # AUTHENTIFICATION
 # ========================
@@ -102,7 +102,7 @@ Authorization: Bearer {{token}}
 # ========================
 
 ### Lister toutes les recettes sauf draft ###
-GET {{apiBaseUrl}}/recipes?categorie=dessert
+GET {{apiBaseUrl}}/recipes?search=
 
 ### Voir une recette par ID sauf draft
 GET {{apiBaseUrl}}/recipes/7
@@ -121,53 +121,52 @@ Authorization: Bearer {{token}}
 Content-Type: application/json
 
 {
-  "title": "souo",
+  "title": "galette de nib",
   "category_id":2,
-  "movie_id":1234,
+  "movie_title":"jurassic",
   "number_of_person":2,
-  "image":"http:kjijp",
+  "image":"http://example.com/galette.jpg",
   "preparation_time": 40,
-  "description": "raclette",
-  "ingredients": "fabien
-  poiki",
-  "preparation_steps": "rouler frfvukjgugigfyflhohygotutilhrghupuyjpikpiiii",
+  "description": "racletteeeee eeerr   gttttg",
+  "ingredients": "fabienPréparer la pâte\nFormer les donuts\nCuire puis décorerfabien poiki",
+  "preparation_steps": "roulerPréparer la pâte\nFormer les donuts\nCuire puis décorer",
   "status": "draft"
 }
 
-### Modifier n'importe qu'elle recette (admin) ###
-PATCH {{apiBaseUrl}}/recipes/4
+### Modifier n'importe qu'elle recette (admin)  ###
+PATCH {{apiBaseUrl}}/recipes/20
 Authorization: Bearer {{token}}
 Content-Type: application/json
 
 {
-  "title": "raclette de loic",
+  "title": "galette de nib",
   "category_id": 2,
-  "movie_id": 1234,
+  "movie_title": "jurassic",
   "number_of_person": 2,
-  "image":"http:kjijp",
+  "image":"http://example.com/galette.jpg",
   "preparation_time": 40,
-  "description": "raclette",
-  "ingredients": "fabien",
-  "preparation_steps": "rouler",
-  "status": "published"
+  "description": "raclette raclette raclette\nSucre ",
+  "ingredients": "fabienPréparer la pâte\nFormer les donuts\nCuire puis décorer",
+  "preparation_steps": "roulerPréparer la pâte\nFormer les donuts\nCuire puis décorer",
+  "status": "draft"
 }
 
 ### Modifier mes recette (admin et user) ###
-PATCH {{apiBaseUrl}}/recipes/me/1
+PATCH {{apiBaseUrl}}/recipes/me/20
 Authorization: Bearer {{token}}
 Content-Type: application/json
 
 {
-  "title": "raclette de loic",
+  "title": "galette de nib",
   "category_id": 2,
-  "movie_id": 1234,
+  "movie_title": "jurassic",
   "number_of_person": 2,
-  "image":"http:kjijp",
+  "image":"http://example.com/galette.jpg",
   "preparation_time": 40,
-  "description": "raclette",
-  "ingredients": "fabien",
-  "preparation_steps": "rouler",
-  "status": "published"
+  "description": "raclette raclette raclette\nSucre ",
+  "ingredients": "fabienPréparer la pâte\nFormer les donuts\nCuire puis décorer",
+  "preparation_steps": "roulerPréparer la pâte\nFormer les donuts\nCuire puis décorer",
+  "status": "draft"
 }
 
 ### Supprimer n'importe quelle recette (admin) ###

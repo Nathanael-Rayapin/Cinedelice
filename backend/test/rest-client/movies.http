@@ -1,0 +1,7 @@
+@apiBaseUrl = http://localhost:3000/api
+
+### Afficher tous les films
+GET {{apiBaseUrl}}/movies
+
+### Afficher un film
+GET {{apiBaseUrl}}/movies/12
