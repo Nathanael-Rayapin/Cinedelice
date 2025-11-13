@@ -1,3 +1,5 @@
+import type { IMovieDTO } from "./movie";
+
 export interface IRecipeDTO {
     id: number
     category: ICategoryDTO;
@@ -24,10 +26,6 @@ interface IUserDTO {
 
 interface ICategoryDTO {
     name: string;
-}
-
-interface IMovieDTO {
-    title: string;
 }
 
 // type CategoryType = "Entrées" | "Plats" | "Desserts";

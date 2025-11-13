@@ -100,6 +100,17 @@ const RecipeDetail = () => {
             </div>
             <div className="details-footer">
                 <h2>{recipe.movie.title}</h2>
+                <div className="content">
+                    <div className="content-cover">
+                            <img src={recipe.movie.image} alt="image" />
+                    </div>
+
+                    <div className="content-infos">
+                            <p>Synopsis : <span>{recipe.movie.synopsis}</span></p>
+                            <p>Année de sortie : <span>{recipe.movie.release_year}</span></p>
+                            <p>Réalisateur : <span>{recipe.movie.director}</span></p>
+                    </div>
+                </div>
             </div>
         </div>
 };
