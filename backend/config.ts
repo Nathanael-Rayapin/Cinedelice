@@ -3,5 +3,6 @@
 export const config = {
   port: parseInt(process.env.PORT || "3000"),
   jwtSecret: process.env.JWT_SECRET as string,
-  jwtExpireIn: process.env.JWT_EXPIRES_IN
+  jwtExpireIn: process.env.JWT_EXPIRES_IN,
+  tmdbApiKey: process.env.TMDB_API_KEY as string
 };
