@@ -22,18 +22,11 @@
         outline: none;
         border: none;
         box-shadow: none;
-    }
-
-    li button a {
         color: #fff;
     }
 
-    li:not(.active) button a {
-        color: var(--color-deep-gray);
-        cursor: default;
-    }
-
     li:not(.active) button {
+        color: var(--color-deep-gray);
         cursor: default;
     }
 }
