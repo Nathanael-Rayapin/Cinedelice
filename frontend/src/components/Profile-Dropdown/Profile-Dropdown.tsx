@@ -25,6 +25,11 @@ const ProfileDropdown = () => {
         detailsRef.current?.removeAttribute("open");
     };
 
+    const handleLogout = () => {
+        authContext.logout();
+        handleClose();
+    }
+
     return (
         <div className="profile">
             <details ref={detailsRef} className="dropdown dropdown-bottom dropdown-end">
@@ -50,17 +55,18 @@ const ProfileDropdown = () => {
                 </ul>}
 
                 {authContext.isAuth && <ul className="menu dropdown-content bg-base-100 rounded-box z-1 w-52 p-2 shadow-sm">
-                    <li>
-                        <NavLink to="/connexion"
+                    {/* On garde ce code pour plus tard */}
+                    {/* <li>
+                        <NavLink to="#"
                             className={({ isActive }) => isActive ? "active" : ""}
                          onClick={handleClose}>
                             Mon profil
                         </NavLink>
-                    </li>
+                    </li> */}
                     <li>
-                        <NavLink to="/inscription"
+                        <NavLink to="/connexion"
                             className={({ isActive }) => isActive ? "active" : ""}
-                         onClick={handleClose}>
+                         onClick={handleLogout}>
                             Déconnexion
                         </NavLink>
                     </li>

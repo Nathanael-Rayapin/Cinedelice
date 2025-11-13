@@ -11,9 +11,7 @@ export const getRecipes = async (): Promise<IRecipeDTO[]> => {
         if (response.status !== 200) {
             throw new Error('Une erreur est survenue lors de la récupération des recettes');
         }
-        
-        console.log(response.data);
-        
+                
         return response.data;
     } catch (error) {
         console.error(error);
@@ -29,8 +27,6 @@ export const getOneRecipe = async (recipeId: number): Promise<IRecipeDTO> => {
         if (response.status !== 200) {
             throw new Error('Une erreur est survenue lors de la récupération de la recette');
         }
-
-        console.log(response.data);
         
         return response.data;
     } catch (error) {

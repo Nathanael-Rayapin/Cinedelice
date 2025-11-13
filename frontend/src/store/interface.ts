@@ -3,6 +3,7 @@ import { createContext, type ReactNode } from "react";
 interface IAuthContextType {
   isAuth: boolean;
   setIsAuth: React.Dispatch<React.SetStateAction<boolean>>;
+  logout: () => void;
 }
 
 export interface IAuthContextProviderProps {
@@ -12,4 +13,5 @@ export interface IAuthContextProviderProps {
 export const AuthContext = createContext<IAuthContextType>({
     isAuth: false,
     setIsAuth: () => {},
+    logout: () => {},
 });
