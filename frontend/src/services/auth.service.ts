@@ -1,6 +1,7 @@
 import axios from 'axios';
-import type { ISignup, ISignin, ISignupDTO, ISigninDTO, IProfileDTO } from '../interfaces/auth';
+import type { ISignup, ISignin, ISignupDTO, ISigninDTO } from '../interfaces/auth';
 import { showSnackbar } from '../utils/snackbar';
+import type { IProfileDTO, IUpdateProfile } from '../interfaces/user';
 
 const BASE_URL = import.meta.env.VITE_BACKEND_API
 
@@ -46,7 +47,7 @@ export const signin = async (userData: ISignin): Promise<ISigninDTO> => {
         if (response.status !== 200) {
             throw new Error('Une erreur est survenue lors de la connexion');
         }
-        
+
         showSnackbar('Connexion réussie', true);
         return response.data;
     } catch (error) {
@@ -68,7 +69,35 @@ export const getProfile = async (): Promise<IProfileDTO> => {
         if (response.status !== 200) {
             throw new Error('Une erreur est survenue lors de la récupération du profil');
         }
-                
+
+        return response.data;
+    } catch (error) {
+        console.error(error);
+        showSnackbar('Oups ! Une erreur est survenue, veuillez réessayer plus tard.', false);
+        throw error;
+    }
+}
+
+export const updatePassword = async (userData: IUpdateProfile): Promise<void> => {
+    try {
+        const response = await axios.patch(`${BASE_URL}/users/me/password`,
+            {
+                oldPassword: userData.oldPassword,
+                newPassword: userData.newPassword
+            },
+            {
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${localStorage.getItem('token')}`
+                }
+            }
+        );
+
+        if (response.status !== 200) {
+            throw new Error('Une erreur est survenue lors de la modification du mot de passe');
+        }
+
+        showSnackbar('Mot de passe modifié avec succès', true);
         return response.data;
     } catch (error) {
         console.error(error);

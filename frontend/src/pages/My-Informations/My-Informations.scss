@@ -1,0 +1,129 @@
+.my-informations {
+    h2 {
+        text-align: left;
+        font-size: 24px;
+        font-weight: 600;
+        color: var(--color-black);
+        margin-top: 48px;
+    }
+
+    .informations {
+        max-width: 600px;
+        width: 100%;
+
+        form {
+            display: flex;
+            flex-direction: column;
+            padding: 56px 0;
+            gap: 32px;
+
+            label {
+                display: block;
+                font-size: 16px;
+                color: var(--color-black);
+            }
+
+            .username label,
+            .password label,
+            .confirm-password label {
+                margin-bottom: 16px;
+            }
+
+            input {
+                width: 100%;
+                height: 50px;
+                border-radius: 8px;
+                border-width: 2px;
+                font-size: 16px;
+                padding: 10px 20px;
+                color: #0D1B2A;
+                background-color: none;
+
+                &:focus {
+                    outline: none;
+                    border: 2px solid #FB8B24;
+                }
+
+                &::placeholder {
+                    color: #0D1B2A;
+                }
+
+                &::-webkit-input-placeholder {
+                    color: #0D1B2A;
+                }
+
+                &:-ms-input-placeholder {
+                    color: #0D1B2A;
+                }
+            }
+
+            .input-default {
+                border: 2px solid #D9D9D9;
+            }
+
+            input#username {
+                color: var(--color-deep-gray);
+            }
+
+            .password-field {
+                position: relative;
+
+                .eye-icon {
+                    position: absolute;
+                    top: 50%;
+                    right: 15px;
+                    transform: translateY(-50%);
+                    width: 24px;
+                    height: 24px;
+                    color: #0D1B2A;
+                    z-index: 99;
+                    cursor: pointer;
+                }
+            }
+
+            .submit-btn {
+                width: 140px;
+                height: 50px;
+                font-size: 16px;
+                font-weight: 600;
+                border-radius: 100px;
+                border: none;
+                color: #fff;
+                background: linear-gradient(to right, #E36414, #FB8B24);
+                margin-right: auto;
+            }
+
+            .error {
+                margin-top: 4px;
+                color: red;
+            }
+        }
+    }
+}
+
+
+@media screen and (min-width: 769px) {
+    .my-informations {
+        h2 {
+            font-size: 32px;
+        }
+
+        .informations {
+            form {
+                label {
+                    font-size: 18px;
+                }
+
+                input {
+                    font-size: 18px;
+                }
+
+                .submit-btn {
+                    width: 160px;
+                    font-size: 18px;
+                    font-weight: 600;
+                }
+            }
+        }
+    }
+}

@@ -25,10 +25,6 @@ export interface ISigninDTO {
     token: string;
 }
 
-export interface IProfileDTO {
-    user: IConnectedUser;
-}
-
 export interface IConnectedUser {
     id: number;
     username: string;
