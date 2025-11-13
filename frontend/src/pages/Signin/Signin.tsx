@@ -4,16 +4,17 @@ import { useContext, useState } from 'react';
 import { useForm, type SubmitHandler } from 'react-hook-form';
 import type { ISignin } from '../../interfaces/auth';
 import { signin } from '../../services/auth.service';
-import PacmanLoader from 'react-spinners/PacmanLoader';
-import { AuthContext } from '../../store/interface';
+import { AuthContext, GlobalUIContext } from '../../store/interface';
 import './Signin.scss';
 
 const emailPattern = /^.+@.+$/i;
 
 const Signin = () => {
     const { register, handleSubmit, formState: { errors, isValid } } = useForm<ISignin>();
-    const [loading, setLoading] = useState(false);
+    const [showPassword, setShowPassword] = useState(false);
+
     const authContext = useContext(AuthContext)
+    const { setLoading } = useContext(GlobalUIContext)
     const navigate = useNavigate()
 
     // Un simple log en attendant d'avoir l'endpoint d'inscription
@@ -38,16 +39,7 @@ const Signin = () => {
         }
     };
 
-    const [showPassword, setShowPassword] = useState(false);
-
-    // Loading State
-    if (loading) {
-        return (
-            <div className="loading-container">
-                <PacmanLoader color="#fB8b24" />
-            </div>
-        );
-    }
+    
 
     return (
         <div className="signin">

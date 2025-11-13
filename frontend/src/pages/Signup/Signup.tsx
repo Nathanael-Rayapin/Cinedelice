@@ -1,20 +1,17 @@
+import type { ISignup } from '../../interfaces/auth';
 import { useForm, type FieldErrors, type SubmitHandler } from 'react-hook-form';
 import { LiaEyeSlashSolid } from "react-icons/lia";
 import { LiaEyeSolid } from "react-icons/lia";
-import { useRef, useState } from 'react';
+import { useContext, useRef, useState } from 'react';
 import { Link, useNavigate } from 'react-router';
-import type { ISignup } from '../../interfaces/auth';
 import { signup } from '../../services/auth.service';
-import PacmanLoader from 'react-spinners/PacmanLoader';
+import { emailPattern, passwordPattern, pseudoPattern } from '../../utils/utils';
 import './Signup.scss';
-
-const pseudoPattern = /^[a-zA-Z0-9]+(-[a-zA-Z0-9]+)*$/i;
-const emailPattern = /^.+@.+$/i;
-const passwordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^a-zA-Z0-9]).+$/;
+import { GlobalUIContext } from '../../store/interface';
 
 const Signup = () => {
     const { register, handleSubmit, getValues, trigger, formState: { errors, isValid } } = useForm<ISignup>();
-    const [loading, setLoading] = useState(false);
+    const { setLoading } = useContext(GlobalUIContext);
     const submitCountRef = useRef(0);
     const navigate = useNavigate();
 
@@ -47,15 +44,6 @@ const Signup = () => {
 
     const [showPassword, setShowPassword] = useState(false);
     const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-
-    // Loading State
-    if (loading) {
-        return (
-            <div className="loading-container">
-                <PacmanLoader color="#fB8b24" />
-            </div>
-        );
-    }
 
     return (
         <div className="signup">

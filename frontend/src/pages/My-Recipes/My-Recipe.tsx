@@ -1,16 +1,19 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import type { IRecipeDTO } from "../../interfaces/recipe";
-import PacmanLoader from "react-spinners/PacmanLoader";
 import RecipeCard from "../../components/Recipe-Card/Recipe-Card";
 import { getMyRecipes } from "../../services/recipes.service";
-import "../Recipes/Recipes.scss"
+import { GlobalUIContext } from "../../store/interface";
+import { usePagination } from "../../hooks/usePagination";
+import PaginationControls from "../../components/Pagination-Controls/Pagination-Controls";
+import "../Recipes/Recipes.scss";
+import "./My-Recipe.scss";
 
 const MyRecipe = () => {
     const [recipes, setRecipes] = useState<IRecipeDTO[]>([]);
-    const [errorMsg, setErrorMsg] = useState<string | null>(null);
-    const [loading, setLoading] = useState(true);
-    const [currentPage, setCurrentPage] = useState(1);
-    const recipesPerPage = 8;
+    const { setLoading, setErrorMsg } = useContext(GlobalUIContext);
+
+    const { currentItems, currentPage, totalPages, goToPage, goToNextPage, goToPreviousPage } =
+        usePagination(recipes, 8);
 
     useEffect(() => {
         const fetchRecipes = async () => {
@@ -28,41 +31,6 @@ const MyRecipe = () => {
         fetchRecipes();
     }, []);
 
-    const indexOfLastRecipe = currentPage * recipesPerPage;
-    const indexOfFirstRecipe = indexOfLastRecipe - recipesPerPage;
-    const currentRecipes = recipes.slice(indexOfFirstRecipe, indexOfLastRecipe);
-    const totalPages = Math.ceil(recipes.length / recipesPerPage);
-
-    const paginate = (pageNumber: number) => setCurrentPage(pageNumber);
-
-    const goToPreviousPage = () => {
-        if (currentPage > 1) {
-            setCurrentPage(currentPage - 1);
-        }
-    };
-
-    const goToNextPage = () => {
-        if (currentPage < totalPages) {
-            setCurrentPage(currentPage + 1);
-        }
-    };
-
-    if (loading) {
-        return (
-            <div className="loading-container" aria-label='Chargement des recettes'>
-                <PacmanLoader color="#fB8b24" />
-            </div>
-        );
-    }
-
-    if (errorMsg) {
-        return (
-            <div className="error-container">
-                <p className="error-msg">{errorMsg}</p>
-            </div>
-        );
-    }
-
     if (recipes.length === 0) {
         return (
             <div className="no-data-found">
@@ -73,39 +41,20 @@ const MyRecipe = () => {
 
     return (
         <>
+            <h2>Éditer mes recettes</h2>
             <div className="recipes-list">
-                {currentRecipes.map((recipe) => (
+                {currentItems.map((recipe) => (
                     <RecipeCard key={recipe.id} recipe={recipe} />
                 ))}
             </div>
 
-            <div className="pagination">
-                <button
-                    onClick={goToPreviousPage}
-                    disabled={currentPage === 1}
-                    className="pagination-button"
-                >
-                    Précédent
-                </button>
-
-                {Array.from({ length: totalPages }, (_, i) => i + 1).map((number) => (
-                    <button
-                        key={number}
-                        onClick={() => paginate(number)}
-                        className={currentPage === number ? 'active' : ''}
-                    >
-                        {number}
-                    </button>
-                ))}
-
-                <button
-                    onClick={goToNextPage}
-                    disabled={currentPage === totalPages}
-                    className="pagination-button"
-                >
-                    Suivant
-                </button>
-            </div>
+            <PaginationControls
+                currentPage={currentPage}
+                totalPages={totalPages}
+                goToPage={goToPage}
+                goToNextPage={goToNextPage}
+                goToPreviousPage={goToPreviousPage}
+            />
         </>
     );
 };

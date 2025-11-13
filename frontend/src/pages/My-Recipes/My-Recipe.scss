@@ -1,0 +1,13 @@
+h2 {
+  text-align: left;
+  font-size: 24px;
+  font-weight: 600;
+  color: var(--color-black);
+  margin-top: 48px;
+}
+
+@media screen and (min-width: 769px) {
+  h2 {
+    font-size: 32px;
+  }
+}

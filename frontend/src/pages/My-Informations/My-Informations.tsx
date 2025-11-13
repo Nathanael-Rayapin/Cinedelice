@@ -5,14 +5,12 @@ import { useContext, useRef, useState } from "react";
 import { passwordPattern } from "../../utils/utils";
 import { LiaEyeSlashSolid, LiaEyeSolid } from "react-icons/lia";
 import { updatePassword } from "../../services/auth.service";
+import { GlobalUIContext } from "../../store/interface";
 import "./My-Informations.scss";
-import { AuthContext } from "../../store/interface";
-import Loading from "../../components/Loading/Loading";
 
 const MyInformations = () => {
     const { register, handleSubmit, getValues, trigger, formState: { errors, isValid } } = useForm<IUpdateProfile>();
-    const [errorMsg, setErrorMsg] = useState<string | null>(null);
-    const { loading, setLoading } = useContext(AuthContext);
+    const { setLoading, setErrorMsg } = useContext(GlobalUIContext);
 
     const [showPassword, setShowPassword] = useState(false);
     const [showConfirmPassword, setShowConfirmPassword] = useState(false);
@@ -38,14 +36,6 @@ const MyInformations = () => {
     const onInvalid = (_errors: FieldErrors<IUpdateProfile>) => {
         submitCountRef.current += 1;
     };
-
-    if (loading) {
-        <Loading />
-    }
-
-    if (errorMsg) {
-        <CustomError errorMsg={errorMsg} />
-    }
 
     return (
         <div className="my-informations">

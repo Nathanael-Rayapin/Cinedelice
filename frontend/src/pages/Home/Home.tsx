@@ -1,21 +1,20 @@
 import TabBar from '../../components/Tab-Bar/Tab-Bar';
 import RecipeCard from '../../components/Recipe-Card/Recipe-Card';
 import MovieCard from '../../components/Movie-Card/Movie-Card';
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { getRecipes } from '../../services/recipes.service';
 import type { IRecipeDTO } from '../../interfaces/recipe';
 import { movies } from './data';
-import PacmanLoader from 'react-spinners/PacmanLoader';
 import { NavLink, Outlet } from 'react-router';
 import Typewriter from 'typewriter-effect';
+import { GlobalUIContext } from '../../store/interface';
 import './Home.scss';
 
 const Home = () => {
     const [recipes, setRecipes] = useState<IRecipeDTO[]>([]);
-    const [errorMsg, setErrorMsg] = useState<string | null>(null);
-    const [loading, setLoading] = useState(false);
+    const { setLoading, setErrorMsg } = useContext(GlobalUIContext);
 
-    const tabs = ['Pour vous', 'Tendances', 'Favoris'];
+    const tabs = ['Pour vous'];
 
     useEffect(() => {
         const fetchRecipes = async () => {
@@ -35,21 +34,7 @@ const Home = () => {
         fetchRecipes();
     }, []);
 
-    // Loading State
-    if (loading) {
-        return (
-            <div className="loading-container">
-                <PacmanLoader color="#fB8b24" />
-            </div>
-        );
-    }
-
-    // Error State
-    if (errorMsg) {
-        return <p className="error-msg">{errorMsg}</p>;
-    }
-
-    return recipes && recipes.length > 0 && (
+    return recipes && recipes.length > 0 &&
         <div className="home">
             <h1 className='slogan'>
             <Typewriter

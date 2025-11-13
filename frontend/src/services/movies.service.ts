@@ -3,7 +3,7 @@ import { movies } from "../pages/Home/data";
 // Pour l'instant on créer les données en dur
 // On utilisera pas l'interface réel car sinon il faudra mettre à jour le tableau
 // qu'on a créer en dur dans data.ts
-interface IFakeMovie {
+export interface IFakeMovie {
   id: number;
   title: string;
   image: string;

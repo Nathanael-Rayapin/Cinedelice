@@ -1,18 +1,17 @@
 import { useParams } from 'react-router';
 import RecipeCover from '../../components/Recipe-Cover/Recipe-Cover';
 import type { IRecipeDTO } from '../../interfaces/recipe';
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { getOneRecipe } from '../../services/recipes.service';
-import PacmanLoader from 'react-spinners/PacmanLoader';
 import { PiTimerDuotone } from "react-icons/pi";
 import { TbPointFilled } from "react-icons/tb";
+import { GlobalUIContext } from '../../store/interface';
 import './Recipe-Detail.scss';
 
 const RecipeDetail = () => {
     const params = useParams();
     const [recipe, setRecipe] = useState<IRecipeDTO | null>(null);
-    const [errorMsg, setErrorMsg] = useState<string | null>(null);
-    const [loading, setLoading] = useState(false);
+    const { setLoading, setErrorMsg } = useContext(GlobalUIContext);
 
     useEffect(() => {
         const fetchRecipe = async () => {
@@ -37,20 +36,6 @@ const RecipeDetail = () => {
 
         fetchRecipe();
     }, [params.id]);
-
-    // Loading State
-    if (loading) {
-        return (
-            <div className="loading-container">
-                <PacmanLoader color="#fB8b24" />
-            </div>
-        );
-    }
-
-    // Error State
-    if (errorMsg) {
-        return <p className="error-msg">{errorMsg}</p>;
-    }
 
     return recipe &&
         <div className="recipe-detail">

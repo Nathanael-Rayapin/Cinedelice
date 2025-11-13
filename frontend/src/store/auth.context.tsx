@@ -1,8 +1,8 @@
 import { useState } from 'react';
-import { AuthContext, type IAuthContextProviderProps } from './interface';
+import { AuthContext, type IContextProviderProps } from './interface';
 import type { ISigninDTO } from '../interfaces/auth';
 
-export default function AuthContextProvider({ children }: IAuthContextProviderProps) {
+export default function AuthContextProvider({ children }: IContextProviderProps) {
   // Utiliser pour mettre à jour mon authentification
   const [isAuth, setIsAuth] = useState(false);
 

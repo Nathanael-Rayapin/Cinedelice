@@ -1,15 +1,14 @@
-import { useEffect, useState } from "react";
-import type { IProfileDTO } from "../../interfaces/auth";
-import PacmanLoader from "react-spinners/PacmanLoader";
+import { useContext, useEffect, useState } from "react";
 import { getProfile } from "../../services/auth.service";
 import TabBar from "../../components/Tab-Bar/Tab-Bar";
 import { Outlet } from "react-router";
+import type { IProfileDTO } from "../../interfaces/user";
+import { GlobalUIContext } from "../../store/interface";
 import "./Profile.scss";
 
 const Profile = () => {
     const [profile, setProfile] = useState<IProfileDTO | null>(null);
-    const [errorMsg, setErrorMsg] = useState<string | null>(null);
-    const [loading, setLoading] = useState(true);
+    const { setLoading, setErrorMsg } = useContext(GlobalUIContext);
 
     const tabs = ['Mes recettes', 'Mes informations'];
 
@@ -28,22 +27,6 @@ const Profile = () => {
 
         fetchProfile();
     }, []);
-
-    if (loading) {
-        return (
-            <div className="loading-container" aria-label='Chargement des recettes'>
-                <PacmanLoader color="#fB8b24" />
-            </div>
-        );
-    }
-
-    if (errorMsg) {
-        return (
-            <div className="error-container">
-                <p className="error-msg">{errorMsg}</p>
-            </div>
-        );
-    }
 
     return profile &&
         <div className="profile-container">
