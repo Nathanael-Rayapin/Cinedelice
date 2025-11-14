@@ -16,6 +16,7 @@ import Profile from './pages/Profile/Profile';
 import MyRecipe from './pages/My-Recipes/My-Recipe';
 import ForYou from './pages/For-You/For-You';
 import MyInformations from './pages/My-Informations/My-Informations';
+import MovieDetail from './pages/Movie-Detail/Movie-Detail';
 import './App.css';
 
 function App() {
@@ -30,25 +31,30 @@ function App() {
     if (token) {
       authContext.setIsAuth(true);
     }
-  }, [location.pathname, authContext]);
+  }, [location.pathname, authContext.isAuth]);
 
   return (
     <>
       <Navbar />
       <Layout>
         <Routes>
+          {/* Accueil */}
           <Route path="/" element={<Home />}>
             <Route index element={<Navigate to="pour-vous" replace />} />
             <Route path="pour-vous" element={<ForYou />} />
           </Route>
 
+          {/* Recettes et Films */}
           <Route path="/recettes" element={<Recipes />} />
           <Route path="/recettes/:id" element={<RecipeDetail showDraft={false} />} />
           <Route path="/films" element={<Movies />} />
+          <Route path="/films/:id" element={<MovieDetail />} />
 
+          {/* Authentification */}
           <Route path="/inscription" element={<Signup />} />
           <Route path="/connexion" element={<Signin />} />
 
+          {/* Profil */}
           <Route path="/profil" element={<Profile />}>
             <Route index element={<Navigate to="mes-recettes" replace />} />
             <Route path="mes-recettes" element={<MyRecipe />} />
@@ -56,6 +62,7 @@ function App() {
             <Route path="mes-informations" element={<MyInformations />} />
           </Route>
 
+          {/* Autre */}
           <Route path="/cgu" element={<CGU />} />
           <Route path="/à-propos" element={<About />} />
         </Routes>

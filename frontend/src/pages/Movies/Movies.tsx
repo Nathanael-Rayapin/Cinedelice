@@ -1,13 +1,14 @@
 import { useContext, useEffect, useState } from 'react';
-import { getMovies, type IFakeMovie } from '../../services/movies.service';
+import { getMovies } from '../../services/movies.service';
 import MovieCard from '../../components/Movie-Card/Movie-Card';
 import { GlobalUIContext } from '../../store/interface';
 import { usePagination } from '../../hooks/usePagination';
 import PaginationControls from '../../components/Pagination-Controls/Pagination-Controls';
 import './Movies.scss';
+import type { IMovieDTO } from '../../interfaces/movie';
 
 const Movies = () => {
-  const [movies, setMovies] = useState<IFakeMovie[]>([]);
+  const [movies, setMovies] = useState<IMovieDTO[]>([]);
   const { setLoading, setErrorMsg } = useContext(GlobalUIContext);
 
   const { currentItems, currentPage, totalPages, goToPage, goToNextPage, goToPreviousPage } =

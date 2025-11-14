@@ -1,19 +1,7 @@
+import type { IMovieDTO } from '../interfaces/movie';
 import { movies } from '../pages/Home/data';
 
-// Pour l'instant on créer les données en dur
-// On utilisera pas l'interface réel car sinon il faudra mettre à jour le tableau
-// qu'on a créer en dur dans data.ts
-export interface IFakeMovie {
-  id: number;
-  title: string;
-  image: string;
-  synopsis: string; 
-  id_movie_tmdb: number;
-  release_year: string; 
-  director: string;
-}
-
-export const getMovies = async (): Promise<IFakeMovie[]> => {
+export const getMovies = async (): Promise<IMovieDTO[]> => {
   // on simule un appel API (comme pour Recipes)
   await new Promise((res) => setTimeout(res, 500));
   return movies;

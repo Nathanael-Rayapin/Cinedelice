@@ -7,11 +7,16 @@ import './Layout.scss';
 const Layout = ({ children }: { children: React.ReactNode }) => {
   const { loading, errorMsg } = useContext(GlobalUIContext);
 
-  if (loading) return <Loading />;
+  // Cas d'erreur
+  if (errorMsg) return <div className="layout"><CustomError errorMsg={errorMsg} /></div>;
 
-  if (errorMsg) return <CustomError errorMsg={errorMsg} />;
-
-  return <div className="layout">{children}</div>;
+  // Affichage par defaut
+  return (
+    <div className="layout">
+      {children}
+      {loading && <div className="loading-overlay"><Loading /></div>}
+    </div>
+  );
 };
 
 export default Layout;

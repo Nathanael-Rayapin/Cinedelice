@@ -35,8 +35,6 @@ const Home = () => {
   }, []);
 
   return (
-    recipes &&
-    recipes.length > 0 && (
       <div className="home">
         <h1 className="slogan">
           <Typewriter
@@ -79,7 +77,6 @@ const Home = () => {
         </div>
       </div>
     )
-  );
 };
 
 export default Home;

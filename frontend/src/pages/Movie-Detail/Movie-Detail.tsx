@@ -1,16 +1,15 @@
 import "./Movie-Detail.scss";
-import RecipeCard from "../../components/Recipe-Card/Recipe-Card"; 
 import { useParams, useNavigate } from "react-router";
 import { useEffect, useState } from "react";
-import { recipes, movies } from "../Home/data"; 
-import type { IMovieDTO } from "../../interfaces/movie"; 
-import type { IRecipeDTO } from "../../interfaces/recipe"; 
+import { recipes, movies } from "../Home/data";
+import type { IRecipeDTO } from "../../interfaces/recipe";
 import PacmanLoader from "react-spinners/PacmanLoader";
+import type { IMovieDTO } from "../../interfaces/movie";
+import RecipeCard from "../../components/Recipe-Card/Recipe-Card";
 
 const MovieDetail = () => {
     const { id } = useParams<{ id: string }>();
     const navigate = useNavigate();
-    // Le state utilise directement le type des données (IMovieDTO)
     const [movie, setMovie] = useState<IMovieDTO | null>(null);
     const [loading, setLoading] = useState(false);
     const [errorMsg, setErrorMsg] = useState<string | null>(null);
@@ -19,8 +18,10 @@ const MovieDetail = () => {
         const fetchMovie = () => {
             try {
                 setLoading(true);
-                const allMovies = movies as IMovieDTO[]; 
+                const allMovies = movies;
+
                 const foundMovie = allMovies.find((m) => String(m.id) === id);
+
                 if (!foundMovie) {
                     setErrorMsg("Film non trouvé");
                 } else {
@@ -70,7 +71,7 @@ const MovieDetail = () => {
     const adaptRecipeToIRecipeDTO = (recipe: ILocalRecipe): IRecipeDTO => ({
         id: recipe.id,
         category: { name: recipe.badge || "Autre" },
-        category_id: 0,
+        category_id: 1,
         description: recipe.description || "",
         image: recipe.img, 
         ingredients: "",
@@ -84,25 +85,33 @@ const MovieDetail = () => {
         updated_at: "",
         user_id: 0,
         user: { username: recipe.author || "Inconnu" },
-        movie: movie, 
+        movie: {
+            id: 1,
+            id_movie_tmdb: 1,
+            title: "Ratatouille",
+            release_year: "2007",
+            director: "Brad Pitt",
+            synopsis: "Un jeune rat de cuisine rêve de devenir un grand chef français et s'associe à un plongeur pour réaliser son rêve, malgré les obstacles.",
+            image: "",
+        }
     });
 
     return (
         <div className="movie-detail">
-            <div className="movie-page-content"> 
-                
+            <div className="movie-page-content">
+
                 <div className="movie-info-container">
-                    
+
                     <div className="movie-title-mobile">
                         <h1>{movie.title}</h1>
                     </div>
-                    
+
                     <img
-                        src={movie.image} 
+                        src={movie.image}
                         alt={movie.title}
                         className="movie-poster"
                     />
-                    
+
                     <div className="movie-synopsis-container">
                         <p className="synopsis">
                             <strong>Synopsis :</strong> {movie.synopsis}
@@ -126,6 +135,7 @@ const MovieDetail = () => {
                             {associatedRecipes.map((recipe) => (
                                 <RecipeCard
                                     key={recipe.id}
+                                    hasDraft={false}
                                     recipe={adaptRecipeToIRecipeDTO(recipe)}
                                 />
                             ))}
