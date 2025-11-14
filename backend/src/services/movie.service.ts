@@ -17,6 +17,7 @@ export async function getMovieFromTmdbById(movieId: number) {
 
   return response.data;
 }
+
 // Service pour récupérer le réalisateur d'un film depuis TMDb
 export async function getMovieDirectorFromTmdb(movieId: number) {
   const response = await axios.get(`${TMDB_BASE_URL}/movie/${movieId}/credits`, {
