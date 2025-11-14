@@ -8,7 +8,7 @@ const RecipeCard = ({ recipe, hasDraft }: { recipe: IRecipeDTO; hasDraft: boolea
 
   const handleClick = () => {
     if (hasDraft) {
-      navigate(`/mes-recettes/${recipe.id}`, { state: { recipe } });
+      navigate(`/ma-recette/${recipe.id}`, { state: { recipe } });
     } else {
       navigate(`/recettes/${recipe.id}`, { state: { recipe } });
     }

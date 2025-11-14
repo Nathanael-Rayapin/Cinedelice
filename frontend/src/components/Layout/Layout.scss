@@ -15,20 +15,19 @@
   }
 
   .loading-overlay {
-    position: fixed; // Fixed pour couvrir tout l'écran
+    position: fixed;
     top: 0;
     left: 0;
     right: 0;
     bottom: 0;
-    background-color: rgba(0, 0, 0, 0.5); // Fond semi-transparent
+    background-color: rgba(0, 0, 0, 0.5);
     display: flex;
     align-items: center;
     justify-content: center;
-    z-index: 999; // Au-dessus de tout
-    backdrop-filter: blur(4px); // Effet de flou (optionnel)
+    z-index: 999;
+    backdrop-filter: blur(4px);
 
     .loading-container {
-      // Reset les styles absolus si tu les as dans Loading
       position: relative;
       transform: none;
     }

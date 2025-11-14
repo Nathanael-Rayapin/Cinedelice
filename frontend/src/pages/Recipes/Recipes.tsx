@@ -1,39 +1,37 @@
-import { useContext, useEffect, useState } from 'react'; //Hooks essentiels pour gérer l'état et les effets de bord
-import { getRecipes } from '../../services/recipes.service'; //Fonction asynchrone pour récupérer les recettes depuis un service
-import { type IRecipeDTO } from '../../interfaces/recipe'; //Interface TypeScript pour typer les données des recettes
-import RecipeCard from '../../components/Recipe-Card/Recipe-Card'; //Composant personnalisé pour afficher chaque recette
+import { useContext, useEffect, useState } from 'react';
+import { getRecipes } from '../../services/recipes.service';
+import { type IRecipeDTO } from '../../interfaces/recipe';
+import RecipeCard from '../../components/Recipe-Card/Recipe-Card';
 import { GlobalUIContext } from '../../store/interface';
 import { usePagination } from '../../hooks/usePagination';
 import PaginationControls from '../../components/Pagination-Controls/Pagination-Controls';
-import './Recipes.scss'; //Import du fichier de styles spécifique à cette page
+import './Recipes.scss';
 
 const Recipes = () => {
-  const [recipes, setRecipes] = useState<IRecipeDTO[]>([]); //Tableau de recettes (initialisé comme tableau vide)
+  const [recipes, setRecipes] = useState<IRecipeDTO[]>([]);
   const { setLoading, setErrorMsg } = useContext(GlobalUIContext);
 
-  const { currentItems, currentPage, totalPages, goToPage, goToNextPage, goToPreviousPage } =
+  const { currentItems, currentPage, pageNumbers, goToPage, goToNextPage, goToPreviousPage } =
     usePagination(recipes, 8);
 
-  //Le useEffect est utilisé pour charger les recettes au montage du composant (tableau de dépendances vide [])
   useEffect(() => {
     const fetchRecipes = async () => {
       try {
         setLoading(true);
-        const recipes = await getRecipes(); //Appel à getRecipes() pour obtenir les recettes
+        const recipes = await getRecipes();
         setRecipes(recipes);
       } catch (error) {
-        setErrorMsg(error instanceof Error ? error.message : 'Une erreur est survenue.'); //Gestion des erreurs avec un message approprié
+        setErrorMsg(error instanceof Error ? error.message : 'Une erreur est survenue.');
       } finally {
-        setLoading(false); //setLoading(false) est appelé dans le bloc finally pour garantir que le loader disparaisse, même en cas d'erreur
+        setLoading(false);
       }
     };
 
     fetchRecipes();
   }, []);
 
-  //Si tout va bien, les recettes sont affichées sous forme de cartes (RecipeCard) en utilisant currentRecipes.map
   return (
-    <>
+    <div className='recipes-container'>
       <h1>Catalogue de recettes</h1>
       <div className="recipes-list">
         {currentItems.map((recipe) => (
@@ -43,12 +41,12 @@ const Recipes = () => {
 
       <PaginationControls
         currentPage={currentPage}
-        totalPages={totalPages}
+        pageNumbers={pageNumbers}
         goToPage={goToPage}
         goToNextPage={goToNextPage}
         goToPreviousPage={goToPreviousPage}
       />
-    </>
+    </div>
   );
 };
 

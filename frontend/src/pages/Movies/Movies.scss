@@ -1,30 +1,36 @@
-h1 {
-  text-align: left;
-  font-size: 24px;
-  font-weight: 600;
-}
+.movies-container {
+  margin-bottom: 64px;
 
-.movies-list {
-  display: flex;
-  flex-direction: column;
-  gap: 28px;
-  margin-top: 64px;
-}
-
-@media screen and (min-width: 769px) {
   h1 {
-    font-size: 40px;
+    text-align: left;
+    font-size: 24px;
+    font-weight: 600;
   }
 
   .movies-list {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
     gap: 20px;
+    grid-template-columns: repeat(1, 1fr);
+    margin-top: 48px;
+  }
+}
+
+@media screen and (min-width: 769px) {
+  .movies-container {
+    h1 {
+      font-size: 40px;
+    }
+
+    .movies-list {
+      grid-template-columns: repeat(2, 1fr);
+    }
   }
 }
 
 @media (min-width: 1200px) {
-  .movies-list {
-    grid-template-columns: repeat(4, 1fr);
+  .movies-container {
+    .movies-list {
+      grid-template-columns: repeat(4, 1fr);
+    }
   }
 }

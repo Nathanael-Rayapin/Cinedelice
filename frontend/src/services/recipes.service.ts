@@ -14,7 +14,6 @@ export const getRecipes = async (): Promise<IRecipeDTO[]> => {
 
     return response.data;
   } catch (error) {
-    console.error(error);
     showSnackbar("Oups ! Une erreur s'est produite. Veuillez réessayer plus tard.", false);
     throw error;
   }
@@ -30,7 +29,6 @@ export const getOneRecipe = async (recipeId: number): Promise<IRecipeDTO> => {
 
     return response.data;
   } catch (error) {
-    console.error(error);
     showSnackbar("Oups ! Une erreur s'est produite. Veuillez réessayer plus tard.", false);
     throw error;
   }
@@ -51,7 +49,6 @@ export const getMyRecipes = async (): Promise<IRecipeDTO[]> => {
 
     return response.data;
   } catch (error) {
-    console.error(error);
     showSnackbar("Oups ! Une erreur s'est produite. Veuillez réessayer plus tard.", false);
     throw error;
   }
@@ -72,7 +69,6 @@ export const getMyRecipe = async (recipeId: number): Promise<IRecipeDTO> => {
 
     return response.data;
   } catch (error) {
-    console.error(error);
     showSnackbar("Oups ! Une erreur s'est produite. Veuillez réessayer plus tard.", false);
     throw error;
   }

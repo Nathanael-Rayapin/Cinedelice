@@ -31,7 +31,6 @@ export const signup = async (userData: ISignup): Promise<ISignupDTO> => {
     showSnackbar('Compte créé avec succès', true);
     return response.data;
   } catch (error) {
-    console.error(error);
     showSnackbar('Oups ! Veuillez vérifier vos informations', false);
     throw error;
   }
@@ -59,7 +58,6 @@ export const signin = async (userData: ISignin): Promise<ISigninDTO> => {
     showSnackbar('Connexion réussie', true);
     return response.data;
   } catch (error) {
-    console.error(error);
     showSnackbar('Oups ! Veuillez vérifier vos informations', false);
     throw error;
   }
@@ -80,7 +78,6 @@ export const getProfile = async (): Promise<IProfileDTO> => {
 
     return response.data;
   } catch (error) {
-    console.error(error);
     showSnackbar('Oups ! Une erreur est survenue, veuillez réessayer plus tard.', false);
     throw error;
   }
@@ -109,7 +106,6 @@ export const updatePassword = async (userData: IUpdateProfile): Promise<void> =>
     showSnackbar('Mot de passe modifié avec succès', true);
     return response.data;
   } catch (error) {
-    console.error(error);
     showSnackbar('Oups ! Une erreur est survenue, veuillez réessayer plus tard.', false);
     throw error;
   }

@@ -4,14 +4,14 @@ import MovieCard from '../../components/Movie-Card/Movie-Card';
 import { GlobalUIContext } from '../../store/interface';
 import { usePagination } from '../../hooks/usePagination';
 import PaginationControls from '../../components/Pagination-Controls/Pagination-Controls';
-import './Movies.scss';
 import type { IMovieDTO } from '../../interfaces/movie';
+import './Movies.scss';
 
 const Movies = () => {
   const [movies, setMovies] = useState<IMovieDTO[]>([]);
   const { setLoading, setErrorMsg } = useContext(GlobalUIContext);
 
-  const { currentItems, currentPage, totalPages, goToPage, goToNextPage, goToPreviousPage } =
+  const { currentItems, currentPage, pageNumbers, goToPage, goToNextPage, goToPreviousPage } =
     usePagination(movies, 8);
 
   useEffect(() => {
@@ -31,22 +31,22 @@ const Movies = () => {
   }, []);
 
   return (
-    <>
+    <div className='movies-container'>
       <h1>Catalogue de films</h1>
       <div className="movies-list">
         {currentItems.map((movie) => (
           <MovieCard key={movie.id} movie={movie} />
         ))}
-
-        <PaginationControls
-          currentPage={currentPage}
-          totalPages={totalPages}
-          goToPage={goToPage}
-          goToNextPage={goToNextPage}
-          goToPreviousPage={goToPreviousPage}
-        />
       </div>
-    </>
+      
+      <PaginationControls
+        currentPage={currentPage}
+        pageNumbers={pageNumbers}
+        goToPage={goToPage}
+        goToNextPage={goToNextPage}
+        goToPreviousPage={goToPreviousPage}
+      />
+    </div>
   );
 };
 

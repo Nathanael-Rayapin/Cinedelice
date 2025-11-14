@@ -36,7 +36,7 @@ const Signin = () => {
 
       // On redirige (à terme on redirigera vers le profil)
       reset();
-      navigate('/pour-vous');
+      navigate('/profil/mes-recettes');
     } catch (error) {
       console.error('Erreur lors de la connexion au compte', error);
     } finally {

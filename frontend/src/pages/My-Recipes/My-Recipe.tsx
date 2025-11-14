@@ -12,7 +12,7 @@ const MyRecipe = () => {
   const [recipes, setRecipes] = useState<IRecipeDTO[]>([]);
   const { setLoading, setErrorMsg } = useContext(GlobalUIContext);
 
-  const { currentItems, currentPage, totalPages, goToPage, goToNextPage, goToPreviousPage } =
+  const { currentItems, currentPage, pageNumbers, goToPage, goToNextPage, goToPreviousPage } =
     usePagination(recipes, 8);
 
   useEffect(() => {
@@ -40,7 +40,7 @@ const MyRecipe = () => {
   }
 
   return (
-    <>
+    <div className='recipes-container'>
       <h2>Éditer mes recettes</h2>
       <div className="recipes-list">
         {currentItems.map((recipe) => (
@@ -50,12 +50,12 @@ const MyRecipe = () => {
 
       <PaginationControls
         currentPage={currentPage}
-        totalPages={totalPages}
+        pageNumbers={pageNumbers}
         goToPage={goToPage}
         goToNextPage={goToNextPage}
         goToPreviousPage={goToPreviousPage}
       />
-    </>
+    </div>
   );
 };
 

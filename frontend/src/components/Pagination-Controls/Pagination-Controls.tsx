@@ -1,6 +1,8 @@
+import './Pagination-Controls.scss';
+
 interface PaginationControlsProps {
   currentPage: number;
-  totalPages: number;
+  pageNumbers: (number | string)[];
   goToPage: (page: number) => void;
   goToNextPage: () => void;
   goToPreviousPage: () => void;
@@ -8,7 +10,7 @@ interface PaginationControlsProps {
 
 const PaginationControls = ({
   currentPage,
-  totalPages,
+  pageNumbers,
   goToPage,
   goToNextPage,
   goToPreviousPage,
@@ -18,21 +20,21 @@ const PaginationControls = ({
       Précédent
     </button>
 
-    {Array.from({ length: totalPages }, (_, i) => i + 1).map((number) => (
-      <button
-        key={number}
-        onClick={() => goToPage(number)}
-        className={currentPage === number ? 'active' : ''}
-      >
-        {number}
-      </button>
-    ))}
+    {pageNumbers.map((number, idx) =>
+      typeof number === 'number' ? (
+        <button
+          key={idx}
+          onClick={() => goToPage(number)}
+          className={currentPage === number ? 'active' : ''}
+        >
+          {number}
+        </button>
+      ) : (
+        <span key={idx} className="dots">{number}</span>
+      )
+    )}
 
-    <button
-      onClick={goToNextPage}
-      disabled={currentPage === totalPages}
-      className="pagination-button"
-    >
+    <button onClick={goToNextPage} disabled={currentPage === pageNumbers[pageNumbers.length - 1]} className="pagination-button">
       Suivant
     </button>
   </div>

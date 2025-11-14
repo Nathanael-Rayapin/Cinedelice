@@ -44,9 +44,8 @@ const Signup = () => {
     }
   };
 
-  const onInvalid = (errors: FieldErrors<ISignup>) => {
+  const onInvalid = (_errors: FieldErrors<ISignup>) => {
     submitCountRef.current += 1;
-    console.error(errors);
   };
 
   const [showPassword, setShowPassword] = useState(false);
