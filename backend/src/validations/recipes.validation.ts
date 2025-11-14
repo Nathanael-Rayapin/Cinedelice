@@ -3,14 +3,7 @@ import { BadRequestError } from "../lib/errors.ts";
 
 export const createRecipeSchema = z.object({
   category_id: z.number().int().positive(),
-  movie_title: z.string()
-    .min(3, "Le titre doit contenir au minimum 3 caractères")
-    .max(100, "Le titre ne peut pas dépasser 100 caractères")
-    .regex(
-      /^[a-zA-ZÀ-ÿ0-9\s\-',.()]+$/,
-      "Le titre ne peut contenir que des lettres, chiffres, espaces et caractères basiques (- ' , . ())"
-    )
-    .trim(), // Supprime les espaces au début et à la fin
+  movie_id: z.number().int().positive(),
   title: z.string()
     .min(3, "Le titre doit contenir au minimum 3 caractères")
     .max(100, "Le titre ne peut pas dépasser 100 caractères")

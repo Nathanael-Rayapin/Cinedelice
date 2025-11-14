@@ -175,7 +175,7 @@ export async function getMyRecipe(req: Request, res: Response) {
 
 // Créer une recette avec un film associé
 export async function createRecipe(req: Request, res: Response) {
-  const { title, category_id, movie_title, number_of_person, preparation_time, description, image, ingredients, preparation_steps, status } = await validateCreateRecipe(req.body);
+  const { title, category_id, movie_id, number_of_person, preparation_time, description, image, ingredients, preparation_steps, status } = await validateCreateRecipe(req.body);
   
   // Récupérer l'ID de l'utilisateur connecté depuis le token JWT
   const user_id = req.currentUserId;
@@ -199,17 +199,13 @@ export async function createRecipe(req: Request, res: Response) {
   }
 
   // on utilise notre service pour trouver ou créer le film dans la BDD
-  const movie = await findOrCreateMovieFromTmdb(movie_title);
-
-  if(!movie){
-    throw new NotFoundError(`Aucun film trouvé avec le titre "${movie_title}"`);
-  }
+  const movie = await findOrCreateMovieFromTmdb(movie_id);
   // Créer la recette avec le film associé
   const createdRecipe = await prisma.recipe.create({
     data: {
       user_id,
       category_id,
-      movie_id:movie.id, // on relie la recette au film trouvé/créé
+      movie_id:movie.id, // on relie la recette au film trouvé/créé dans notre bbd
       title,
       number_of_person,
       preparation_time,

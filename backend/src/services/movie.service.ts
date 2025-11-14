@@ -31,6 +31,7 @@ export async function getMovieDirectorFromTmdb(movieId: number) {
 
   return director ? director.name : "Inconnu";
 }
+
 // Trouve ou crée un film dans NOTRE BDD à partir de l'ID TMDb envoyé par le front
 export async function findOrCreateMovieFromTmdb(movieId: number) { 
   // si trouvé on verifie si le film existe déjà dans notre BDD
