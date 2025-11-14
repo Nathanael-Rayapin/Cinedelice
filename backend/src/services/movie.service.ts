@@ -1,6 +1,8 @@
 import axios from "axios";
 import { config } from "../../config.ts";
 import { prisma } from "../models/index.ts";
+import type { MovieJob } from "../@types/express.d.ts";
+
 const TMDB_API_KEY = config.tmdbApiKey;
 const TMDB_BASE_URL = "https://api.themoviedb.org/3";
 
@@ -27,7 +29,7 @@ export async function getMovieDirectorFromTmdb(movieId: number) {
 
   const crew = response.data.crew;
   // On cherche la personne qui a le job "Director"
-  const director = crew.find((person: any) => person.job === "Director");
+  const director = crew.find((person: MovieJob) => person.job === "Director");
 
   return director ? director.name : "Inconnu";
 }
