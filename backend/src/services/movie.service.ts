@@ -27,15 +27,7 @@ export async function getMovieDirectorFromTmdb(movieId: number) {
     }
   });
 
-// Service pour récupérer le réalisateur d'un film depuis TMDb
-export async function getMovieDirectorFromTmdb(movieId: number) {
-  const response = await axios.get(`${TMDB_BASE_URL}/movie/${movieId}/credits`, {
-    params: {
-      api_key: TMDB_API_KEY,
-      language: "fr-FR"
-    }
-  });
-
+  // Service pour récupérer le réalisateur d'un film depuis TMDb
   const crew = response.data.crew;
   // On cherche la personne qui a le job "Director"
   const director = crew.find((person: MovieJob) => person.job === "Director");
