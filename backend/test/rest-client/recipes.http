@@ -1,5 +1,5 @@
 @apiBaseUrl = http://localhost:3000/api
-@token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjMsInJvbGUiOiJ1c2VyIiwiaWF0IjoxNzYzMDQ0OTE2LCJleHAiOjE3NjMwNDg1MTZ9.8rxEtsRvak1ExqqBBho-Ib2tWctMBk_1CK8xKHdGkoM
+@token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTc2MzEzMjEzNCwiZXhwIjoxNzYzMTM1NzM0fQ.05p7NpGTweP3_kHecTqhFqzqVdGSBvZmZ4Hl05cD5TY
 
 ### Lister toutes les recettes
 GET {{apiBaseUrl}}/recipes
@@ -13,16 +13,16 @@ Authorization: Bearer {{token}}
 Content-Type: application/json
 
 {
-  "title": "la pizza de toy storie",
+  "title": "la purrée de star wars",
   "category_id": 1,
-  "movie_title": "les simpson",
+  "movie_id": 33,
   "number_of_person": 3,
   "preparation_time": 45,
   "image": "http://example.com/donuts-roses.jpg",
   "description": "Les délicieux donuts roses préférés d'Homer Simpson, inspirés du film.",
   "ingredients": "Farine\nSucre\nBeurre\nLait\nLevure\nColorant rose\nVermicelles",
   "preparation_steps": "Préparer la pâte\nFormer les donuts\nFaire frire\nAjouter le glaçage rose\nDécorer avec des vermicelles",
-  "status": "draft"
+  "status": "published"
 }
 
 ### Supprimer une recette (user)

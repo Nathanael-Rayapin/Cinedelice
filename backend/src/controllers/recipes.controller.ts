@@ -228,32 +228,15 @@ export async function updateAnyRecipe(req: Request, res: Response) {
   }
 
   // Utilise prisma pour modifier la recette et sa data
-  const { title, category_id, movie_id, number_of_person, preparation_time, description, image, ingredients, preparation_steps, status } = await validateUpdateRecipe(req.body);
-  // par défaut on garde l'ancien film
-  let finalMovieId = recipe.movie_id; 
+  const { category_id } = await validateUpdateRecipe(req.body);
 
-  // Si on envoie un nouveau movie_id, on met à jour
-  if (movie_id) {
-    const movie = await findOrCreateMovieFromId(movie_id);
-    finalMovieId = movie.id;
-  }
-
+  // On met uniquement la catégorie à jour
   const updatedRecipe = await prisma.recipe.update({
     where: { id: recipeId },
     data: {
       category_id,
-      movie_id:finalMovieId, 
-      title,
-      number_of_person,
-      preparation_time,
-      description,
-      image,
-      ingredients,
-      preparation_steps,
-      status,
     },
   });
-
   // Renvoyer la recette mise à jour
   res.status(200).json({
     message: `La recette "${updatedRecipe.title}" a été mise à jour avec succès par l'administrateur`,
@@ -285,7 +268,7 @@ export async function updateMyRecipe(req: Request, res: Response) {
   const { title, category_id, movie_id, number_of_person, preparation_time, description, image, ingredients, preparation_steps, status } = await validateUpdateRecipe(req.body);
   
   let finalMovieId = recipe.movie_id; // par défaut on garde l'ancien film
-  
+
   // si le titre du film a changé, on cherche/crée le nouveau film
   if(movie_id){
     const movie = await findOrCreateMovieFromId(movie_id);
