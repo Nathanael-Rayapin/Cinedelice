@@ -17,6 +17,7 @@ import MyRecipe from './pages/My-Recipes/My-Recipe';
 import ForYou from './pages/For-You/For-You';
 import MyInformations from './pages/My-Informations/My-Informations';
 import MovieDetail from './pages/Movie-Detail/Movie-Detail';
+import ProtectedRoute from './components/ProtectedRoute/ProtectedRoute';
 import './App.css';
 
 function App() {
@@ -47,7 +48,6 @@ function App() {
           {/* Recettes et Films */}
           <Route path="/recettes" element={<Recipes />} />
           <Route path="/recettes/:id" element={<RecipeDetail showDraft={false} />} />
-          <Route path="/ma-recette/:id" element={<RecipeDetail showDraft={true} />} />
           <Route path="/films" element={<Movies />} />
           <Route path="/films/:id" element={<MovieDetail />} />
 
@@ -55,11 +55,18 @@ function App() {
           <Route path="/inscription" element={<Signup />} />
           <Route path="/connexion" element={<Signin />} />
 
-          {/* Profil */}
-          <Route path="/profil" element={<Profile />}>
-            <Route index element={<Navigate to="mes-recettes" replace />} />
-            <Route path="mes-recettes" element={<MyRecipe />} />
-            <Route path="mes-informations" element={<MyInformations />} />
+          {/* Routes Protégées - Mes recettes */}
+          <Route element={<ProtectedRoute isAuthenticated={authContext.isAuth} />}>
+            <Route path="/ma-recette/:id" element={<RecipeDetail showDraft={true} />} />
+          </Route>
+
+          {/* Routes Protégées - Mon Profil */}
+          <Route element={<ProtectedRoute isAuthenticated={authContext.isAuth} />}>
+            <Route path="/profil" element={<Profile />}>
+              <Route index element={<Navigate to="mes-recettes" replace />} />
+              <Route path="mes-recettes" element={<MyRecipe />} />
+              <Route path="mes-informations" element={<MyInformations />} />
+            </Route>
           </Route>
 
           {/* Autre */}
