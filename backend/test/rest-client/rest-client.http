@@ -1,5 +1,5 @@
 @apiBaseUrl = http://localhost:3000/api
-@token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTc2MzEzMjEzNCwiZXhwIjoxNzYzMTM1NzM0fQ.05p7NpGTweP3_kHecTqhFqzqVdGSBvZmZ4Hl05cD5TY
+@token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTc2MzEzNzQyMCwiZXhwIjoxNzYzMTQxMDIwfQ.cJoFRy3wyd9ngV68OJb2ujpm1armcM2rLIZHfrvmUbA
 # ========================
 # AUTHENTIFICATION
 # ========================
@@ -121,9 +121,9 @@ Authorization: Bearer {{token}}
 Content-Type: application/json
 
 {
-  "title": "galette de nib",
+  "title": "le burger de nib",
   "category_id":2,
-  "movie_title":"jurassic",
+  "movie_id":33,
   "number_of_person":2,
   "image":"http://example.com/galette.jpg",
   "preparation_time": 40,
@@ -143,14 +143,14 @@ Content-Type: application/json
 }
 
 ### Modifier mes recette (admin et user) ###
-PATCH {{apiBaseUrl}}/recipes/me/20
+PATCH {{apiBaseUrl}}/recipes/me/22
 Authorization: Bearer {{token}}
 Content-Type: application/json
 
 {
-  "title": "galette de nib",
+  "title": "fuit de mer",
   "category_id": 2,
-  "movie_title": "jurassic",
+  "movie_id": 55,
   "number_of_person": 2,
   "image":"http://example.com/galette.jpg",
   "preparation_time": 40,
