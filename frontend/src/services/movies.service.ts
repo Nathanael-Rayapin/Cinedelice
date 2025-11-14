@@ -6,7 +6,11 @@ import { movies } from "../pages/Home/data";
 interface IFakeMovie {
   id: number;
   title: string;
-  img: string;
+  image: string;
+  synopsis: string; 
+  id_movie_tmdb: number;
+  release_year: string; 
+  director: string;
 }
 
 export const getMovies = async (): Promise<IFakeMovie[]> => {

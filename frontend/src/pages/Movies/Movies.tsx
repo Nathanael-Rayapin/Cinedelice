@@ -1,12 +1,12 @@
 import { useEffect, useState } from 'react';
 import { getMovies } from '../../services/movies.service';
-import type { IMovieProps } from '../../interfaces/movie';
+import type { IMovieDTO } from '../../interfaces/movie';
 import PacmanLoader from 'react-spinners/PacmanLoader';
 import MovieCard from '../../components/Movie-Card/Movie-Card';
 import './Movies.scss';
 
 const Movies = () => {
-    const [movies, setMovies] = useState<IMovieProps[]>([]);
+    const [movies, setMovies] = useState<IMovieDTO[]>([]);
     const [errorMsg, setErrorMsg] = useState<string | null>(null);
     const [loading, setLoading] = useState(true);
     const [currentPage, setCurrentPage] = useState(1);
@@ -38,6 +38,55 @@ const Movies = () => {
     const goToPreviousPage = () => currentPage > 1 && setCurrentPage(currentPage - 1);
     const goToNextPage = () => currentPage < totalPages && setCurrentPage(currentPage + 1);
 
+    // Fonction pour générer les numéros de pages à afficher
+    const getPageNumbers = () => {
+        const pageNumbers: (number | string)[] = [];
+        const maxVisiblePages = 7; // Nombre maximum de boutons visibles
+
+        if (totalPages <= maxVisiblePages) {
+            // Si peu de pages, afficher toutes les pages
+            for (let i = 1; i <= totalPages; i++) {
+                pageNumbers.push(i);
+            }
+        } else {
+            // Logique pour afficher : première page ... pages autour de la page actuelle ... dernière page
+            const leftSiblingIndex = Math.max(currentPage - 1, 1);
+            const rightSiblingIndex = Math.min(currentPage + 1, totalPages);
+
+            const shouldShowLeftDots = leftSiblingIndex > 2;
+            const shouldShowRightDots = rightSiblingIndex < totalPages - 1;
+
+            if (!shouldShowLeftDots && shouldShowRightDots) {
+                // Cas: 1 2 3 4 5 ... 10
+                const leftRange = 5;
+                for (let i = 1; i <= leftRange; i++) {
+                    pageNumbers.push(i);
+                }
+                pageNumbers.push('...');
+                pageNumbers.push(totalPages);
+            } else if (shouldShowLeftDots && !shouldShowRightDots) {
+                // Cas: 1 ... 6 7 8 9 10
+                pageNumbers.push(1);
+                pageNumbers.push('...');
+                const rightRange = 5;
+                for (let i = totalPages - rightRange + 1; i <= totalPages; i++) {
+                    pageNumbers.push(i);
+                }
+            } else if (shouldShowLeftDots && shouldShowRightDots) {
+                // Cas: 1 ... 4 5 6 ... 10
+                pageNumbers.push(1);
+                pageNumbers.push('...');
+                for (let i = leftSiblingIndex; i <= rightSiblingIndex; i++) {
+                    pageNumbers.push(i);
+                }
+                pageNumbers.push('...');
+                pageNumbers.push(totalPages);
+            }
+        }
+
+        return pageNumbers;
+    };
+
     if (loading) {
         return (
             <div className="loading-container" aria-label="Chargement des films">
@@ -45,7 +94,6 @@ const Movies = () => {
             </div>
         );
     }
-
 
     if (errorMsg) {
         return (
@@ -59,12 +107,10 @@ const Movies = () => {
         <>
             <h1>Catalogue de films</h1>
             <div className="movies-list">
-
                 {currentMovies.map((movie) => (
                     <MovieCard key={movie.id} movie={movie} />
                 ))}
-
-
+            </div>
                 {/* Boutons de pagination */}
                 <div className="pagination">
                     <button
@@ -75,27 +121,27 @@ const Movies = () => {
                         Précédent
                     </button>
 
-                    {/* Génère dynamiquement un bouton pour chaque numéro de page (de 1 à totalPages) */}
-                    {/* Crée un tableau de nombres de 1 à totalPages (ex: [1, 2, 3, ..., totalPages]) */}
-                    {/* Parcourt ce tableau et génère un bouton pour chaque numéro de page */}
-                    {/* key={number} : Clé unique pour chaque bouton (obligatoire dans une liste React).
-                onClick={() => paginate(number)} :
-                Appelle la fonction paginate avec le numéro de page (number) pour mettre à jour currentPage.
-                className={currentPage === number ? 'active' : ''} :
-                Applique la classe active au bouton si currentPage correspond au numéro de page (number).
-                Cela permet de mettre en évidence la page actuelle (ex: couleur de fond différente). */}
-                    {Array.from({ length: totalPages }, (_, i) => i + 1).map((number) => (
-                        <button
-                            key={number}
-                            onClick={() => paginate(number)}
-                            className={currentPage === number ? 'active' : ''}
-                        >
-                            {number}
-                        </button>
-                    ))}
+                    {/* Affichage intelligent des numéros de pages */}
+                    {getPageNumbers().map((pageNumber, index) => {
+                        if (pageNumber === '...') {
+                            return (
+                                <span key={`dots-${index}`} className="pagination-dots">
+                                    ...
+                                </span>
+                            );
+                        }
 
+                        return (
+                            <button
+                                key={pageNumber}
+                                onClick={() => paginate(pageNumber as number)}
+                                className={currentPage === pageNumber ? 'active' : ''}
+                            >
+                                {pageNumber}
+                            </button>
+                        );
+                    })}
 
-                    {/* Permet à l'utilisateur d'aller à la page suivante */}
                     <button
                         onClick={goToNextPage}
                         disabled={currentPage === totalPages}
@@ -104,7 +150,6 @@ const Movies = () => {
                         Suivant
                     </button>
                 </div>
-            </div>
         </>
     );
 };

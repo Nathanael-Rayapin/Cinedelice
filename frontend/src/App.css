@@ -50,6 +50,7 @@ p, span, a, button, label, li, input, textarea, select {
       background-color: var(--color-white);
       border-radius: 4px;
       cursor: pointer;
+      min-width: 40px;
       
       &.active {
         background-color: var(--color-primary);
@@ -69,13 +70,21 @@ p, span, a, button, label, li, input, textarea, select {
 
     .pagination-button {
       background-color: var(--color-primary);
-        color: var(--color-white);
-        border-color: var(--color-primary);
+      color: var(--color-white);
+      border-color: var(--color-primary);
 
       &:disabled {
-        background-color:var(--color-deep-gray);
+        background-color: var(--color-deep-gray);
         border-color: var(--color-deep-gray);
       }
     }
-  }
 
+    .pagination-dots {
+      padding: 8px 12px;
+      color: var(--color-deep-gray);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      user-select: none;
+    }
+}
