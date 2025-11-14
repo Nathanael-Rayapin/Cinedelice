@@ -129,7 +129,7 @@ export async function getAllMyRecipes(req: Request, res: Response) {
   res.status(200).json(recipe);
 }
 
-// Afficher le détail de ma recette
+// Afficher le détail de ma recette (publié et brouillon)
 export async function getMyRecipe(req: Request, res: Response) {
   const user_id = req.currentUserId;
   const recipeId = await parseIdFromParams(req.params.id);
@@ -170,6 +170,8 @@ export async function getMyRecipe(req: Request, res: Response) {
 }
 
 // Créer une recette avec un film associé
+//le front envoie un movie_id du film TMDb
+// Le back va chercher/creer le film dans notre BDD
 export async function createRecipe(req: Request, res: Response) {
   const { title, category_id, movie_id, number_of_person, preparation_time, description, image, ingredients, preparation_steps, status } = await validateCreateRecipe(req.body);
   
@@ -182,7 +184,7 @@ export async function createRecipe(req: Request, res: Response) {
     );
   }
 
-  // Vérifier qu'une recette avec le même titre n'existe pas déjà pour cet utilisateur
+  // Vérifier que l'utilisateur n'a pas déjà une recette avec ce titre
   const existingRecipe = await prisma.recipe.findFirst({
     where: {
       user_id: user_id,
@@ -194,7 +196,7 @@ export async function createRecipe(req: Request, res: Response) {
     throw new ConflictError("Vous avez déjà une recette avec ce titre");
   }
 
-  // on utilise notre service pour trouver ou créer le film dans la BDD
+  // Récupérer/créer le film dans NOTRE BDD à partir de l'ID TMDb
   const movie = await findOrCreateMovieFromId(movie_id);
   // Créer la recette avec le film associé
   const createdRecipe = await prisma.recipe.create({
@@ -216,6 +218,7 @@ export async function createRecipe(req: Request, res: Response) {
 }
 
 // Modifier n'importe quel recette (admin)
+//peut modifier le movie_id
 export async function updateAnyRecipe(req: Request, res: Response) {
   const recipeId = await parseIdFromParams(req.params.id);
 
@@ -258,7 +261,8 @@ export async function updateAnyRecipe(req: Request, res: Response) {
   });
 }
 
-// Modifier ma recette (admin et user)
+// Modifier ma recette 
+
 export async function updateMyRecipe(req: Request, res: Response) {
   const user_id = req.currentUserId;
   const recipeId = await parseIdFromParams(req.params.id);
@@ -279,7 +283,9 @@ export async function updateMyRecipe(req: Request, res: Response) {
 
   // Utilise prisma pour modifier la recette et sa data
   const { title, category_id, movie_id, number_of_person, preparation_time, description, image, ingredients, preparation_steps, status } = await validateUpdateRecipe(req.body);
+  
   let finalMovieId = recipe.movie_id; // par défaut on garde l'ancien film
+  
   // si le titre du film a changé, on cherche/crée le nouveau film
   if(movie_id){
     const movie = await findOrCreateMovieFromId(movie_id);

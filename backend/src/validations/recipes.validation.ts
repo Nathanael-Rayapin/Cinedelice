@@ -5,13 +5,14 @@ export const createRecipeSchema = z.object({
   category_id: z.number().int().positive(),
   movie_id: z.number().int().positive(),
   title: z.string()
+    .trim() // Supprime les espaces au début et à la fin
     .min(3, "Le titre doit contenir au minimum 3 caractères")
     .max(100, "Le titre ne peut pas dépasser 100 caractères")
     .regex(
       /^[a-zA-ZÀ-ÿ0-9\s\-',.()]+$/,
       "Le titre ne peut contenir que des lettres, chiffres, espaces et caractères basiques (- ' , . ())"
-    )
-    .trim(), // Supprime les espaces au début et à la fin
+    ),
+    
   number_of_person: z.number()
     .int("Le nombre de personnes doit être un entier")
     .min(1, "La recette doit servir au moins 1 personne")
