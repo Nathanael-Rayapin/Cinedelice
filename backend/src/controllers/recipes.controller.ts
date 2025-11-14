@@ -268,7 +268,6 @@ export async function updateMyRecipe(req: Request, res: Response) {
   const { title, category_id, movie_id, number_of_person, preparation_time, description, image, ingredients, preparation_steps, status } = await validateUpdateRecipe(req.body);
   
   let finalMovieId = recipe.movie_id; // par défaut on garde l'ancien film
-
   // si le titre du film a changé, on cherche/crée le nouveau film
   if(movie_id){
     const movie = await findOrCreateMovieFromId(movie_id);
