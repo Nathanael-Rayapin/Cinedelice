@@ -5,11 +5,15 @@ import RecipeCard from '../../components/Recipe-Card/Recipe-Card';
 import { GlobalUIContext } from '../../store/interface';
 import { usePagination } from '../../hooks/usePagination';
 import PaginationControls from '../../components/Pagination-Controls/Pagination-Controls';
+import { usePageMeta } from '../../hooks/usePageMeta';
+import { pageMetadata } from '../../utils/pageMetadata';
 import './Recipes.scss';
 
 const Recipes = () => {
   const [recipes, setRecipes] = useState<IRecipeDTO[]>([]);
   const { setLoading, setErrorMsg } = useContext(GlobalUIContext);
+
+  usePageMeta(pageMetadata.recipes);
 
   const { currentItems, currentPage, pageNumbers, goToPage, goToNextPage, goToPreviousPage } =
     usePagination(recipes, 8);

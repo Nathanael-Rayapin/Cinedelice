@@ -8,11 +8,15 @@ import { movies } from './data';
 import { NavLink, Outlet } from 'react-router';
 import Typewriter from 'typewriter-effect';
 import { GlobalUIContext } from '../../store/interface';
+import { usePageMeta } from '../../hooks/usePageMeta';
+import { pageMetadata } from '../../utils/pageMetadata';
 import './Home.scss';
 
 const Home = () => {
   const [recipes, setRecipes] = useState<IRecipeDTO[]>([]);
   const { setLoading, setErrorMsg } = useContext(GlobalUIContext);
+
+  usePageMeta(pageMetadata.home);
 
   const tabs = ['Pour vous'];
 

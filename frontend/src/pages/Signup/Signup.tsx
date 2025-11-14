@@ -6,9 +6,12 @@ import { useRef, useState } from 'react';
 import { Link, useNavigate } from 'react-router';
 import { signup } from '../../services/auth.service';
 import { emailPattern, passwordPattern, pseudoPattern } from '../../utils/utils';
+import { usePageMeta } from '../../hooks/usePageMeta';
+import { pageMetadata } from '../../utils/pageMetadata';
 import './Signup.scss';
 
 const Signup = () => {
+  usePageMeta(pageMetadata.signup);
   const {
     register,
     handleSubmit,

@@ -2,9 +2,12 @@ import logo from '../../assets/logo.svg';
 import maxiburger from '../../assets/images/maxiburger.png';
 import director from '../../assets/images/director.jpg';
 import chefHat from '../../assets/images/chef-hat.webp';
+import { usePageMeta } from '../../hooks/usePageMeta';
+import { pageMetadata } from '../../utils/pageMetadata';
 import './About.scss';
 
 const About = () => {
+  usePageMeta(pageMetadata.about);
   return (
     <div className="about-page">
       {/* Section d’en-tête */}

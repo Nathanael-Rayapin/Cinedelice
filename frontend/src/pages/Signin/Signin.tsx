@@ -5,11 +5,14 @@ import { useForm, type SubmitHandler } from 'react-hook-form';
 import type { ISignin } from '../../interfaces/auth';
 import { signin } from '../../services/auth.service';
 import { AuthContext } from '../../store/interface';
+import { usePageMeta } from '../../hooks/usePageMeta';
+import { pageMetadata } from '../../utils/pageMetadata';
 import './Signin.scss';
 
 const emailPattern = /^.+@.+$/i;
 
 const Signin = () => {
+  usePageMeta(pageMetadata.signin);
   const {
     register,
     handleSubmit,

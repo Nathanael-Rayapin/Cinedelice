@@ -5,11 +5,15 @@ import { GlobalUIContext } from '../../store/interface';
 import { usePagination } from '../../hooks/usePagination';
 import PaginationControls from '../../components/Pagination-Controls/Pagination-Controls';
 import type { IMovieDTO } from '../../interfaces/movie';
+import { usePageMeta } from '../../hooks/usePageMeta';
+import { pageMetadata } from '../../utils/pageMetadata';
 import './Movies.scss';
 
 const Movies = () => {
   const [movies, setMovies] = useState<IMovieDTO[]>([]);
   const { setLoading, setErrorMsg } = useContext(GlobalUIContext);
+
+  usePageMeta(pageMetadata.movies);
 
   const { currentItems, currentPage, pageNumbers, goToPage, goToNextPage, goToPreviousPage } =
     usePagination(movies, 8);

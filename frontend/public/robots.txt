@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+Disallow: /profil
+Disallow: /inscription
+Disallow: /connexion
+
+Sitemap: https://cinedelices.com/sitemap.xml
