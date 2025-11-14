@@ -33,7 +33,7 @@ export async function getMovieDirectorFromTmdb(movieId: number) {
 }
 
 // Trouve ou crée un film dans NOTRE BDD à partir de l'ID TMDb envoyé par le front
-export async function findOrCreateMovieFromTmdb(movieId: number) { 
+export async function findOrCreateMovieFromId(movieId: number) { 
   // si trouvé on verifie si le film existe déjà dans notre BDD
   let movieInDB = await prisma.movie.findUnique({
     where:{
