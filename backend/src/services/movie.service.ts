@@ -4,18 +4,18 @@ import { prisma } from "../models/index.ts";
 const TMDB_API_KEY = config.tmdbApiKey;
 const TMDB_BASE_URL = "https://api.themoviedb.org/3";
 
-// Service pour chercher un film dans l'API TMDb
-export async function searchMovieInTmdb(title: string){
-  const response = await axios.get(`${TMDB_BASE_URL}/search/movie`, {
+// Récuperer un film depuis Tmbd par son Id
+export async function getMovieFromTmdbById(movieId: number) {
+  const response = await axios.get(`${TMDB_BASE_URL}/movie/${movieId}`, {
     params: {
       api_key: TMDB_API_KEY,
-      query:title,
-      language: "fr-FR",
-    }
+      language: "fr-FR", // Pour avoir la traduction FR
+    },
   });
-  console.log("TMBD RESULTS:",response.data);
+
   return response.data;
 }
+
 // Service pour récupérer le réalisateur d'un film depuis TMDb
 export async function getMovieDirectorFromTmdb(movieId: number) {
   const response = await axios.get(`${TMDB_BASE_URL}/movie/${movieId}/credits`, {
@@ -26,30 +26,27 @@ export async function getMovieDirectorFromTmdb(movieId: number) {
   });
 
   const crew = response.data.crew;
-
   // On cherche la personne qui a le job "Director"
   const director = crew.find((person: any) => person.job === "Director");
 
   return director ? director.name : "Inconnu";
 }
-// Service pour trouver ou créer un film dans notre BDD à partir de TMDb
-export async function findOrCreateMovieFromTmdb(title: string) { 
-// on appel notre service pour chercher le film dans TMDB 
-  const tmdbResults = await searchMovieInTmdb(title);
-  // On recupere le premier film trouvé dans TMBD
-  const movie = tmdbResults.results[0];
-  // si aucun film trouvé on retourne null
-  if(!movie)return null;
-  // on va chercher le nom du réalisateur grace a l'Id Tmbd du film
-  const director = await getMovieDirectorFromTmdb(movie.id);
-
+// Trouve ou crée un film dans NOTRE BDD à partir de l'ID TMDb envoyé par le front
+export async function findOrCreateMovieFromTmdb(movieId: number) { 
   // si trouvé on verifie si le film existe déjà dans notre BDD
   let movieInDB = await prisma.movie.findUnique({
     where:{
-      id_movie_tmdb:movie.id
+      id_movie_tmdb:movieId
     }
   });
-    // si le film n'existe pas en BDD on le crée
+  // si pas trouvé on le récupère depuis TMDb
+  if (movieInDB) return movieInDB;
+
+  // sinon va chercher les infos dans Tmbd
+  const movie =  await getMovieFromTmdbById(movieId);
+  const director = await getMovieDirectorFromTmdb(movieId);
+
+  // si le film n'existe pas en BDD on le crée
   if(!movieInDB){
     movieInDB = await prisma.movie.create({
       data:{
