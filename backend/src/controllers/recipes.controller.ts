@@ -173,7 +173,7 @@ export async function getMyRecipe(req: Request, res: Response) {
 //le front envoie un movie_id du film TMDb
 // Le back va chercher/creer le film dans notre BDD
 export async function createRecipe(req: Request, res: Response) {
-  const { title, category_id, movie_title, number_of_person, preparation_time, description, image, ingredients, preparation_steps, status } = await validateCreateRecipe(req.body);
+  const { title, category_id, movie_id, number_of_person, preparation_time, description, image, ingredients, preparation_steps, status } = await validateCreateRecipe(req.body);
   
   // Récupérer l'ID de l'utilisateur connecté depuis le token JWT
   const user_id = req.currentUserId;
