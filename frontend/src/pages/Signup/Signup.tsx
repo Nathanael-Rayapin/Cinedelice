@@ -2,16 +2,15 @@ import type { ISignup } from '../../interfaces/auth';
 import { useForm, type FieldErrors, type SubmitHandler } from 'react-hook-form';
 import { LiaEyeSlashSolid } from "react-icons/lia";
 import { LiaEyeSolid } from "react-icons/lia";
-import { useContext, useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 import { Link, useNavigate } from 'react-router';
 import { signup } from '../../services/auth.service';
 import { emailPattern, passwordPattern, pseudoPattern } from '../../utils/utils';
 import './Signup.scss';
-import { GlobalUIContext } from '../../store/interface';
 
 const Signup = () => {
-    const { register, handleSubmit, getValues, trigger, formState: { errors, isValid } } = useForm<ISignup>();
-    const { setLoading } = useContext(GlobalUIContext);
+    const { register, handleSubmit, getValues, trigger, formState: { errors, isValid }, reset } = useForm<ISignup>();
+    const [loadingBtn, setLoadingBtn] = useState(false);
     const submitCountRef = useRef(0);
     const navigate = useNavigate();
 
@@ -27,12 +26,13 @@ const Signup = () => {
         }
 
         try {
-            setLoading(true);
+            setLoadingBtn(true);
             await signup(userData);
+            reset();
         } catch (error) {
             console.error('Erreur lors de la création du compte', error);
         } finally {
-            setLoading(false);
+            setLoadingBtn(false);
             navigate("/connexion");
         }
     };
@@ -162,8 +162,10 @@ const Signup = () => {
                     <label htmlFor="termOfUse">J’accepte les <a href='/cgu'>CGU</a></label>
                 </div>
 
-                <button type='submit' className="submit-btn btn m-1">
-                    Je m'inscris
+                <button type="submit" className="submit-btn btn m-1">
+                    {loadingBtn 
+                    ? <><span className="loading loading-spinner"></span> Je m'inscris</> 
+                    : "Je m'inscris"}
                 </button>
 
                 <div className="have-an-account">

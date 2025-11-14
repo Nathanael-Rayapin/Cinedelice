@@ -4,17 +4,17 @@ import { useContext, useState } from 'react';
 import { useForm, type SubmitHandler } from 'react-hook-form';
 import type { ISignin } from '../../interfaces/auth';
 import { signin } from '../../services/auth.service';
-import { AuthContext, GlobalUIContext } from '../../store/interface';
+import { AuthContext } from '../../store/interface';
 import './Signin.scss';
 
 const emailPattern = /^.+@.+$/i;
 
 const Signin = () => {
-    const { register, handleSubmit, formState: { errors, isValid } } = useForm<ISignin>();
+    const { register, handleSubmit, formState: { errors, isValid }, reset } = useForm<ISignin>();
     const [showPassword, setShowPassword] = useState(false);
 
     const authContext = useContext(AuthContext)
-    const { setLoading } = useContext(GlobalUIContext)
+    const [loadingBtn, setLoadingBtn] = useState(false);
     const navigate = useNavigate()
 
     // Un simple log en attendant d'avoir l'endpoint d'inscription
@@ -25,17 +25,18 @@ const Signin = () => {
         }
 
         try {
-            setLoading(true);
+            setLoadingBtn(true);
             const data = await signin(userData);
             authContext.login(data);
 
             // On redirige (à terme on redirigera vers le profil)
+            reset();
             navigate('/pour-vous')
 
         } catch (error) {
             console.error('Erreur lors de la connexion au compte', error);
         } finally {
-            setLoading(false);
+            setLoadingBtn(false);
         }
     };
 
@@ -85,8 +86,10 @@ const Signin = () => {
                     {errors.password && <p className="error" role="alert">{errors.password.message as string}</p>}
                 </div>
 
-                <button type='submit' className="submit-btn btn m-1">
-                    Connexion
+                <button type="submit" className="submit-btn btn m-1">
+                    {loadingBtn 
+                    ? <><span className="loading loading-spinner"></span> Connexion</> 
+                    : "Connexion"}
                 </button>
 
                 <div className="have-an-account">

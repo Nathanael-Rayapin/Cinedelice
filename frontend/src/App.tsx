@@ -43,7 +43,7 @@ function App() {
           </Route>
 
           <Route path="/recettes" element={<Recipes />} />
-          <Route path="/recettes/:id" element={<RecipeDetail />} />
+          <Route path="/recettes/:id" element={<RecipeDetail showDraft={false} />} />
           <Route path='/films' element={<Movies />} />
           <Route path="/films/:id" element={<MovieDetail />} />
 
@@ -53,6 +53,7 @@ function App() {
           <Route path="/profil" element={<Profile />}>
             <Route index element={<Navigate to="mes-recettes" replace />} />
             <Route path="mes-recettes" element={<MyRecipe />} />
+            <Route path="mes-recettes/:id" element={<RecipeDetail showDraft={true} />} />
             <Route path="mes-informations" element={<MyInformations />} />
           </Route>
 

@@ -9,8 +9,9 @@ import { GlobalUIContext } from "../../store/interface";
 import "./My-Informations.scss";
 
 const MyInformations = () => {
-    const { register, handleSubmit, getValues, trigger, formState: { errors, isValid } } = useForm<IUpdateProfile>();
-    const { setLoading, setErrorMsg } = useContext(GlobalUIContext);
+    const { register, handleSubmit, getValues, trigger, formState: { errors, isValid }, reset } = useForm<IUpdateProfile>();
+    const { setErrorMsg } = useContext(GlobalUIContext);
+    const [loadingBtn, setLoadingBtn] = useState(false);
 
     const [showPassword, setShowPassword] = useState(false);
     const [showConfirmPassword, setShowConfirmPassword] = useState(false);
@@ -24,12 +25,13 @@ const MyInformations = () => {
         }
 
         try {
-            setLoading(true);
+            setLoadingBtn(true);
             await updatePassword(userData);
+            reset();
         } catch (error) {
             setErrorMsg(error instanceof Error ? error.message : "Une erreur est survenue.");
         } finally {
-            setLoading(false);
+            setLoadingBtn(false);
         }
     };
 
@@ -119,11 +121,14 @@ const MyInformations = () => {
                         </div>
 
                         {errors.confirmPassword && <p className="error" role="alert">{errors.confirmPassword.message as string}</p>}
-
                     </div>
-                    <button type='submit' className="submit-btn btn m-1">
-                        Modifier
+
+                    <button type="submit" className="submit-btn btn m-1">
+                        {loadingBtn
+                            ? <><span className="loading loading-spinner"></span> Modifier</>
+                            : "Modifier"}
                     </button>
+
                 </form>
             </div>
         </div>

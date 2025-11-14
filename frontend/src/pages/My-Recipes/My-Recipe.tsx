@@ -44,7 +44,7 @@ const MyRecipe = () => {
             <h2>Éditer mes recettes</h2>
             <div className="recipes-list">
                 {currentItems.map((recipe) => (
-                    <RecipeCard key={recipe.id} recipe={recipe} />
+                    <RecipeCard key={recipe.id} recipe={recipe} hasDraft={true} />
                 ))}
             </div>
 

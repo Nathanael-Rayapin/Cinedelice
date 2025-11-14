@@ -3,11 +3,15 @@ import type { IRecipeDTO } from "../../interfaces/recipe"
 import { useNavigate } from "react-router";
 import './Recipe-Card.scss';
 
-const RecipeCard = ({ recipe }: { recipe: IRecipeDTO }) => {
+const RecipeCard = ({ recipe, hasDraft }: { recipe: IRecipeDTO, hasDraft: boolean }) => {
     const navigate = useNavigate();
-    
+
     const handleClick = () => {
-        navigate(`/recettes/${recipe.id}`, { state: { recipe } });
+        if (hasDraft) {
+            navigate(`/mes-recettes/${recipe.id}`, { state: { recipe } });
+        } else {
+            navigate(`/recettes/${recipe.id}`, { state: { recipe } });
+        }
     };
 
     return (

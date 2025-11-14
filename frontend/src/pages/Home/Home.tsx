@@ -60,7 +60,7 @@ const Home = () => {
                 </div>
                 <div className="recipes-list">
                     {recipes.slice(0,8).map((recipe) => (
-                        <RecipeCard key={recipe.id} recipe={recipe} />
+                        <RecipeCard key={recipe.id} recipe={recipe} hasDraft={false} />
                     ))}
                 </div>
             </section>

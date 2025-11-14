@@ -56,3 +56,24 @@ export const getMyRecipes = async (): Promise<IRecipeDTO[]> => {
         throw error;
     }
 }
+
+export const getMyRecipe = async (recipeId: number): Promise<IRecipeDTO> => {
+    try {
+        const response = await axios.get(`${BASE_URL}/recipes/me/${recipeId}`, {
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${localStorage.getItem('token')}`
+            }
+        });
+
+        if (response.status !== 200) {
+            throw new Error('Une erreur est survenue lors de la récupération de la recette');
+        }
+
+        return response.data;
+    } catch (error) {
+        console.error(error);
+        showSnackbar('Oups ! Une erreur s\'est produite. Veuillez réessayer plus tard.', false);
+        throw error;
+    }
+}

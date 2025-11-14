@@ -2,13 +2,17 @@ import { useParams } from 'react-router';
 import RecipeCover from '../../components/Recipe-Cover/Recipe-Cover';
 import type { IRecipeDTO } from '../../interfaces/recipe';
 import { useContext, useEffect, useState } from 'react';
-import { getOneRecipe } from '../../services/recipes.service';
+import { getMyRecipe, getOneRecipe } from '../../services/recipes.service';
 import { PiTimerDuotone } from "react-icons/pi";
 import { TbPointFilled } from "react-icons/tb";
 import { GlobalUIContext } from '../../store/interface';
 import './Recipe-Detail.scss';
 
-const RecipeDetail = () => {
+interface IRecipeDetailProps {
+    showDraft: boolean;
+}
+
+const RecipeDetail = ({ showDraft }: IRecipeDetailProps) => {
     const params = useParams();
     const [recipe, setRecipe] = useState<IRecipeDTO | null>(null);
     const { setLoading, setErrorMsg } = useContext(GlobalUIContext);
@@ -22,9 +26,13 @@ const RecipeDetail = () => {
                 if (isNaN(recipeId)) {
                     throw new Error('Invalid ID format');
                 }
+                
+                if (showDraft) {
+                    setRecipe(await getMyRecipe(recipeId));
+                } else {
+                    setRecipe(await getOneRecipe(recipeId));
+                }
 
-                const recipe = await getOneRecipe(recipeId);
-                setRecipe(recipe);
             } catch (error) {
                 if (error instanceof Error) {
                     setErrorMsg(error.message);
