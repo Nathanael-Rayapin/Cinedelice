@@ -1,11 +1,11 @@
-import type { IConnectedUser } from "./auth";
+import type { IConnectedUser } from './auth';
 
 export interface IUpdateProfile {
-    oldPassword: string;
-    newPassword: string;
-    confirmPassword: string;
+  oldPassword: string;
+  newPassword: string;
+  confirmPassword: string;
 }
 
 export interface IProfileDTO {
-    user: IConnectedUser;
+  user: IConnectedUser;
 }

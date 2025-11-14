@@ -1,36 +1,36 @@
 .tab-bar {
-    max-width: 450px;
-    width: 100%;
-    display: flex;
-    align-items: center;
-    list-style: none;
-    justify-content: space-between;
-    margin-bottom: 24px;
+  max-width: 450px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  list-style: none;
+  justify-content: space-between;
+  margin-bottom: 24px;
 
-    li.active button {
-        height: 50px;
-        border-radius: 80px;
-        border: none;
-        color: var(--color-white);
-        font-size: 18px;
-        font-weight: 600;
-        background: linear-gradient(to right, var(--color-secondary), var(--color-primary));
+  li.active button {
+    height: 50px;
+    border-radius: 80px;
+    border: none;
+    color: var(--color-white);
+    font-size: 18px;
+    font-weight: 600;
+    background: linear-gradient(to right, var(--color-secondary), var(--color-primary));
+  }
+
+  li button {
+    background: none;
+    outline: none;
+    border: none;
+    box-shadow: none;
+    color: #fff;
+  }
+
+  li:not(.active) button {
+    color: var(--color-deep-gray);
+    transition: all 0.3s ease;
+
+    &:hover {
+      color: var(--color-black);
     }
-
-    li button {
-        background: none;
-        outline: none;
-        border: none;
-        box-shadow: none;
-        color: #fff;
-    }
-
-    li:not(.active) button {
-        color: var(--color-deep-gray);
-        transition: all 0.3s ease;
-
-        &:hover {
-            color: var(--color-black);
-        }
-    }
+  }
 }

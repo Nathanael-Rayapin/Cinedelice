@@ -5,17 +5,13 @@ import CustomError from '../Custom-Error/Custom-Error';
 import './Layout.scss';
 
 const Layout = ({ children }: { children: React.ReactNode }) => {
-    const { loading, errorMsg } = useContext(GlobalUIContext);
+  const { loading, errorMsg } = useContext(GlobalUIContext);
 
-    if (loading) return <Loading />;
+  if (loading) return <Loading />;
 
-    if (errorMsg) return <CustomError errorMsg={errorMsg} />;
+  if (errorMsg) return <CustomError errorMsg={errorMsg} />;
 
-    return (
-        <div className="layout">
-            {children}
-        </div>
-    )
-}
+  return <div className="layout">{children}</div>;
+};
 
-export default Layout
+export default Layout;

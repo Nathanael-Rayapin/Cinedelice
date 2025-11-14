@@ -48,7 +48,7 @@
     gap: 28px;
 
     /* Mobile: 4 éléments en colonne */
-    >*:nth-child(n + 5) {
+    > *:nth-child(n + 5) {
       display: none;
     }
 
@@ -59,7 +59,7 @@
       gap: 24px;
 
       /* Mobile: 2 éléments en colonne */
-      >*:nth-child(n + 3) {
+      > *:nth-child(n + 3) {
         display: none;
       }
     }
@@ -81,11 +81,11 @@
       gap: 20px;
 
       /* Afficher 4 films sur tablette */
-      >*:nth-child(n + 3) {
+      > *:nth-child(n + 3) {
         display: block;
       }
 
-      >*:nth-child(n + 5) {
+      > *:nth-child(n + 5) {
         display: none;
       }
     }
@@ -95,17 +95,16 @@
 /* Desktop (1200px et plus) */
 @media (min-width: 1200px) {
   .home {
-
     /* Desktop: 8 recettes sur 2 lignes (4x2) */
     .featured-recipes .recipes-list {
       grid-template-columns: repeat(4, 1fr);
 
       /* Afficher 8 recettes sur desktop */
-      >*:nth-child(n + 5) {
+      > *:nth-child(n + 5) {
         display: block;
       }
 
-      >*:nth-child(n + 9) {
+      > *:nth-child(n + 9) {
         display: none;
       }
     }
@@ -115,7 +114,7 @@
       grid-template-columns: repeat(4, 1fr);
 
       /* Afficher 4 films sur desktop */
-      >*:nth-child(n + 5) {
+      > *:nth-child(n + 5) {
         display: none;
       }
     }

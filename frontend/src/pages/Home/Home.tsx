@@ -11,76 +11,75 @@ import { GlobalUIContext } from '../../store/interface';
 import './Home.scss';
 
 const Home = () => {
-    const [recipes, setRecipes] = useState<IRecipeDTO[]>([]);
-    const { setLoading, setErrorMsg } = useContext(GlobalUIContext);
+  const [recipes, setRecipes] = useState<IRecipeDTO[]>([]);
+  const { setLoading, setErrorMsg } = useContext(GlobalUIContext);
 
-    const tabs = ['Pour vous'];
+  const tabs = ['Pour vous'];
 
-    useEffect(() => {
-        const fetchRecipes = async () => {
-            try {
-                setLoading(true);
-                const recipes = await getRecipes();
-                setRecipes(recipes);
-            } catch (error) {
-                if (error instanceof Error) {
-                    setErrorMsg(error.message);
-                }
-            } finally {
-                setLoading(false);
-            }
-        };
+  useEffect(() => {
+    const fetchRecipes = async () => {
+      try {
+        setLoading(true);
+        const recipes = await getRecipes();
+        setRecipes(recipes);
+      } catch (error) {
+        if (error instanceof Error) {
+          setErrorMsg(error.message);
+        }
+      } finally {
+        setLoading(false);
+      }
+    };
 
-        fetchRecipes();
-    }, []);
+    fetchRecipes();
+  }, []);
 
-    return recipes && recipes.length > 0 &&
-        <div className="home">
-            <h1 className='slogan'>
-            <Typewriter
+  return (
+    recipes &&
+    recipes.length > 0 && (
+      <div className="home">
+        <h1 className="slogan">
+          <Typewriter
             options={{
-                autoStart: true,
-                loop: true,
-                strings: ['Quand le cinéma met la main à la pâte'],
-                cursor: '_',
-                cursorClassName: 'cursor',
+              autoStart: true,
+              loop: true,
+              strings: ['Quand le cinéma met la main à la pâte'],
+              cursor: '_',
+              cursorClassName: 'cursor',
             }}
-            />
-            </h1>
-            
-            <TabBar tabs={tabs} />
-            <Outlet context={{ recipes }} />
+          />
+        </h1>
 
-            <section>
-                <div className="recipes-header">
-                    <h2>Recettes à la une</h2>
-                    <NavLink to="/recettes">
-                        Tout voir
-                    </NavLink>
-                </div>
-                <div className="recipes-list">
-                    {recipes.slice(0,8).map((recipe) => (
-                        <RecipeCard key={recipe.id} recipe={recipe} hasDraft={false} />
-                    ))}
-                </div>
-            </section>
+        <TabBar tabs={tabs} />
+        <Outlet context={{ recipes }} />
 
-            <div className="featured-movies">
-                <div className="movies-header">
-                    <h2>Parcourir par films</h2>
-                    <NavLink to="/films">
-                        Tout voir
-                    </NavLink>
-                </div>
-
-                <section className="movies-list">
-                    {movies.slice(0, 4).map((movie) => (
-                        <MovieCard key={movie.id} movie={movie} />
-                    ))}
-                </section>
-            </div>
+        <div className="featured-recipes">
+          <div className="recipes-header">
+            <h2>Recettes à la une</h2>
+            <NavLink to="/recettes">Tout voir</NavLink>
+          </div>
+          <section className="recipes-list">
+            {recipes.slice(0, 8).map((recipe) => (
+              <RecipeCard key={recipe.id} recipe={recipe} hasDraft={false} />
+            ))}
+          </section>
         </div>
-    );
-}
+
+        <div className="featured-movies">
+          <div className="movies-header">
+            <h2>Parcourir par films</h2>
+            <NavLink to="/films">Tout voir</NavLink>
+          </div>
+
+          <section className="movies-list">
+            {movies.slice(0, 4).map((movie) => (
+              <MovieCard key={movie.id} movie={movie} />
+            ))}
+          </section>
+        </div>
+      </div>
+    )
+  );
+};
 
 export default Home;

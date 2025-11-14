@@ -7,47 +7,46 @@ import PaginationControls from '../../components/Pagination-Controls/Pagination-
 import './Movies.scss';
 
 const Movies = () => {
-    const [movies, setMovies] = useState<IFakeMovie[]>([]);
-    const { setLoading, setErrorMsg } = useContext(GlobalUIContext);
+  const [movies, setMovies] = useState<IFakeMovie[]>([]);
+  const { setLoading, setErrorMsg } = useContext(GlobalUIContext);
 
-    const { currentItems, currentPage, totalPages, goToPage, goToNextPage, goToPreviousPage } =
-        usePagination(movies, 8);
+  const { currentItems, currentPage, totalPages, goToPage, goToNextPage, goToPreviousPage } =
+    usePagination(movies, 8);
 
-    useEffect(() => {
-        const fetchMovies = async () => {
-            try {
-                setLoading(true);
-                const movies = await getMovies();
-                setMovies(movies);
-            } catch (error) {
-                setErrorMsg(error instanceof Error ? error.message : "Une erreur est survenue.");
-            } finally {
-                setLoading(false);
-            }
-        };
+  useEffect(() => {
+    const fetchMovies = async () => {
+      try {
+        setLoading(true);
+        const movies = await getMovies();
+        setMovies(movies);
+      } catch (error) {
+        setErrorMsg(error instanceof Error ? error.message : 'Une erreur est survenue.');
+      } finally {
+        setLoading(false);
+      }
+    };
 
-        fetchMovies();
-    }, []);
+    fetchMovies();
+  }, []);
 
-    return (
-        <>
-            <h1>Catalogue de films</h1>
-            <div className="movies-list">
+  return (
+    <>
+      <h1>Catalogue de films</h1>
+      <div className="movies-list">
+        {currentItems.map((movie) => (
+          <MovieCard key={movie.id} movie={movie} />
+        ))}
 
-                {currentItems.map((movie) => (
-                    <MovieCard key={movie.id} movie={movie} />
-                ))}
-
-                <PaginationControls
-                    currentPage={currentPage}
-                    totalPages={totalPages}
-                    goToPage={goToPage}
-                    goToNextPage={goToNextPage}
-                    goToPreviousPage={goToPreviousPage}
-                />
-            </div>
-        </>
-    );
+        <PaginationControls
+          currentPage={currentPage}
+          totalPages={totalPages}
+          goToPage={goToPage}
+          goToNextPage={goToNextPage}
+          goToPreviousPage={goToPreviousPage}
+        />
+      </div>
+    </>
+  );
 };
 
 export default Movies;

@@ -1,5 +1,5 @@
-import { createContext, type ReactNode } from "react";
-import type { ISigninDTO } from "../interfaces/auth";
+import { createContext, type ReactNode } from 'react';
+import type { ISigninDTO } from '../interfaces/auth';
 
 export interface IContextProviderProps {
   children: ReactNode;
@@ -14,10 +14,10 @@ interface IAuthContextType {
 }
 
 export const AuthContext = createContext<IAuthContextType>({
-    isAuth: false,
-    setIsAuth: () => {},
-    login: () => {},
-    logout: () => {},
+  isAuth: false,
+  setIsAuth: () => {},
+  login: () => {},
+  logout: () => {},
 });
 
 // Interface Contexte pour l'UI
@@ -29,8 +29,8 @@ interface IGlobalUIContextType {
 }
 
 export const GlobalUIContext = createContext<IGlobalUIContextType>({
-    loading: false,
-    setLoading: () => {},
-    errorMsg: null,
-    setErrorMsg: () => {},
+  loading: false,
+  setLoading: () => {},
+  errorMsg: null,
+  setErrorMsg: () => {},
 });

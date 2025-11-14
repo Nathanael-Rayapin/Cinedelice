@@ -10,7 +10,7 @@ export default function AuthContextProvider({ children }: IContextProviderProps)
   const login = (data: ISigninDTO) => {
     setIsAuth(true);
     localStorage.setItem('token', data.token);
-  }
+  };
 
   // Utiliser pour me déconnecter
   const logout = () => {
@@ -27,9 +27,5 @@ export default function AuthContextProvider({ children }: IContextProviderProps)
   };
 
   // Code utiliser dans main.tsx pour dire sur quoi j'applique le contexte
-  return (
-    <AuthContext.Provider value={ctxValue}>
-      {children}
-    </AuthContext.Provider>
-  );
+  return <AuthContext.Provider value={ctxValue}>{children}</AuthContext.Provider>;
 }

@@ -1,4 +1,4 @@
-import burger1 from "../../assets/images/burger1.jpg";
+import burger1 from '../../assets/images/burger1.jpg';
 
 import chocolats from "../../assets/images/chocolats.jpg";
 import ramen from "../../assets/images/ramen.jpg";

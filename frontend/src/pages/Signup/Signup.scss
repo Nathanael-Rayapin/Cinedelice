@@ -1,162 +1,162 @@
 .signup {
-    min-width: 300px;
-    max-width: 380px;
-    width: 100%;
-    margin: auto;
+  min-width: 300px;
+  max-width: 380px;
+  width: 100%;
+  margin: auto;
 
-    h1 {
-        font-size: 24px;
-        font-weight: 600;
-        text-align: center;
+  h1 {
+    font-size: 24px;
+    font-weight: 600;
+    text-align: center;
+  }
+
+  form {
+    display: flex;
+    flex-direction: column;
+    padding-top: 56px;
+    gap: 32px;
+
+    label {
+      display: block;
+      font-size: 16px;
+      color: #0d1b2a;
     }
 
-    form {
-        display: flex;
-        flex-direction: column;
-        padding-top: 56px;
-        gap: 32px;
-
-        label {
-            display: block;
-            font-size: 16px;
-            color: #0D1B2A;
-        }
-
-        .username label,
-        .email label,
-        .password label,
-        .confirm-password label {
-            margin-bottom: 16px;
-        }
-
-        input:not([type="checkbox"]) {
-            width: 100%;
-            height: 50px;
-            border-radius: 8px;
-            border-width: 2px;
-            font-size: 16px;
-            padding: 10px 20px;
-            color: #0D1B2A;
-
-            &:focus {
-                outline: none;
-                border: 2px solid #FB8B24;
-            }
-
-            &::placeholder {
-                color: #0D1B2A;
-            }
-
-            &::-webkit-input-placeholder {
-                color: #0D1B2A;
-            }
-
-            &:-ms-input-placeholder {
-                color: #0D1B2A;
-            }
-        }
-
-        .input-default {
-            border: 2px solid #D9D9D9;
-        }
-
-        .age-declaration,
-        .term-of-use {
-            display: flex;
-            align-items: center;
-            gap: 16px;
-            transition: all 0.3s ease;
-
-            input[type="checkbox"] {
-                width: 21px;
-                height: 21px;
-                border-width: 2px;
-                border-radius: 4px;
-                cursor: pointer;
-            }
-
-            a:hover {
-                text-decoration: underline;
-            }
-        }
-
-        .password-field {
-            position: relative;
-
-            .eye-icon {
-                position: absolute;
-                top: 50%;
-                right: 15px;
-                transform: translateY(-50%);
-                width: 24px;
-                height: 24px;
-                color: #0D1B2A;
-                z-index: 99;
-                cursor: pointer;
-            }
-        }
-
-        .submit-btn {
-            width: 180px;
-            height: 50px;
-            font-size: 16px;
-            font-weight: 600;
-            border-radius: 100px;
-            border: none;
-            color: #fff;
-            background: linear-gradient(to right, #E36414, #FB8B24);
-            margin-left: auto;
-        }
-
-        .have-an-account {
-            margin: 64px auto;
-            text-align: center;
-            font-size: 16px;
-            transition: all 0.3s ease;
-
-            p {
-                margin-bottom: 8px;
-            }
-
-            a:hover {
-                text-decoration: underline;
-            }
-        }
-
-        .error {
-            margin-top: 4px;
-            color: red;
-        }
+    .username label,
+    .email label,
+    .password label,
+    .confirm-password label {
+      margin-bottom: 16px;
     }
+
+    input:not([type='checkbox']) {
+      width: 100%;
+      height: 50px;
+      border-radius: 8px;
+      border-width: 2px;
+      font-size: 16px;
+      padding: 10px 20px;
+      color: #0d1b2a;
+
+      &:focus {
+        outline: none;
+        border: 2px solid #fb8b24;
+      }
+
+      &::placeholder {
+        color: #0d1b2a;
+      }
+
+      &::-webkit-input-placeholder {
+        color: #0d1b2a;
+      }
+
+      &:-ms-input-placeholder {
+        color: #0d1b2a;
+      }
+    }
+
+    .input-default {
+      border: 2px solid #d9d9d9;
+    }
+
+    .age-declaration,
+    .term-of-use {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      transition: all 0.3s ease;
+
+      input[type='checkbox'] {
+        width: 21px;
+        height: 21px;
+        border-width: 2px;
+        border-radius: 4px;
+        cursor: pointer;
+      }
+
+      a:hover {
+        text-decoration: underline;
+      }
+    }
+
+    .password-field {
+      position: relative;
+
+      .eye-icon {
+        position: absolute;
+        top: 50%;
+        right: 15px;
+        transform: translateY(-50%);
+        width: 24px;
+        height: 24px;
+        color: #0d1b2a;
+        z-index: 99;
+        cursor: pointer;
+      }
+    }
+
+    .submit-btn {
+      width: 180px;
+      height: 50px;
+      font-size: 16px;
+      font-weight: 600;
+      border-radius: 100px;
+      border: none;
+      color: #fff;
+      background: linear-gradient(to right, #e36414, #fb8b24);
+      margin-left: auto;
+    }
+
+    .have-an-account {
+      margin: 64px auto;
+      text-align: center;
+      font-size: 16px;
+      transition: all 0.3s ease;
+
+      p {
+        margin-bottom: 8px;
+      }
+
+      a:hover {
+        text-decoration: underline;
+      }
+    }
+
+    .error {
+      margin-top: 4px;
+      color: red;
+    }
+  }
 }
 
 @media screen and (min-width: 769px) {
-    .signup {
-        min-width: 600px;
-        max-width: 600px;
-        width: 600px;
+  .signup {
+    min-width: 600px;
+    max-width: 600px;
+    width: 600px;
 
-        h1 {
-            font-size: 40px;
-        }
-
-        form {
-            label {
-                font-size: 18px;
-            }
-
-            input:not([type="checkbox"]) {
-                font-size: 18px;
-            }
-
-            .have-an-account {
-                font-size: 18px;
-            }
-
-            .submit-btn {
-                font-size: 18px;
-                font-weight: 600;
-            }
-        }
+    h1 {
+      font-size: 40px;
     }
+
+    form {
+      label {
+        font-size: 18px;
+      }
+
+      input:not([type='checkbox']) {
+        font-size: 18px;
+      }
+
+      .have-an-account {
+        font-size: 18px;
+      }
+
+      .submit-btn {
+        font-size: 18px;
+        font-weight: 600;
+      }
+    }
+  }
 }

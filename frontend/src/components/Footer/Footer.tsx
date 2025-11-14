@@ -6,7 +6,6 @@ const Footer = () => {
   return (
     <footer className="footer">
       <div className="footer-content">
-
         <NavLink to="/">
           <img src={logo} alt="Logo" />
         </NavLink>
@@ -16,7 +15,6 @@ const Footer = () => {
           <NavLink to="/cgu">CGU</NavLink>
           <NavLink to="/à-propos">À propos</NavLink>
         </nav>
-
       </div>
     </footer>
   );

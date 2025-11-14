@@ -2,7 +2,7 @@ import Search from '../Search/Search';
 import ProfileDropdown from '../Profile-Dropdown/Profile-Dropdown';
 import BurgerMenuDropdown from '../Burger-Menu-Dropdown/Burger-Menu-Dropdown';
 import CategoriesDropdown from '../Categories-Dropdown/Categories-Dropdown';
-import { IoIosSearch } from "react-icons/io";
+import { IoIosSearch } from 'react-icons/io';
 import logo from '../../assets/logo.svg';
 import { NavLink } from 'react-router';
 import './Navbar.scss';
@@ -10,7 +10,7 @@ import './Navbar.scss';
 const Navbar = () => {
   return (
     <header>
-      <nav className='navbar'>
+      <nav className="navbar">
         <div className="brand">
           <BurgerMenuDropdown />
           <NavLink to="/">
@@ -25,11 +25,11 @@ const Navbar = () => {
           <NavLink to="/recettes">Recettes</NavLink>
           <NavLink to="/films">Films</NavLink>
           <ProfileDropdown />
-          <IoIosSearch className='search-btn' size={40} color="#FB8B24" />
+          <IoIosSearch className="search-btn" size={40} color="#FB8B24" />
         </div>
       </nav>
     </header>
   );
-}
+};
 
-export default Navbar
+export default Navbar;

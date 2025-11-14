@@ -15,9 +15,5 @@ export default function GlobalUIContextProvider({ children }: IContextProviderPr
   };
 
   // Code utiliser dans main.tsx pour dire sur quoi j'applique le contexte
-  return (
-    <GlobalUIContext.Provider value={ctxValue}>
-      {children}
-    </GlobalUIContext.Provider>
-  );
+  return <GlobalUIContext.Provider value={ctxValue}>{children}</GlobalUIContext.Provider>;
 }

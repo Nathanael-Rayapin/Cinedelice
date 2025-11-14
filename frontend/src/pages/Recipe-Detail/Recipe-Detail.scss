@@ -1,172 +1,170 @@
 .recipe-detail {
-    .detail {
-
-        .preparation,
-        .ingredients {
-            width: 100%;
-            margin-bottom: 64px;
-        }
-
-        .preparation-header,
-        .ingredients-header {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-
-            h2 {
-                font-size: 24px;
-                color: var(--color-black);
-            }
-        }
-
-        .preparation-header {
-            .badge {
-                border: 1px solid var(--color-secondary);
-                border-radius: 20px;
-                width: auto;
-                padding: 0 8px;
-                height: 40px;
-                font-size: 16px;
-                font-weight: 500;
-                color: var(--color-secondary);
-                cursor: default;
-            }
-        }
-
-        .preparation-steps {
-            margin-top: 24px;
-            padding: 16px;
-            display: flex;
-            flex-direction: column;
-            gap: 16px;
-            background-color: var(--color-gray);
-            border-radius: 16px;
-
-            h3 {
-                color: var(--color-black);
-                text-transform: uppercase;
-            }
-        }
-
-        .ingredients-header {
-            .preparation-time {
-                display: flex;
-                align-items: center;
-                gap: 16px;
-            }
-        }
-
-        .ingredients-list {
-            margin-top: 24px;
-            padding: 16px;
-            display: flex;
-            flex-direction: column;
-            background-color: var(--color-gray);
-            border-radius: 16px;
-
-            ul li {
-                display: flex;
-                align-items: center;
-
-                svg {
-                    position: relative;
-                    margin-right: 8px;
-                    top: 2px;
-                }
-            }
-        }
+  .detail {
+    .preparation,
+    .ingredients {
+      width: 100%;
+      margin-bottom: 64px;
     }
 
-    .details-footer {
-        margin-bottom: 15rem;
+    .preparation-header,
+    .ingredients-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
 
-        h2 {
-            font-size: 24px;
-            color: var(--color-black);
-        }
-
-        .content {
-            display: flex;
-            flex-direction: column;
-            gap: 24px;
-            margin-top: 24px;
-
-            .content-cover {
-                width: 100%;
-                height: 300px;
-                border-radius: 24px;
-                flex-shrink: 0;
-
-                img {
-                    width: 100%;
-                    height: 100%;
-                    border-radius: 24px;
-                    object-fit: cover;
-                }
-            }
-
-            .content-infos {
-                margin-top: 16px;
-
-                p:nth-child(1) {
-                    margin-bottom: 24px;
-                }
-
-                p {
-                    font-size: 18px;
-                    font-weight: 600;
-
-                    span {
-                        font-weight: 400;
-                    }
-                }
-            }
-        }
+      h2 {
+        font-size: 24px;
+        color: var(--color-black);
+      }
     }
+
+    .preparation-header {
+      .badge {
+        border: 1px solid var(--color-secondary);
+        border-radius: 20px;
+        width: auto;
+        padding: 0 8px;
+        height: 40px;
+        font-size: 16px;
+        font-weight: 500;
+        color: var(--color-secondary);
+        cursor: default;
+      }
+    }
+
+    .preparation-steps {
+      margin-top: 24px;
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      background-color: var(--color-gray);
+      border-radius: 16px;
+
+      h3 {
+        color: var(--color-black);
+        text-transform: uppercase;
+      }
+    }
+
+    .ingredients-header {
+      .preparation-time {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+      }
+    }
+
+    .ingredients-list {
+      margin-top: 24px;
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      background-color: var(--color-gray);
+      border-radius: 16px;
+
+      ul li {
+        display: flex;
+        align-items: center;
+
+        svg {
+          position: relative;
+          margin-right: 8px;
+          top: 2px;
+        }
+      }
+    }
+  }
+
+  .details-footer {
+    margin-bottom: 15rem;
+
+    h2 {
+      font-size: 24px;
+      color: var(--color-black);
+    }
+
+    .content {
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+      margin-top: 24px;
+
+      .content-cover {
+        width: 100%;
+        height: 300px;
+        border-radius: 24px;
+        flex-shrink: 0;
+
+        img {
+          width: 100%;
+          height: 100%;
+          border-radius: 24px;
+          object-fit: cover;
+        }
+      }
+
+      .content-infos {
+        margin-top: 16px;
+
+        p:nth-child(1) {
+          margin-bottom: 24px;
+        }
+
+        p {
+          font-size: 18px;
+          font-weight: 600;
+
+          span {
+            font-weight: 400;
+          }
+        }
+      }
+    }
+  }
 }
 
 @media screen and (min-width: 769px) {
-    .recipe-detail {
-        .details-footer {
-            h2 {
-                font-size: 32px;
-            }
+  .recipe-detail {
+    .details-footer {
+      h2 {
+        font-size: 32px;
+      }
 
-            .content {
-                flex-direction: row;
+      .content {
+        flex-direction: row;
 
-                .content-cover {
-                    width: 360px;
-                }
-            }
+        .content-cover {
+          width: 360px;
         }
+      }
     }
+  }
 }
 
 @media screen and (min-width: 992px) {
-    .recipe-detail {
-        .detail {
-            display: flex;
-            justify-content: space-between;
+  .recipe-detail {
+    .detail {
+      display: flex;
+      justify-content: space-between;
 
-            .preparation,
-            .ingredients {
-                width: 45%;
-            }
+      .preparation,
+      .ingredients {
+        width: 45%;
+      }
 
-            .preparation-header,
-            .ingredients-header {
-                h2 {
-                    font-size: 32px;
-                }
-            }
-
-            .preparation-header {
-                .badge {
-                    font-size: 20px;
-                }
-            }
+      .preparation-header,
+      .ingredients-header {
+        h2 {
+          font-size: 32px;
         }
+      }
 
+      .preparation-header {
+        .badge {
+          font-size: 20px;
+        }
+      }
     }
+  }
 }

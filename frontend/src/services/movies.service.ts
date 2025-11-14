@@ -1,4 +1,4 @@
-import { movies } from "../pages/Home/data"; 
+import { movies } from '../pages/Home/data';
 
 // Pour l'instant on créer les données en dur
 // On utilisera pas l'interface réel car sinon il faudra mettre à jour le tableau
@@ -15,6 +15,6 @@ export interface IFakeMovie {
 
 export const getMovies = async (): Promise<IFakeMovie[]> => {
   // on simule un appel API (comme pour Recipes)
-  await new Promise(res => setTimeout(res, 500));
+  await new Promise((res) => setTimeout(res, 500));
   return movies;
 };

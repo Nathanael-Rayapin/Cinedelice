@@ -1,14 +1,14 @@
 .profile-btn {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    border: none;
-    background: linear-gradient(to right, var(--color-secondary), var(--color-primary));
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: none;
+  background: linear-gradient(to right, var(--color-secondary), var(--color-primary));
 }
 
 @media screen and (min-width: 769px) {
-    .profile-btn {
-        width: 50px;
-        height: 50px;
-    }
+  .profile-btn {
+    width: 50px;
+    height: 50px;
+  }
 }
