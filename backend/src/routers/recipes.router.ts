@@ -1,6 +1,7 @@
 import { Router } from "express";
 import * as recipesController from "../controllers/recipes.controller.ts";
 import { checkRoles } from "../middlewares/access-control-middleware.ts";
+import { uploadImage } from "../middlewares/upload.ts";
 
 export const router = Router();
 
@@ -13,7 +14,7 @@ router.get("/recipes", recipesController.getAllRecipes);
 router.get("/recipes/:id", recipesController.getOneRecipe);
 
 router.delete("/recipes/:id", checkRoles(["admin"]), recipesController.deleteAnyRecipe);
-
-router.post("/recipes", checkRoles(["user", "admin"]), recipesController.createRecipe);
+// Ajout d'une recette avec upload d'image via multer middleware
+router.post("/recipes", checkRoles(["user", "admin"]), uploadImage.single('image'), recipesController.createRecipe);
 
 router.patch("/recipes/:id", checkRoles(["admin"]), recipesController.updateAnyRecipe);
