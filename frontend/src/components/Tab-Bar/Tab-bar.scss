@@ -7,9 +7,10 @@
   justify-content: space-between;
   margin-bottom: 24px;
 
-  li.active button {
+  li a.active {
     height: 50px;
     border-radius: 80px;
+    padding: 0.6rem 1.2rem;
     border: none;
     color: var(--color-white);
     font-size: 18px;
@@ -17,7 +18,7 @@
     background: linear-gradient(to right, var(--color-secondary), var(--color-primary));
   }
 
-  li button {
+  li a {
     background: none;
     outline: none;
     border: none;
@@ -25,7 +26,7 @@
     color: #fff;
   }
 
-  li:not(.active) button {
+  li a:not(.active) {
     color: var(--color-deep-gray);
     transition: all 0.3s ease;
 

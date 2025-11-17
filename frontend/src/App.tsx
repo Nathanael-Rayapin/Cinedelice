@@ -19,6 +19,7 @@ import MyInformations from './pages/My-Informations/My-Informations';
 import MovieDetail from './pages/Movie-Detail/Movie-Detail';
 import ProtectedRoute from './components/ProtectedRoute/ProtectedRoute';
 import './App.css';
+import AddRecipe from './pages/Add-Recipe/Add-Recipe';
 
 function App() {
   const authContext = useContext(AuthContext);
@@ -66,6 +67,7 @@ function App() {
               <Route index element={<Navigate to="mes-recettes" replace />} />
               <Route path="mes-recettes" element={<MyRecipe />} />
               <Route path="mes-informations" element={<MyInformations />} />
+              <Route path="ajouter-recette" element={<AddRecipe />} />
             </Route>
           </Route>
 
