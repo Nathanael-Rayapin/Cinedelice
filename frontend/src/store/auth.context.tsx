@@ -4,7 +4,10 @@ import type { ISigninDTO } from '../interfaces/auth';
 
 export default function AuthContextProvider({ children }: IContextProviderProps) {
   // Utiliser pour mettre à jour mon authentification
-  const [isAuth, setIsAuth] = useState(false);
+  const [isAuth, setIsAuth] = useState<boolean>(() => {
+    const token = localStorage.getItem("token");
+    return !!token;
+  });
 
   // Utiliser pour me conencter
   const login = (data: ISigninDTO) => {

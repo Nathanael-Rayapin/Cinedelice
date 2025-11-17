@@ -39,6 +39,8 @@ const Navbar = () => {
         <div className="filters">
           <CategoriesDropdown />
           <Search isMobileOpen={false} onMobileToggle={setIsMobileSearchOpen} isDesktop />
+          {/* <CategoriesDropdown /> */}
+          <Search />
         </div>
         <div className="sections">
           <NavLink to="/recettes">Recettes</NavLink>

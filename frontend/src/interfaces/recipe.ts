@@ -28,6 +28,28 @@ interface ICategoryDTO {
   name: string;
 }
 
-// type CategoryType = "Entrées" | "Plats" | "Desserts";
+export interface ICreateRecipeDTO {
+  title: string;
+  category_id: number;
+  movie_id: number;
+  number_of_person: number;
+  preparation_time: number;
+  description: string;
+  image: File;
+  ingredients: string;
+  preparation_steps: string;
+  status: StatusType;
+}
+
+export interface ICreateRecipe {
+  title: string;
+  movieTitle: string;
+  image: FileList;
+  ingredients: string;
+  preparationSteps: string;
+  category: string;
+  preparationTime: number;
+  numberOfPerson: number;
+}
 
 type StatusType = 'draft' | 'published';

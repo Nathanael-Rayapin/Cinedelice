@@ -13,7 +13,6 @@ export const signup = async (userData: ISignup): Promise<ISignupDTO> => {
         username: userData.username,
         email: userData.email,
         password: userData.password,
-        confirm_password: userData.confirmPassword,
         age_declaration: userData.ageDeclaration,
         cgu_accepted: userData.termOfUse,
       },

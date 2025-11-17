@@ -1,5 +1,6 @@
 import { createContext, type ReactNode } from 'react';
 import type { ISigninDTO } from '../interfaces/auth';
+import type { IModalOptions } from '../interfaces/modal';
 
 export interface IContextProviderProps {
   children: ReactNode;
@@ -24,6 +25,10 @@ export const AuthContext = createContext<IAuthContextType>({
 interface IGlobalUIContextType {
   loading: boolean;
   setLoading: React.Dispatch<React.SetStateAction<boolean>>;
+  showModal: boolean;
+  setShowModal: React.Dispatch<React.SetStateAction<boolean>>;
+  modalOptions: IModalOptions | null;
+  setModalOptions: React.Dispatch<React.SetStateAction<IModalOptions | null>>;
   errorMsg: string | null;
   setErrorMsg: React.Dispatch<React.SetStateAction<string | null>>;
 }
@@ -31,6 +36,10 @@ interface IGlobalUIContextType {
 export const GlobalUIContext = createContext<IGlobalUIContextType>({
   loading: false,
   setLoading: () => {},
+  showModal: false,
+  setShowModal: () => {},
+  modalOptions: null,
+  setModalOptions: () => {},
   errorMsg: null,
   setErrorMsg: () => {},
 });

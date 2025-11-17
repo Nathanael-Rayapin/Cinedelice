@@ -1,12 +1,5 @@
-.categories-btn {
-  width: 125px;
-  height: 40px;
-  font-size: 16px;
-}
-
 @media screen and (min-width: 769px) {
   .categories-btn {
-    width: 175px;
     height: 50px;
     border-radius: 80px;
     border: none;
@@ -23,9 +16,10 @@
 
     li {
       display: flex;
+      align-items: center;
       flex-direction: row;
 
-      input[type='checkbox'] {
+      input[type='radio'] {
         margin-right: 10px;
       }
     }

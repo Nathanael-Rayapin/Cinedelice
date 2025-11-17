@@ -1,5 +1,5 @@
 import axios from 'axios';
-import type { IRecipeDTO } from '../interfaces/recipe';
+import type { ICreateRecipeDTO, IRecipeDTO } from '../interfaces/recipe';
 import { showSnackbar } from '../utils/snackbar';
 
 const BASE_URL = import.meta.env.VITE_BACKEND_API;
@@ -65,6 +65,30 @@ export const getMyRecipe = async (recipeId: number): Promise<IRecipeDTO> => {
 
     if (response.status !== 200) {
       throw new Error('Une erreur est survenue lors de la récupération de la recette');
+    }
+
+    return response.data;
+  } catch (error) {
+    showSnackbar("Oups ! Une erreur s'est produite. Veuillez réessayer plus tard.", false);
+    throw error;
+  }
+};
+
+export const createRecipe = async (formData: FormData): Promise<ICreateRecipeDTO> => {
+  try {
+    const response = await axios.post(`${BASE_URL}/recipes`, 
+      {
+        formData
+      },
+      {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${localStorage.getItem('token')}`,
+      },
+    });
+
+    if (response.status !== 200) {
+      throw new Error('Une erreur est survenue lors de la création de la recette');
     }
 
     return response.data;

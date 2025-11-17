@@ -2,7 +2,12 @@ import { FaCaretDown } from 'react-icons/fa';
 import { useEffect, useRef } from 'react';
 import './Categories-Dropdown.scss';
 
-const CategoriesDropdown = () => {
+interface ICategoriesDropdownProps {
+  value: string;
+  onChange: (value: string) => void;
+}
+
+const CategoriesDropdown = ({ value, onChange }: ICategoriesDropdownProps) => {
   const detailsRef = useRef<HTMLDetailsElement>(null);
 
   useEffect(() => {
@@ -26,28 +31,31 @@ const CategoriesDropdown = () => {
         </summary>
 
         <ul className="menu dropdown-content bg-base-100 rounded-box z-1 w-52 p-2 shadow-sm">
-          <li>
+          <li onClick={() => onChange("Entrées")}>
             <input
-              type="checkbox"
-              defaultChecked
-              className="checkbox checkbox-sm checked:border-orange-500 checked:bg-orange-400 checked:text-orange-800"
-            />
+              type="radio"
+              name="radio-8"
+              className="radio radio-sm radio-custom-color"
+              checked={value === "Entrées"}
+              readOnly />
             <label>Entrées</label>
           </li>
-          <li>
+          <li onClick={() => onChange("Plats")}>
             <input
-              type="checkbox"
-              defaultChecked
-              className="checkbox checkbox-sm checked:border-orange-500 checked:bg-orange-400 checked:text-orange-800"
-            />
+              type="radio"
+              name="radio-8"
+              className="radio radio-sm radio-custom-color"
+              checked={value === "Plats"}
+              readOnly />
             <label>Plats</label>
           </li>
-          <li>
+          <li onClick={() => onChange("Desserts")}>
             <input
-              type="checkbox"
-              defaultChecked
-              className="checkbox checkbox-sm checked:border-orange-500 checked:bg-orange-400 checked:text-orange-800"
-            />
+              type="radio"
+              name="radio-8"
+              className="radio radio-sm radio-custom-color"
+              checked={value === "Desserts"}
+              readOnly />
             <label>Desserts</label>
           </li>
         </ul>

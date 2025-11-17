@@ -18,8 +18,8 @@ import ForYou from './pages/For-You/For-You';
 import MyInformations from './pages/My-Informations/My-Informations';
 import MovieDetail from './pages/Movie-Detail/Movie-Detail';
 import ProtectedRoute from './components/ProtectedRoute/ProtectedRoute';
-import './App.css';
 import AddRecipe from './pages/Add-Recipe/Add-Recipe';
+import './App.css';
 
 function App() {
   const authContext = useContext(AuthContext);
