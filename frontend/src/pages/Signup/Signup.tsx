@@ -135,7 +135,7 @@ const Signup = () => {
                 pattern: {
                   value: passwordPattern,
                   message:
-                    'Le mot de passe doit contenir au moins un chiffre, une lettre et un caractère spécial',
+                    'Le mot de passe doit contenir au moins un chiffre, une lettre, une majuscule et un caractère spécial',
                 },
                 onChange: () => {
                   if (submitCountRef.current > 0) {
