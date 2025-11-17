@@ -61,19 +61,22 @@ const Search = ({ isMobileOpen = false, onMobileToggle, isDesktop = false }: Sea
 
   // Naviguer vers le résultat sélectionné
   const handleSelectResult = (result: ISearchResult) => {
-    if (result.type === 'recipe') {
-      navigate(`/recettes/${result.id}`);
-    } else if (result.type === 'movie') {
-      navigate(`/films/${result.id}`);
-    }
-    // Réinitialiser la recherche
+    // Réinitialiser la recherche AVANT la navigation
     setQuery('');
     setResults([]);
     setIsOpen(false);
     // Fermer la search en mobile
     if (onMobileToggle && !isDesktop) {
-      setTimeout(() => onMobileToggle(false), 0);
+      onMobileToggle(false);
     }
+    // Naviguer après un micro-délai pour voir l'effet visuel
+    setTimeout(() => {
+      if (result.type === 'recipe') {
+        navigate(`/recettes/${result.id}`);
+      } else if (result.type === 'movie') {
+        navigate(`/films/${result.id}`);
+      }
+    }, 0);
   };
 
   // Soumettre la recherche (navigation optionnelle)
