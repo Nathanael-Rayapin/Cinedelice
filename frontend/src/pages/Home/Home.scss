@@ -20,6 +20,12 @@
     font-weight: 600;
   }
 
+  .movies-list {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+  } 
+  
   .recipes-header,
   .movies-header {
     display: flex;

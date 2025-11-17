@@ -1,7 +1,8 @@
 import "./Movie-Detail.scss";
 import { useParams, useNavigate } from "react-router";
 import { useEffect, useState } from "react";
-import { recipes, movies } from "../Home/data";
+import { getRecipes } from "../../services/recipes.service";
+import { getOneMovie } from "../../services/movies.service";
 import type { IRecipeDTO } from "../../interfaces/recipe";
 import PacmanLoader from "react-spinners/PacmanLoader";
 import type { IMovieDTO } from "../../interfaces/movie";
@@ -13,30 +14,33 @@ const MovieDetail = () => {
     const [movie, setMovie] = useState<IMovieDTO | null>(null);
     const [loading, setLoading] = useState(false);
     const [errorMsg, setErrorMsg] = useState<string | null>(null);
+    const [associatedRecipes, setAssociatedRecipes] = useState<IRecipeDTO[]>([]);
 
     useEffect(() => {
-        const fetchMovie = () => {
+        const fetchMovieAndRecipes = async () => {
             try {
                 setLoading(true);
-                const allMovies = movies;
-
-                const foundMovie = allMovies.find((m) => String(m.id) === id);
-
-                if (!foundMovie) {
-                    setErrorMsg("Film non trouvé");
-                } else {
-                    setMovie(foundMovie);   
+                if (!id) {
+                    setErrorMsg('Film non trouvé');
+                    return;
                 }
+
+                const movieId = Number(id);
+                const fetchedMovie = await getOneMovie(movieId);
+                setMovie(fetchedMovie);
+
+                // Récupérer toutes les recettes et filtrer côté client par movie_id
+                const allRecipes = await getRecipes();
+                const associated = allRecipes.filter((r) => r.movie_id === fetchedMovie.id);
+                setAssociatedRecipes(associated);
             } catch (error) {
-                if (error instanceof Error) {
-                    setErrorMsg(error.message);
-                }
+                if (error instanceof Error) setErrorMsg(error.message);
             } finally {
                 setLoading(false);
             }
         };
 
-        fetchMovie();
+        fetchMovieAndRecipes();
     }, [id]);
 
     if (loading) {
@@ -50,51 +54,6 @@ const MovieDetail = () => {
     if (errorMsg || !movie) {
         return <p className="error-msg">{errorMsg || "Film non trouvé"}</p>;
     }
-
-    // Réintroduction du type local pour les recettes
-    interface ILocalRecipe {
-        id: number;
-        img: string; 
-        title: string;
-        author: string;
-        badge?: string;
-        movieId: number;
-        description?: string;
-    }
-
-    // Filtrer les recettes associées à ce film
-    const associatedRecipes = (recipes as ILocalRecipe[]).filter(
-        (recipe) => recipe.movieId === movie.id
-    );
-
-    // Adaptateur pour correspondre à IRecipeDTO
-    const adaptRecipeToIRecipeDTO = (recipe: ILocalRecipe): IRecipeDTO => ({
-        id: recipe.id,
-        category: { name: recipe.badge || "Autre" },
-        category_id: 1,
-        description: recipe.description || "",
-        image: recipe.img, 
-        ingredients: "",
-        movie_id: recipe.movieId,
-        number_of_person: 1,
-        preparation_steps: "",
-        preparation_time: 0,
-        status: "published",
-        title: recipe.title,
-        created_at: "",
-        updated_at: "",
-        user_id: 0,
-        user: { username: recipe.author || "Inconnu" },
-        movie: {
-            id: 1,
-            id_movie_tmdb: 1,
-            title: "Ratatouille",
-            release_year: "2007",
-            director: "Brad Pitt",
-            synopsis: "Un jeune rat de cuisine rêve de devenir un grand chef français et s'associe à un plongeur pour réaliser son rêve, malgré les obstacles.",
-            image: "",
-        }
-    });
 
     return (
         <div className="movie-detail">
@@ -136,7 +95,7 @@ const MovieDetail = () => {
                                 <RecipeCard
                                     key={recipe.id}
                                     hasDraft={false}
-                                    recipe={adaptRecipeToIRecipeDTO(recipe)}
+                                    recipe={recipe}
                                 />
                             ))}
                         </div>
