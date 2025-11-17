@@ -26,7 +26,6 @@
     display: none;
     order: 3;
     width: 100%;
-    margin-left: 50px;
   }
 
   .sections {
@@ -71,6 +70,7 @@
       margin-right: auto;
       order: 2;
       width: auto;
+      margin-left: 50px;
     }
 
     .sections {
@@ -78,6 +78,7 @@
       align-items: center;
       gap: 32px;
       order: 3;
+      margin-left: 50px;
 
       a {
         display: inline-block;

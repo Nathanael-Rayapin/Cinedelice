@@ -13,12 +13,34 @@ interface SearchProps {
 
 const Search = ({ isMobileOpen = false, onMobileToggle, isDesktop = false }: SearchProps) => {
   const [query, setQuery] = useState('');
+  const [debouncedQuery, setDebouncedQuery] = useState('');
   const [results, setResults] = useState<ISearchResult[]>([]);
   const [isOpen, setIsOpen] = useState(false);
   const navigate = useNavigate();
   const { search } = useSearch();
   const dropdownRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
+
+  // Debounce de 500ms sur la query
+  useEffect(() => {
+    const timeoutId = setTimeout(() => {
+      setDebouncedQuery(query);
+    }, 500);
+
+    return () => clearTimeout(timeoutId);
+  }, [query]);
+
+  // Mettre à jour les résultats quand debouncedQuery change
+  useEffect(() => {
+    if (debouncedQuery.trim()) {
+      const searchResults = search(debouncedQuery);
+      setResults(searchResults);
+      setIsOpen(true);
+    } else {
+      setResults([]);
+      setIsOpen(false);
+    }
+  }, [debouncedQuery, search]);
 
   // Fermer le dropdown en cliquant en dehors
   useEffect(() => {
@@ -39,30 +61,23 @@ const Search = ({ isMobileOpen = false, onMobileToggle, isDesktop = false }: Sea
     } else if (!isMobileOpen && !isDesktop) {
       // Réinitialiser quand on ferme la recherche mobile
       setQuery('');
+      setDebouncedQuery('');
       setResults([]);
       setIsOpen(false);
     }
   }, [isMobileOpen, isDesktop]);
 
-  // Mettre à jour les résultats au changement de query
+  // Mettre à jour la query
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     setQuery(value);
-
-    if (value.trim()) {
-      const searchResults = search(value);
-      setResults(searchResults);
-      setIsOpen(true);
-    } else {
-      setResults([]);
-      setIsOpen(false);
-    }
   };
 
   // Naviguer vers le résultat sélectionné
   const handleSelectResult = (result: ISearchResult) => {
     // Réinitialiser la recherche AVANT la navigation
     setQuery('');
+    setDebouncedQuery('');
     setResults([]);
     setIsOpen(false);
     // Fermer la search en mobile
@@ -97,7 +112,8 @@ const Search = ({ isMobileOpen = false, onMobileToggle, isDesktop = false }: Sea
           ref={inputRef}
           role="searchbox"
           type="search"
-          placeholder="Rechercher un plat..."
+          placeholder="Rechercher un plat ou un film..."
+          aria-label="Rechercher un plat ou un film"
           value={query}
           onChange={handleInputChange}
           onFocus={() => query.trim() && setIsOpen(true)}
