@@ -2,8 +2,8 @@ import z from "zod";
 import { BadRequestError } from "../lib/errors.ts";
 
 export const createRecipeSchema = z.object({
-  category_id: z.number().int().positive(),
-  movie_id: z.number().int().positive(),
+  category_id: z.coerce.number().int().positive(),
+  movie_id: z.coerce.number().int().positive(),
   title: z.string()
     .trim() // Supprime les espaces au début et à la fin
     .min(3, "Le titre doit contenir au minimum 3 caractères")
@@ -13,11 +13,11 @@ export const createRecipeSchema = z.object({
       "Le titre ne peut contenir que des lettres, chiffres, espaces et caractères basiques (- ' , . ())"
     ),
     
-  number_of_person: z.number()
+  number_of_person: z.coerce.number()
     .int("Le nombre de personnes doit être un entier")
     .min(1, "La recette doit servir au moins 1 personne")
     .max(50, "Le nombre de personnes ne peut pas dépasser 50"),
-  preparation_time: z.number()
+  preparation_time: z.coerce.number()
     .int("Le temps de préparation doit être un entier")
     .min(1, "Le temps de préparation doit être d'au moins 1 minute")
     .max(240, "Le temps de préparation ne peut pas dépasser 4 heures (240 minutes)"),
@@ -26,12 +26,8 @@ export const createRecipeSchema = z.object({
     .max(500, "La description ne peut pas dépasser 500 caractères")
     .trim()
     .optional(),
-  image: z.url("L'image doit être une URL valide")
-    .regex(
-      /\.(jpg|jpeg|png|webp|gif)(\?.*)?$/i,
-      "L'URL doit pointer vers une image (jpg, jpeg, png, webp, gif)"
-    )
-    .max(2000, "L'URL de l'image est trop longue"),
+  image: z.url("L'image doit être une URL valide").optional(),
+  
   ingredients: z.string()
     .min(10, "Les ingrédients doivent contenir au minimum 10 caractères")
     .max(5000, "Les ingrédients ne peuvent pas dépasser 5000 caractères")

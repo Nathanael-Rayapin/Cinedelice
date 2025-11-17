@@ -1,0 +1,64 @@
+@apiBaseUrl = http://localhost:3000/api
+@token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTc2MzM5OTgxMSwiZXhwIjoxNzYzNDAzNDExfQ.iPYmLUTbHtgUCAmKsglsaDvLJqyLcwoIlR4ZcJBKK5c
+
+### Connexion ###
+POST {{apiBaseUrl}}/auth/login
+Content-Type: application/json
+
+{
+  "email": "admin@example.com",
+  "password": "password"
+}
+
+### Créer une recette (avec upload image)
+POST {{apiBaseUrl}}/recipes
+Authorization: Bearer {{token}}
+Content-Type: multipart/form-data; boundary=boundary123
+
+--boundary123
+Content-Disposition: form-data; name="title"
+
+les macarons
+--boundary123
+Content-Disposition: form-data; name="category_id"
+
+1
+--boundary123
+Content-Disposition: form-data; name="movie_id"
+
+223
+--boundary123
+Content-Disposition: form-data; name="number_of_person"
+
+3
+--boundary123
+Content-Disposition: form-data; name="preparation_time"
+
+45
+--boundary123
+Content-Disposition: form-data; name="description"
+
+Purée inspirée de Star Wars.
+--boundary123
+Content-Disposition: form-data; name="ingredients"
+
+Pommes de terre
+Beurre
+Sel
+--boundary123
+Content-Disposition: form-data; name="preparation_steps"
+
+Éplucher
+Cuire
+Écraser
+Assaisonner
+--boundary123
+Content-Disposition: form-data; name="status"
+
+published
+--boundary123
+Content-Disposition: form-data; name="image"; filename="Macarons.jpg"
+Content-Type: image/jpeg
+
+< ../Macarons.JPG
+--boundary123--
