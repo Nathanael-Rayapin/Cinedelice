@@ -1,5 +1,5 @@
 import axios from "axios";
-import { config } from "../../config.ts";
+import { config } from "../../config/config.ts";
 import { prisma } from "../models/index.ts";
 import type { MovieJob } from "../@types/express.d.ts";
 

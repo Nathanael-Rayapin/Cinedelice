@@ -1,5 +1,5 @@
 import jwt, { type JwtPayload } from "jsonwebtoken";
-import { config } from "../../config.ts";
+import { config } from "../../config/config.ts";
 import { UnauthorizedError } from "./errors.ts";
 import type { Role } from "@prisma/client";
 

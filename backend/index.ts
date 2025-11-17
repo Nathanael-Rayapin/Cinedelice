@@ -1,4 +1,4 @@
-import { config } from "./config.ts";
+import { config } from "./config/config.ts";
 import { app } from "./src/app.ts";
 
 // Démarrer un serveur HTTP
