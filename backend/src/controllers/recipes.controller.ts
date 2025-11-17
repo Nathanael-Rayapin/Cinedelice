@@ -4,6 +4,7 @@ import type { Request,Response } from "express";
 import { BadRequestError, ConflictError, NotFoundError, UnauthorizedError } from "../lib/errors.ts";
 import { parseIdFromParams, validateCreateRecipe, validateUpdateRecipe } from "../validations/index.ts";
 import { findOrCreateMovieFromId } from "../services/movie.service.ts";
+import { uploadImageToCloudinary } from "../services/upload.service.ts";
 
 // Lister toutes les recettes publiées
 export async function getAllRecipes(req: Request, res: Response) {
@@ -173,17 +174,35 @@ export async function getMyRecipe(req: Request, res: Response) {
 //le front envoie un movie_id du film TMDb
 // Le back va chercher/creer le film dans notre BDD
 export async function createRecipe(req: Request, res: Response) {
-  const { title, category_id, movie_id, number_of_person, preparation_time, description, image, ingredients, preparation_steps, status } = await validateCreateRecipe(req.body);
-  
-  // Récupérer l'ID de l'utilisateur connecté depuis le token JWT
+  // L'image envoyée par le front via middleware Multer
+  const file = req.file;
+  // URL de l'image uploadée sur Cloudinary
+  let imageUrl: string = "";
+
+  // Si le user a envoyé une image : on l'upload via service dans Cloudinary
+  if (file) {
+    imageUrl = await uploadImageToCloudinary(file.buffer); // c'est une string
+  }
+
+  // On vérifie les données JSON envoyées dans le body
+  const { 
+    title, 
+    category_id, 
+    movie_id, 
+    number_of_person, 
+    preparation_time, 
+    description, 
+    ingredients, 
+    preparation_steps, 
+    status 
+  } = await validateCreateRecipe(req.body);
+
+  // Récupérer l'ID de l'utilisateur connecté
   const user_id = req.currentUserId;
 
   if (!user_id) {
-    throw new UnauthorizedError(
-      "Vous devez être connecté pour créer une recette"
-    );
+    throw new UnauthorizedError("Vous devez être connecté pour créer une recette");
   }
-
   // Vérifier que l'utilisateur n'a pas déjà une recette avec ce titre
   const existingRecipe = await prisma.recipe.findFirst({
     where: {
@@ -208,7 +227,7 @@ export async function createRecipe(req: Request, res: Response) {
       number_of_person,
       preparation_time,
       description,
-      image,
+      image: imageUrl,// URL de l'image uploadée sur Cloudinary
       ingredients,
       preparation_steps,
       status: status || "draft",

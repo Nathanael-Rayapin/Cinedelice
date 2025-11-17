@@ -1,7 +1,8 @@
 import cloudinary from "../../config/cloudinary.ts";
+
 //Service pour envoyer des images sur Cloudinary et récupérer leur URL
-export async function uploadImageToCloudinary(buffer: Buffer) { // buffer venant de multer
-  return new Promise<string>((resolve, reject) => {// on retourne une promesse qui résout l'URL de l'image uploadée
+export async function uploadImageToCloudinary(buffer: Buffer): Promise<string> { // buffer venant de multer
+  return new Promise((resolve, reject) => {// on retourne une promesse qui résout l'URL de l'image uploadée
     cloudinary.uploader.upload_stream( 
       { folder: 'recipes' }, 
       (error, result) => {
