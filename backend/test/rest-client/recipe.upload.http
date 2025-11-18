@@ -1,5 +1,5 @@
 @apiBaseUrl = http://localhost:3000/api
-@token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTc2MzM5OTgxMSwiZXhwIjoxNzYzNDAzNDExfQ.iPYmLUTbHtgUCAmKsglsaDvLJqyLcwoIlR4ZcJBKK5c
+@token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTc2MzQ1Nzk0MCwiZXhwIjoxNzYzNDYxNTQwfQ.cpsrOnWU2v7lr-0eV69NqVv_qVXXQwZmeaJ8N_2nMp8
 
 ### Connexion ###
 POST {{apiBaseUrl}}/auth/login
@@ -18,32 +18,32 @@ Content-Type: multipart/form-data; boundary=boundary123
 --boundary123
 Content-Disposition: form-data; name="title"
 
-les macarons
+le kabab de yoda
 --boundary123
 Content-Disposition: form-data; name="category_id"
 
-1
+2
 --boundary123
 Content-Disposition: form-data; name="movie_id"
 
-223
+555
 --boundary123
 Content-Disposition: form-data; name="number_of_person"
 
-3
+1
 --boundary123
 Content-Disposition: form-data; name="preparation_time"
 
-45
+30
 --boundary123
 Content-Disposition: form-data; name="description"
 
-Purée inspirée de Star Wars.
+sandwich au poulet epice
 --boundary123
 Content-Disposition: form-data; name="ingredients"
 
-Pommes de terre
-Beurre
+Pain
+viande
 Sel
 --boundary123
 Content-Disposition: form-data; name="preparation_steps"
@@ -60,5 +60,5 @@ published
 Content-Disposition: form-data; name="image"; filename="Macarons.jpg"
 Content-Type: image/jpeg
 
-< ../Macarons.JPG
+< ../kebabi.jpg
 --boundary123--

@@ -1,5 +1,5 @@
 @apiBaseUrl = http://localhost:3000/api
-@token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTc2MzEzNzQyMCwiZXhwIjoxNzYzMTQxMDIwfQ.cJoFRy3wyd9ngV68OJb2ujpm1armcM2rLIZHfrvmUbA
+@token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTc2MzQ1Nzk0MCwiZXhwIjoxNzYzNDYxNTQwfQ.cpsrOnWU2v7lr-0eV69NqVv_qVXXQwZmeaJ8N_2nMp8
 # ========================
 # AUTHENTIFICATION
 # ========================
