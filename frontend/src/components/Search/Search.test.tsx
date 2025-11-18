@@ -13,13 +13,10 @@ describe('Search', () => {
   it('should contain a caracter if the input is filled', () => {
     render(<Search />);
 
-    // On créer une constante de l'input par son rôle
     const input = screen.getByRole('searchbox');
 
-    // On change la valeur de l'input via l'événement "change"
     fireEvent.change(input, { target: { value: 'test' } });
 
-    // On vérifie que l'input contient la valeur "test"
     expect(input).toHaveValue('test');
   });
 });

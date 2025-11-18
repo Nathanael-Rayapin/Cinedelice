@@ -22,12 +22,12 @@ const TextAreaField = ({ value, onChange, options }: ITextAreaFieldProps) => {
     const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
         let val = e.target.value;
 
-        // ✅ Si on commence à taper et qu'il n'y a pas de "•", on l'ajoute
+        // Si on commence à taper et qu'il n'y a pas de "•", on l'ajoute
         if (!value && val.length > 0 && !val.startsWith("• ")) {
             val = "• " + val;
         }
 
-        // ✅ Détecte si l'utilisateur a ajouté une nouvelle ligne
+        // Détecte si l'utilisateur a ajouté une nouvelle ligne
         const isAddingNewLine = val.length > value.length && val.endsWith("\n");
 
         if (isAddingNewLine) {

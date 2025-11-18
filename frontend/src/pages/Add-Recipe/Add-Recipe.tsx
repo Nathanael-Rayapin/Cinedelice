@@ -209,7 +209,7 @@ const AddRecipe = () => {
                 },
                 pattern: {
                   value: /^[a-zA-ZÀ-ÿ0-9\s\-',.()]+$/,
-                  message: "Le titre ne peut contenir que des lettres, chiffres, espaces et caractères basiques"
+                  message: "Le titre ne peut contenir que des lettres, chiffres, espaces et caractères basiques (- ' , . ())"
                 },
                 validate: (value) =>
                   value.trim().length >= 10 || "Le titre de la recette doit contenir au moins 10 caractères"

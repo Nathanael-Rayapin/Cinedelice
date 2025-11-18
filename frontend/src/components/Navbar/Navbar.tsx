@@ -26,6 +26,33 @@ const Navbar = () => {
   const toggleMobileSearch = () => {
     setIsMobileSearchOpen(!isMobileSearchOpen);
   };
+import { useContext, useEffect, useState } from 'react';
+import { GlobalUIContext } from '../../store/interface';
+import { getCategories } from '../../services/categories.service';
+import type { ICategoryDTO } from '../../interfaces/category';
+import './Navbar.scss';
+
+const Navbar = () => {
+    const { setLoading, setErrorMsg } = useContext(GlobalUIContext);
+    const [categories, setCategories] = useState<ICategoryDTO[]>([]);
+
+  useEffect(() => {
+      const fetchCategories = async () => {
+        try {
+          setLoading(true);
+          const categories = await getCategories();
+          setCategories(categories);
+        } catch (error) {
+          if (error instanceof Error) {
+            setErrorMsg(error.message);
+          }
+        } finally {
+          setLoading(false);
+        }
+      };
+  
+      fetchCategories();
+    }, []);
 
   return (
     <header>
@@ -40,6 +67,7 @@ const Navbar = () => {
           <CategoriesDropdown />
           <Search isMobileOpen={false} onMobileToggle={setIsMobileSearchOpen} isDesktop />
           {/* <CategoriesDropdown /> */}
+          <CategoriesDropdown value="" onChange={() => { }} categories={categories} />
           <Search />
         </div>
         <div className="sections">
