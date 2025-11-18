@@ -5,154 +5,141 @@
         display: flex;
         flex-direction: column;
         gap: 48px;
-    }
 
-    .movie-info-container {
-        display: flex;
-        flex-direction: column;
-        gap: 24px;
-        
-        .movie-title-mobile h1 {
-            font-size: 32px;
-            font-weight: 700;
-            color: black;
-        }
-        
-        .movie-poster {
-            width: 100%;
-            max-width: 300px;
-            height: auto;
-            border-radius: 16px;
-            box-shadow: rgba(0, 0, 0, 0.2) 0px 4px 12px;
-        }
 
-        .movie-synopsis-container .synopsis {
-            font-size: 16px;
-            line-height: 1.6;
-            color: var(--color-text);
-            text-align: justify;
-
-            strong {
-                font-weight: 600;
-            }
-        }
-    }
-
-    .associated-recipes {
-        .recipes-header {
+        .movie-info-container {
             display: flex;
-            align-items: center;
-            justify-content: space-between;
-            margin-bottom: 24px;
+            flex-direction: column;
+            gap: 24px;
+            width: 360px;
 
-            h2 {
-                font-size: 24px;
-                font-weight: 600;
-                color: black;
+            .movie-title-mobile {
+                h1 {
+                    font-size: 24px;
+                    font-weight: 700;
+                    color: black;
+                    text-align: left;
+                }
             }
 
-            .see-all {
-                color: #fb8b24;
-                font-size: 18px;
-                text-decoration: none;
-                font-weight: 500;
-                transition: all 0.3s ease;
-                background: none;
-                border: none;
-                cursor: pointer;
+            .movie-poster {
+                width: 100%;
+                height: 300px;
+                border-radius: 24px;
+                flex-shrink: 0;
 
-                &:hover {
-                    text-decoration: underline;
+                img {
+                    width: 100%;
+                    height: 100%;
+                    border-radius: 24px;
+                    object-fit: cover;
+                }
+            }
+
+            .movie-synopsis-container .synopsis {
+                font-size: 16px;
+                line-height: 1.6;
+                color: var(--color-text);
+                text-align: justify;
+
+                strong {
+                    font-weight: 600;
                 }
             }
         }
 
-        .recipes-grid {
-            display: flex;
-            flex-direction: column; 
+        .associated-recipes {
             gap: 24px;
+            display: flex;
+            flex-direction: column;
+
+            .recipes-header {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                margin-bottom: 24px;
+
+                h2 {
+                    font-size: 24px;
+                    font-weight: 600;
+                    color: black;
+                }
+
+                .see-all {
+                    color: #fb8b24;
+                    font-size: 18px;
+                    text-decoration: none;
+                    font-weight: 500;
+                    transition: all 0.3s ease;
+                    background: none;
+                    border: none;
+                    cursor: pointer;
+
+                    &:hover {
+                        text-decoration: underline;
+                    }
+                }
+            }
         }
     }
 }
 
 /* Tablette (769px et plus) */
-@media screen and (min-width: 768px) {
+@media screen and (min-width: 769px) {
     .movie-detail {
         .movie-page-content {
-            //Mise en page principale en GRID : 1/4 Film (gauche) et 3/4 Recettes (droite)
-            display: grid;
-            grid-template-columns: 1fr 3fr; 
-            gap: 40px;
-            /* Aligner les colonnes en haut pour que titres/photos correspondent */
-            align-items: start;
-        }
+            display: flex;
+            flex-direction: row;
 
-        .movie-info-container {
-            // L'image prend toute la largeur de la colonne 1/4
-            align-self: start;
-            .movie-poster {
-                max-width: 100%; 
-                /* S'assurer que l'image démarre en haut de son conteneur */
-                display: block;
-                margin-top: 0;
-            }
-        }
-            .movie-title-mobile {
-                /* Forcer le titre du film à démarrer en haut et sans marge parasites */
-                margin: 0 0 12px 0;
+            .movie-info-container {
+                align-self: start;
 
-                h1 {
-                    margin: 0;
-                    line-height: 1.1;
+                .movie-poster {
+                    width: 360px;
+                }
+
+                .movie-title-mobile {
+                    margin: 0 0 12px 0;
+
+                    h1 {
+                        font-size: 32px;
+                        margin: 0;
+                        line-height: 1.1;
+                    }
                 }
             }
 
+            .associated-recipes {
+                .recipes-header {
+                    display: flex;
+                    align-items: flex-start;
+                    gap: 12px;
+                    margin: 0 0 12px 0;
 
-        .associated-recipes {
-            /* S'assurer que la colonne des recettes commence en haut */
-            align-self: start;
-            .recipes-header h2 {
-                font-size: 28px;
-                margin: 0;
-                /* alignement vertical précis */
-                line-height: 1.1;
-            }
+                    h2 {
+                        font-size: 32px;
+                        margin: 0;
+                        line-height: 1.1;
+                    }
+                }
 
-            /* Si besoin, enlever tout margin-top par défaut sur le header */
-            .recipes-header {
-                margin: 0 0 12px 0;
-            }
-
-            .recipes-header {
-                /* Aligner le titre des recettes sur le haut de la colonne */
-                display: flex;
-                align-items: flex-start;
-                gap: 12px;
-            }
-
-            .recipes-grid {
-                display: grid;
-                grid-template-columns: repeat(2, 1fr); 
-                gap: 20px;
-                /* Forcer chaque carte à s'aligner en haut pour que leur image soit au même niveau que l'affiche */
-                & > * {
-                    align-self: start;
+                .recipes-list {
+                    display: grid;
+                    grid-template-columns: repeat(2, 1fr);
+                    gap: 20px;
                 }
             }
         }
     }
 }
 
-/* Desktop (992px et plus) */
-@media (min-width: 1200px) {
+@media screen and (min-width: 1200px) {
     .movie-detail {
-        .associated-recipes {
-            .recipes-header h2 {
-                font-size: 32px;
-            }
-
-            .recipes-grid {
-                grid-template-columns: repeat(3, 1fr); 
+        .movie-page-content {
+            .associated-recipes {
+                .recipes-list {
+                    grid-template-columns: repeat(3, 1fr);
+                }
             }
         }
     }

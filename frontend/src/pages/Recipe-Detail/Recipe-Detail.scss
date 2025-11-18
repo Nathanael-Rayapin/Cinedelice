@@ -9,7 +9,7 @@
     .preparation-header,
     .ingredients-header {
       display: flex;
-      align-items: center;
+      align-items: end;
       justify-content: space-between;
 
       h2 {
@@ -23,7 +23,7 @@
         border: 1px solid var(--color-secondary);
         border-radius: 20px;
         width: auto;
-        padding: 0 8px;
+        padding: 16px;
         height: 40px;
         font-size: 16px;
         font-weight: 500;

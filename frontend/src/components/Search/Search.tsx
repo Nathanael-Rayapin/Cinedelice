@@ -1,105 +1,92 @@
 import { IoIosSearch } from 'react-icons/io';
 import { useNavigate } from 'react-router';
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect, useCallback } from 'react';
 import { useSearch } from '../../hooks/useSearch';
 import type { ISearchResult } from '../../hooks/useSearch';
 import './Search.scss';
 
-interface SearchProps {
-  isMobileOpen?: boolean;
-  onMobileToggle?: (isOpen: boolean) => void;
-  isDesktop?: boolean;
+interface ISearchProps {
+  isMobileOpen: boolean;
+  onMobileToggle: (isOpen: boolean) => void;
+  isDesktop: boolean;
 }
 
-const Search = ({ isMobileOpen = false, onMobileToggle, isDesktop = false }: SearchProps) => {
+const Search = ({ isMobileOpen, onMobileToggle, isDesktop }: ISearchProps) => {
   const [query, setQuery] = useState('');
-  const [debouncedQuery, setDebouncedQuery] = useState('');
   const [results, setResults] = useState<ISearchResult[]>([]);
-  const [isOpen, setIsOpen] = useState(false);
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+
   const navigate = useNavigate();
   const { search } = useSearch();
+
   const dropdownRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
 
-  // Debounce de 500ms sur la query
+  // Centraliser la logique de fermeture / reset
+  const closeSearch = useCallback(() => {
+    setQuery('');
+    setResults([]);
+    setIsDropdownOpen(false);
+    if (!isDesktop) onMobileToggle(false);
+  }, [isDesktop, onMobileToggle]);
+
+  // Mettre à jour les résultats avec debounce
   useEffect(() => {
-    const timeoutId = setTimeout(() => {
-      setDebouncedQuery(query);
+    if (!query.trim()) return;
+
+    const timer = setTimeout(() => {
+      const searchResults = search(query).slice(0, 10);
+      setResults(searchResults);
+      setIsDropdownOpen(true);
     }, 500);
 
-    return () => clearTimeout(timeoutId);
-  }, [query]);
-
-  // Mettre à jour les résultats quand debouncedQuery change
-  useEffect(() => {
-    if (debouncedQuery.trim()) {
-      const searchResults = search(debouncedQuery);
-      setResults(searchResults);
-      setIsOpen(true);
-    } else {
-      setResults([]);
-      setIsOpen(false);
-    }
-  }, [debouncedQuery, search]);
+    return () => clearTimeout(timer);
+  }, [query, search, closeSearch]);
 
   // Fermer le dropdown en cliquant en dehors
   useEffect(() => {
     const handleClickOutside = (e: MouseEvent) => {
       if (dropdownRef.current && !dropdownRef.current.contains(e.target as Node)) {
-        setIsOpen(false);
+        closeSearch();
       }
     };
-
     document.addEventListener('mousedown', handleClickOutside);
     return () => document.removeEventListener('mousedown', handleClickOutside);
-  }, []);
+  }, [closeSearch]);
 
-  // Focus sur l'input au ouverture mobile et réinitialiser à la fermeture
+  // Reset quand la fenêtre passe sous 769px
   useEffect(() => {
-    if (isMobileOpen && inputRef.current) {
-      inputRef.current.focus();
-    } else if (!isMobileOpen && !isDesktop) {
-      // Réinitialiser quand on ferme la recherche mobile
-      setQuery('');
-      setDebouncedQuery('');
-      setResults([]);
-      setIsOpen(false);
-    }
-  }, [isMobileOpen, isDesktop]);
-
-  // Mettre à jour la query
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value;
-    setQuery(value);
-  };
-
-  // Naviguer vers le résultat sélectionné
-  const handleSelectResult = (result: ISearchResult) => {
-    // Réinitialiser la recherche AVANT la navigation
-    setQuery('');
-    setDebouncedQuery('');
-    setResults([]);
-    setIsOpen(false);
-    // Fermer la search en mobile
-    if (onMobileToggle && !isDesktop) {
-      onMobileToggle(false);
-    }
-    // Naviguer après un micro-délai pour voir l'effet visuel
-    setTimeout(() => {
-      if (result.type === 'recipe') {
-        navigate(`/recettes/${result.id}`);
-      } else if (result.type === 'movie') {
-        navigate(`/films/${result.id}`);
+    const handleResize = () => {
+      if (window.innerWidth <= 769) {
+        resetSearch(true);
       }
+    };
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, [closeSearch]);
+
+  // Naviguer vers un résultat
+  const handleSelectResult = (result: ISearchResult) => {
+    closeSearch();
+
+    setTimeout(() => {
+      navigate(result.type === 'recipe'
+        ? `/recettes/${result.id}`
+        : `/films/${result.id}`);
     }, 0);
   };
 
-  // Soumettre la recherche (navigation optionnelle)
+  // Soumettre le premier résultat si présent
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (results.length > 0) {
-      handleSelectResult(results[0]);
-    }
+    if (results.length > 0) handleSelectResult(results[0]);
+  };
+
+  const resetSearch = (closeMobile = false) => {
+    setQuery('');
+    setResults([]);
+    setIsDropdownOpen(false);
+    if (closeMobile && !isDesktop) onMobileToggle(false);
   };
 
   return (
@@ -115,35 +102,33 @@ const Search = ({ isMobileOpen = false, onMobileToggle, isDesktop = false }: Sea
           placeholder="Rechercher un plat ou un film..."
           aria-label="Rechercher un plat ou un film"
           value={query}
-          onChange={handleInputChange}
-          onFocus={() => query.trim() && setIsOpen(true)}
+          onChange={(e) => setQuery(e.target.value)}
+          onFocus={() => query.trim() && setIsDropdownOpen(true)}
         />
         <button type="submit" className="search-btn">
           <IoIosSearch size={24} color="#D9D9D9" />
         </button>
       </form>
 
-      {isOpen && results.length > 0 && (
+      {isDropdownOpen && (
         <div className="search-dropdown">
-          {results.map((result) => (
-            <div
-              key={`${result.type}-${result.id}`}
-              className="search-result"
-              onClick={() => handleSelectResult(result)}
-            >
-              {result.image && <img src={result.image} alt={result.title} className="result-image" />}
-              <div className="result-info">
-                <p className="result-title">{result.title}</p>
-                <p className="result-type">{result.type === 'recipe' ? 'Recette' : 'Film'}</p>
+          {results.length > 0 ? (
+            results.map((result) => (
+              <div
+                key={`${result.type}-${result.id}`}
+                className="search-result"
+                onClick={() => handleSelectResult(result)}
+              >
+                {result.image && <img src={result.image} alt={result.title} className="result-image" />}
+                <div className="result-info">
+                  <p className="result-title">{result.title}</p>
+                  <p className="result-type">{result.type === 'recipe' ? 'Recette' : 'Film'}</p>
+                </div>
               </div>
-            </div>
-          ))}
-        </div>
-      )}
-
-      {isOpen && query.trim() && results.length === 0 && (
-        <div className="search-dropdown">
-          <p className="no-results">Aucun résultat trouvé pour « {query} »</p>
+            ))
+          ) : (
+            <p className="no-results">Aucun résultat trouvé</p>
+          )}
         </div>
       )}
     </div>

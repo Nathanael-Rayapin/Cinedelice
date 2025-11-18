@@ -4,16 +4,18 @@ import MovieCard from '../../components/Movie-Card/Movie-Card';
 import { useContext, useEffect, useState } from 'react';
 import { getRecipes } from '../../services/recipes.service';
 import type { IRecipeDTO } from '../../interfaces/recipe';
-import { movies } from './data';
 import { NavLink, Outlet } from 'react-router';
 import Typewriter from 'typewriter-effect';
 import { GlobalUIContext } from '../../store/interface';
 import { usePageMeta } from '../../hooks/usePageMeta';
 import { pageMetadata } from '../../utils/pageMetadata';
+import type { IMovieDTO } from '../../interfaces/movie';
+import { getMovies } from '../../services/movies.service';
 import './Home.scss';
 
 const Home = () => {
   const [recipes, setRecipes] = useState<IRecipeDTO[]>([]);
+  const [movies, setMovies] = useState<IMovieDTO[]>([]);
   const { setLoading, setErrorMsg } = useContext(GlobalUIContext);
 
   usePageMeta(pageMetadata.home);
@@ -24,8 +26,13 @@ const Home = () => {
     const fetchRecipes = async () => {
       try {
         setLoading(true);
+
         const recipes = await getRecipes();
         setRecipes(recipes);
+
+        const movies = await getMovies();
+        setMovies(movies);
+
       } catch (error) {
         if (error instanceof Error) {
           setErrorMsg(error.message);

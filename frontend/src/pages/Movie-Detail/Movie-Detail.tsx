@@ -1,5 +1,4 @@
-import "./Movie-Detail.scss";
-import { useParams, useNavigate } from "react-router";
+import { useParams } from "react-router";
 import { useEffect, useState } from "react";
 import { getRecipes } from "../../services/recipes.service";
 import { getOneMovie } from "../../services/movies.service";
@@ -7,10 +6,10 @@ import type { IRecipeDTO } from "../../interfaces/recipe";
 import PacmanLoader from "react-spinners/PacmanLoader";
 import type { IMovieDTO } from "../../interfaces/movie";
 import RecipeCard from "../../components/Recipe-Card/Recipe-Card";
+import "./Movie-Detail.scss";
 
 const MovieDetail = () => {
     const { id } = useParams<{ id: string }>();
-    const navigate = useNavigate();
     const [movie, setMovie] = useState<IMovieDTO | null>(null);
     const [loading, setLoading] = useState(false);
     const [errorMsg, setErrorMsg] = useState<string | null>(null);
@@ -60,37 +59,30 @@ const MovieDetail = () => {
             <div className="movie-page-content">
 
                 <div className="movie-info-container">
-
                     <div className="movie-title-mobile">
                         <h1>{movie.title}</h1>
                     </div>
 
-                    <img
-                        src={movie.image}
-                        alt={movie.title}
-                        className="movie-poster"
-                    />
+                    <div className="movie-poster">
+                        <img
+                            src={movie.image}
+                            alt={movie.title}
+                        />
+                    </div>
 
                     <div className="movie-synopsis-container">
                         <p className="synopsis">
                             <strong>Synopsis :</strong> {movie.synopsis}
                         </p>
                     </div>
-
                 </div>
 
                 {associatedRecipes.length > 0 && (
                     <section className="associated-recipes">
                         <div className="recipes-header">
                             <h2>Recettes associées</h2>
-                            <button
-                                onClick={() => navigate("/recettes")}
-                                className="see-all"
-                            >
-                                Tout voir
-                            </button>
                         </div>
-                        <div className="recipes-grid">
+                        <div className="recipes-list">
                             {associatedRecipes.map((recipe) => (
                                 <RecipeCard
                                     key={recipe.id}
