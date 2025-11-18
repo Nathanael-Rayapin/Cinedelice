@@ -356,7 +356,12 @@ export async function deleteAnyRecipe(req: Request, res: Response) {
       "Recette introuvable ou vous n'avez pas les droits sur cette recettes."
     );
   }
-
+  // Supprimer l'image de Cloudinary associée à la recette
+  try{
+    await deleteImageFromCloudinary(recipe.image);
+  } catch {
+    throw new InternalServerError("Erreur lors de la suppression de l'image sur Cloudinary");
+  }
   await prisma.recipe.delete({
     where: { id: recipeId },
   });
@@ -383,7 +388,12 @@ export async function deleteMyRecipe(req: Request, res: Response) {
       "Recette introuvable ou vous n'avez pas les droits sur cette recettes."
     );
   }
-
+  // Supprimer l'image de Cloudinary associée à la recette
+  try{
+    await deleteImageFromCloudinary(recipe.image);
+  } catch {
+    throw new InternalServerError("Erreur lors de la suppression de l'image sur Cloudinary");
+  }
   await prisma.recipe.delete({
     where: { id: recipeId },
   });

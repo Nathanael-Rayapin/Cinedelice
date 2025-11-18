@@ -1,5 +1,5 @@
 @apiBaseUrl = http://localhost:3000/api
-@token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTc2MzEzMjEzNCwiZXhwIjoxNzYzMTM1NzM0fQ.05p7NpGTweP3_kHecTqhFqzqVdGSBvZmZ4Hl05cD5TY
+@token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTc2MzQ3ODM2MCwiZXhwIjoxNzYzNDgxOTYwfQ.aDPzHKzAIeiiMmZd5i5Wd8HeSmVkwztX_EHIUuaZN9Y
 
 ### Lister toutes les recettes
 GET {{apiBaseUrl}}/recipes
@@ -26,5 +26,5 @@ Content-Type: application/json
 }
 
 ### Supprimer une recette (user)
-DELETE {{apiBaseUrl}}/recipes/7
+DELETE {{apiBaseUrl}}/recipes/25
 Authorization: Bearer {{token}}
