@@ -306,13 +306,17 @@ export async function updateMyRecipe(req: Request, res: Response) {
     let finalImageUrl = recipe.image; // par défaut on garde l'ancienne image
     // Si une nouvelle image envoyée > on supprime l'ancienne sur Cloudinary,
     if (req.file) {
-      await deleteImageFromCloudinary(recipe.image);
-  
       //   puis on upload la nouvelle, et on récupère l'URL Cloudinary.
-      finalImageUrl = await uploadImageToCloudinary(req.file.buffer);
-      if (!finalImageUrl) {
+      const newImageUrl = await uploadImageToCloudinary(req.file.buffer);
+      if (!newImageUrl) {
         throw new InternalServerError("Erreur lors de l'upload de l'image");
       }
+      try{
+        await deleteImageFromCloudinary(recipe.image);
+      } catch {
+        throw new InternalServerError("Erreur lors de la suppression de l'ancienne image sur Cloudinary");
+      }
+      finalImageUrl = newImageUrl;
     }
     // On met à jour la recette avec les nouvelles données 
     const updatedRecipe = await prisma.recipe.update({

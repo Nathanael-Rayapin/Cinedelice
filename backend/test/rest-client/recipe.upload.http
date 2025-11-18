@@ -1,5 +1,5 @@
 @apiBaseUrl = http://localhost:3000/api
-@token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTc2MzQ3NjIwNSwiZXhwIjoxNzYzNDc5ODA1fQ.zUzAA-nFIes9gEh3GPJZpJAHkbT-ZFmBj79a1MF4iXs
+@token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTc2MzQ3ODM2MCwiZXhwIjoxNzYzNDgxOTYwfQ.aDPzHKzAIeiiMmZd5i5Wd8HeSmVkwztX_EHIUuaZN9Y
 
 ### Connexion ###
 POST {{apiBaseUrl}}/auth/login
@@ -64,7 +64,7 @@ Content-Type: image/jpeg
 --boundary123--
 
 ### Modifier une recette (avec upload image) ###
-PATCH {{apiBaseUrl}}/recipes/me/25
+PATCH {{apiBaseUrl}}/recipes/me/26
 Authorization: Bearer {{token}}
 Content-Type: multipart/form-data; boundary=update123
 
