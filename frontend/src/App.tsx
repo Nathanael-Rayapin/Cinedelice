@@ -40,6 +40,8 @@ function App() {
       } else {
         authContext.logout();
       }
+    } else {
+      authContext.setIsAuth(false);
     }
   }, [location.pathname, authContext.isAuth]);
 
