@@ -23,6 +23,7 @@ export interface ISignupDTO {
 export interface ISigninDTO {
   user: IConnectedUser;
   token: string;
+  expiresAt: number;
 }
 
 export interface IConnectedUser {

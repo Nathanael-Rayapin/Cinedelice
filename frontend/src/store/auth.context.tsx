@@ -13,12 +13,14 @@ export default function AuthContextProvider({ children }: IContextProviderProps)
   const login = (data: ISigninDTO) => {
     setIsAuth(true);
     localStorage.setItem('token', data.token);
+    localStorage.setItem('expiresAt', data.expiresAt.toString());
   };
 
   // Utiliser pour me déconnecter
   const logout = () => {
     setIsAuth(false);
     localStorage.removeItem('token');
+    localStorage.removeItem('expiresAt');
   };
 
   // Ce qu'on met à disposition pour tous les composants

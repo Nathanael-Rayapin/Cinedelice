@@ -30,8 +30,16 @@ function App() {
     window.scrollTo(0, 0);
 
     const token = localStorage.getItem('token');
-    if (token) {
-      authContext.setIsAuth(true);
+    const expiresAtStr = localStorage.getItem('expiresAt');
+
+    if (token && expiresAtStr) {
+      const expiresAt = Number(expiresAtStr);
+
+      if (Date.now() < expiresAt) {
+        authContext.setIsAuth(true);
+      } else {
+        authContext.logout();
+      }
     }
   }, [location.pathname, authContext.isAuth]);
 
