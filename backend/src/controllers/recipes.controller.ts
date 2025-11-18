@@ -1,5 +1,6 @@
 import { prisma } from "../models/index.ts";
 import { Prisma } from "@prisma/client";
+import { recipeUpdateLocks } from "../lib/lock.ts";
 import type { Request,Response } from "express";
 import { BadRequestError, ConflictError, InternalServerError, NotFoundError, UnauthorizedError } from "../lib/errors.ts";
 import { parseIdFromParams, validateCreateRecipe, validateUpdateRecipe } from "../validations/index.ts";
@@ -286,50 +287,59 @@ export async function updateMyRecipe(req: Request, res: Response) {
     throw new NotFoundError("Recette introuvable.");
   }
 
+  if (recipeUpdateLocks.has(recipeId)) {
+    throw new ConflictError("Une mise à jour de cette recette est déjà en cours. Veuillez réessayer plus tard.");
+  }
+  recipeUpdateLocks.add(recipeId);
+  try {
   // Utilise prisma pour modifier la recette et sa data
-  const { title, category_id, movie_id, number_of_person, preparation_time, description, ingredients, preparation_steps, status } = await validateUpdateRecipe(req.body);
+    const { title, category_id, movie_id, number_of_person, preparation_time, description, ingredients, preparation_steps, status } = await validateUpdateRecipe(req.body);
   
-  let finalMovieId = recipe.movie_id; // par défaut on garde l'ancien film
+    let finalMovieId = recipe.movie_id; // par défaut on garde l'ancien film
 
-  // si le titre du film a changé, on cherche/crée le nouveau film
-  if(movie_id){
-    const movie = await findOrCreateMovieFromId(movie_id);
-    finalMovieId = movie.id;
-  }
-
-  let finalImageUrl = recipe.image; // par défaut on garde l'ancienne image
-  // Si une nouvelle image envoyée > on supprime l'ancienne sur Cloudinary,
-  if (req.file) {
-    await deleteImageFromCloudinary(recipe.image);
-  
-    //   puis on upload la nouvelle, et on récupère l'URL Cloudinary.
-    finalImageUrl = await uploadImageToCloudinary(req.file.buffer);
-    if (!finalImageUrl) {
-      throw new InternalServerError("Erreur lors de l'upload de l'image");
+    // si le titre du film a changé, on cherche/crée le nouveau film
+    if(movie_id){
+      const movie = await findOrCreateMovieFromId(movie_id);
+      finalMovieId = movie.id;
     }
-  }
-  // On met à jour la recette avec les nouvelles données 
-  const updatedRecipe = await prisma.recipe.update({
-    where: { id: recipeId },
-    data: {
-      category_id,
-      movie_id:finalMovieId,
-      title,
-      number_of_person,
-      preparation_time,
-      description,
-      ingredients,
-      preparation_steps,
-      status,
-      image: finalImageUrl, // Url c'est l'ancien ou nouvelle image
-    },
-  });
 
-  // Renvoyer la recette mise à jour
-  res.status(200).json({
-    message: `La recette "${updatedRecipe.title}" a été mise à jour avec succès`,
-    recipe: updatedRecipe,
-  });
+    let finalImageUrl = recipe.image; // par défaut on garde l'ancienne image
+    // Si une nouvelle image envoyée > on supprime l'ancienne sur Cloudinary,
+    if (req.file) {
+      await deleteImageFromCloudinary(recipe.image);
+  
+      //   puis on upload la nouvelle, et on récupère l'URL Cloudinary.
+      finalImageUrl = await uploadImageToCloudinary(req.file.buffer);
+      if (!finalImageUrl) {
+        throw new InternalServerError("Erreur lors de l'upload de l'image");
+      }
+    }
+    // On met à jour la recette avec les nouvelles données 
+    const updatedRecipe = await prisma.recipe.update({
+      where: { id: recipeId },
+      data: {
+        category_id,
+        movie_id:finalMovieId,
+        title,
+        number_of_person,
+        preparation_time,
+        description,
+        ingredients,
+        preparation_steps,
+        status,
+        image: finalImageUrl, // Url c'est l'ancien ou nouvelle image
+      },
+    });
+
+    // Renvoyer la recette mise à jour
+    res.status(200).json({
+      message: `La recette "${updatedRecipe.title}" a été mise à jour avec succès`,
+      recipe: updatedRecipe,
+    });
+
+  } finally {
+    recipeUpdateLocks.delete(recipeId);
+  }
 }
 
 // Supprimer n'importe quelle recette (admin)

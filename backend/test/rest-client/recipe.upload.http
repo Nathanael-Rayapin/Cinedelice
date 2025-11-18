@@ -1,5 +1,5 @@
 @apiBaseUrl = http://localhost:3000/api
-@token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTc2MzQ1Nzk0MCwiZXhwIjoxNzYzNDYxNTQwfQ.cpsrOnWU2v7lr-0eV69NqVv_qVXXQwZmeaJ8N_2nMp8
+@token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTc2MzQ3NjIwNSwiZXhwIjoxNzYzNDc5ODA1fQ.zUzAA-nFIes9gEh3GPJZpJAHkbT-ZFmBj79a1MF4iXs
 
 ### Connexion ###
 POST {{apiBaseUrl}}/auth/login
@@ -18,7 +18,7 @@ Content-Type: multipart/form-data; boundary=boundary123
 --boundary123
 Content-Disposition: form-data; name="title"
 
-le kabab de yoda
+tajine
 --boundary123
 Content-Disposition: form-data; name="category_id"
 
@@ -26,7 +26,7 @@ Content-Disposition: form-data; name="category_id"
 --boundary123
 Content-Disposition: form-data; name="movie_id"
 
-555
+222
 --boundary123
 Content-Disposition: form-data; name="number_of_person"
 
@@ -60,5 +60,58 @@ published
 Content-Disposition: form-data; name="image"; filename="Macarons.jpg"
 Content-Type: image/jpeg
 
-< ../kebabi.jpg
+< ../tajine.webp
 --boundary123--
+
+### Modifier une recette (avec upload image) ###
+PATCH {{apiBaseUrl}}/recipes/me/25
+Authorization: Bearer {{token}}
+Content-Type: multipart/form-data; boundary=update123
+
+--update123
+Content-Disposition: form-data; name="title"
+
+Tarte au citron modifiée
+--update123
+Content-Disposition: form-data; name="category_id"
+
+3
+--update123
+Content-Disposition: form-data; name="movie_id"
+
+557
+--update123
+Content-Disposition: form-data; name="number_of_person"
+
+4
+--update123
+Content-Disposition: form-data; name="preparation_time"
+
+45
+--update123
+Content-Disposition: form-data; name="description"
+
+Une tarte modifiée avec amour.
+--update123
+Content-Disposition: form-data; name="ingredients"
+
+Citron
+Oeufs
+Sucre
+Pâte sablée
+--update123
+Content-Disposition: form-data; name="preparation_steps"
+
+Mélanger
+Cuire
+Refroidir
+--update123
+Content-Disposition: form-data; name="status"
+
+published
+--update123
+Content-Disposition: form-data; name="image"; filename="nouvelle-image.jpg"
+Content-Type: image/jpeg
+
+< ../kebab.webp
+--update123--
