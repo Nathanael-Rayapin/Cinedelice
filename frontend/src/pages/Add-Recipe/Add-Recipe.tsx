@@ -62,7 +62,17 @@ const AddRecipe = () => {
     // Sinon, on recherche les films correspondant au mot-clé de recherche
     const handler = setTimeout(async () => {
       const filteredMovies = await searchMovies(query);
-      setResults(filteredMovies.slice(0, 10));
+      const uniqueMovies: ITmdbMovieDTO[] = [];
+      const titles = new Set<string>();
+
+      filteredMovies.forEach(movie => {
+        if (!titles.has(movie.title)) {
+          titles.add(movie.title);
+          uniqueMovies.push(movie);
+        }
+      });
+
+      setResults(uniqueMovies.slice(0, 10));
     }, 500);
 
     return () => clearTimeout(handler);
