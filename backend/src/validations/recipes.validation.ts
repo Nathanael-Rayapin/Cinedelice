@@ -26,7 +26,6 @@ export const createRecipeSchema = z.object({
     .max(500, "La description ne peut pas dépasser 500 caractères")
     .trim()
     .optional(),
-  image: z.url("L'image doit être une URL valide").optional(),
   
   ingredients: z.string()
     .min(10, "Les ingrédients doivent contenir au minimum 10 caractères")

@@ -1,7 +1,7 @@
 import { prisma } from "../models/index.ts";
 import { Prisma } from "@prisma/client";
 import type { Request,Response } from "express";
-import { BadRequestError, ConflictError, NotFoundError, UnauthorizedError } from "../lib/errors.ts";
+import { BadRequestError, ConflictError, InternalServerError, NotFoundError, UnauthorizedError } from "../lib/errors.ts";
 import { parseIdFromParams, validateCreateRecipe, validateUpdateRecipe } from "../validations/index.ts";
 import { findOrCreateMovieFromId } from "../services/movie.service.ts";
 import { uploadImageToCloudinary } from "../services/upload.service.ts";
@@ -174,14 +174,23 @@ export async function getMyRecipe(req: Request, res: Response) {
 //le front envoie un movie_id du film TMDb
 // Le back va chercher/creer le film dans notre BDD
 export async function createRecipe(req: Request, res: Response) {
+  // Récupérer l'ID de l'utilisateur connecté
+  const user_id = req.currentUserId;
+
+  if (!user_id) {
+    throw new UnauthorizedError("Vous devez être connecté pour créer une recette");
+  }
   // L'image envoyée par le front via middleware Multer
   const file = req.file;
   // URL de l'image uploadée sur Cloudinary
-  let imageUrl: string = "";
+  //si aucune image n'est fournie, on renvoie une erreur
+  if (!file) {
+    throw new BadRequestError("Aucun fichier fourni");
+  }
 
-  // Si le user a envoyé une image : on l'upload via service dans Cloudinary
-  if (file) {
-    imageUrl = await uploadImageToCloudinary(file.buffer); // c'est une string
+  const imageUrl = await uploadImageToCloudinary(file.buffer); // c'est une string
+  if (!imageUrl) {
+    throw new InternalServerError("Erreur lors de l'upload de l'image");
   }
 
   // On vérifie les données JSON envoyées dans le body
@@ -197,12 +206,7 @@ export async function createRecipe(req: Request, res: Response) {
     status 
   } = await validateCreateRecipe(req.body);
 
-  // Récupérer l'ID de l'utilisateur connecté
-  const user_id = req.currentUserId;
 
-  if (!user_id) {
-    throw new UnauthorizedError("Vous devez être connecté pour créer une recette");
-  }
   // Vérifier que l'utilisateur n'a pas déjà une recette avec ce titre
   const existingRecipe = await prisma.recipe.findFirst({
     where: {
@@ -284,7 +288,7 @@ export async function updateMyRecipe(req: Request, res: Response) {
   }
 
   // Utilise prisma pour modifier la recette et sa data
-  const { title, category_id, movie_id, number_of_person, preparation_time, description, image, ingredients, preparation_steps, status } = await validateUpdateRecipe(req.body);
+  const { title, category_id, movie_id, number_of_person, preparation_time, description, ingredients, preparation_steps, status } = await validateUpdateRecipe(req.body);
   
   let finalMovieId = recipe.movie_id; // par défaut on garde l'ancien film
 
@@ -303,7 +307,6 @@ export async function updateMyRecipe(req: Request, res: Response) {
       number_of_person,
       preparation_time,
       description,
-      image,
       ingredients,
       preparation_steps,
       status,
