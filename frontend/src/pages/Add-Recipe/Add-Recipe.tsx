@@ -4,33 +4,51 @@ import { useContext, useEffect, useRef, useState } from "react";
 import { searchMovies } from "../../services/movies.service";
 import type { ITmdbMovieDTO } from "../../interfaces/movie";
 import TextAreaField from "../../components/TextAreaField/TextAreaField";
-import type { ICreateRecipe, ICreateRecipeDTO } from "../../interfaces/recipe";
-import "./Add-Recipe.scss"
+import type { ICreateRecipe } from "../../interfaces/recipe";
 import { GlobalUIContext } from "../../store/interface";
 import { Controller, useForm, type SubmitHandler } from "react-hook-form";
 import { createRecipe } from "../../services/recipes.service";
+import { useNavigate } from "react-router";
+import { getCategories } from "../../services/categories.service";
+import type { ICategoryDTO } from "../../interfaces/category";
+import "./Add-Recipe.scss"
 
 const AddRecipe = () => {
+  const [categories, setCategories] = useState<ICategoryDTO[]>([]);
   const [query, setQuery] = useState("");
   const [selectedMovie, setSelectedMovie] = useState<ITmdbMovieDTO | null>(null);
   const [results, setResults] = useState<ITmdbMovieDTO[]>([]);
   const [imagePreview, setImagePreview] = useState<string | null>(null);
-  const [preparationTime, setPreparationTime] = useState<number | null>(null);
-  const [numberOfPerson, setNumberOfPerson] = useState<number | null>(null);
+  const [loadingBtn, setLoadingBtn] = useState(false);
 
-  const { setShowModal, setModalOptions } = useContext(GlobalUIContext);
+  const { setShowModal, setLoading, setModalOptions, setErrorMsg } = useContext(GlobalUIContext);
   const skipNextSearch = useRef(false);
+  const navigate = useNavigate();
 
   const {
     register,
     handleSubmit,
-    formState: { errors, isValid },
-    control,
-    reset,
     getValues,
-  } = useForm<ICreateRecipe>();
+    reset,
+    formState: { errors, isValid, isDirty },
+    control,
+  } = useForm<ICreateRecipe>({
+    defaultValues: {
+      title: "",
+      description: "",
+      image: [],
+      preparationSteps: "",
+      ingredients: "",
+      category: "",
+      numberOfPerson: "",
+      preparationTime: "",
+      movieTitle: ""
+    },
+  });
 
+  // Gestion des résultats de recherche de films
   useEffect(() => {
+    // Si le champ de recherche est vide, on réinitialise les résultats
     if (!query) {
       setResults([]);
       return;
@@ -41,6 +59,7 @@ const AddRecipe = () => {
       return;
     }
 
+    // Sinon, on recherche les films correspondant au mot-clé de recherche
     const handler = setTimeout(async () => {
       const filteredMovies = await searchMovies(query);
       setResults(filteredMovies.slice(0, 10));
@@ -49,53 +68,92 @@ const AddRecipe = () => {
     return () => clearTimeout(handler);
   }, [query]);
 
+  // Gestion des catégories
+  useEffect(() => {
+    const fetchCategories = async () => {
+      try {
+        setLoading(true);
+        const categories = await getCategories();
+        setCategories(categories);
+      } catch (error) {
+        if (error instanceof Error) {
+          setErrorMsg(error.message);
+        }
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchCategories();
+  }, []);
+
   const onSubmit: SubmitHandler<ICreateRecipe> = async (data) => {
     if (!selectedMovie) return;
 
-    let categoryId: number;
+    const form = buildRecipeFormData(data);
 
-    switch (data.category) {
-      case "Entrées":
-        categoryId = 1;
-        break;
-      case "Plats":
-        categoryId = 2;
-        break;
-      case "Desserts":
-        categoryId = 3;
-        break;
-      default:
-        categoryId = 1;
-        break;
+    try {
+      const newRecipe = await createRecipe(form);
+
+      if (newRecipe) {
+        reset();
+        navigate("/profil/mes-recettes");
+      }
+
+    } catch (error) {
+      console.error('Erreur lors de la création de la recette', error);
+    } finally {
+      setLoadingBtn(false);
     }
+  };
+
+  const buildRecipeFormData = (data: ICreateRecipe): FormData => {
+    const selectedCategory = categories.find(c => c.name === data.category);
 
     const form = new FormData();
     form.append("title", data.title);
-    form.append("category_id", categoryId.toString());
-    form.append("movie_id", selectedMovie.id.toString());
-    form.append("number_of_person", data.numberOfPerson.toString());
-    form.append("preparation_time", data.preparationTime.toString());
+    form.append("category_id", selectedCategory ? selectedCategory.id.toString() : "0");
+    form.append("movie_id", selectedMovie!.id.toString());
+    form.append("number_of_person", data.numberOfPerson!.toString());
+    form.append("preparation_time", data.preparationTime!.toString());
     form.append("description", data.description);
     form.append("image", data.image[0]);
     form.append("ingredients", data.ingredients);
     form.append("preparation_steps", data.preparationSteps);
     form.append("status", "published");
 
-    try {
-      await createRecipe(form);
-    } catch (error) {
-      console.error('Erreur lors de la création de la recette', error);
-    } finally {
-      console.log("FINALLY");
+    return form;
+  }
+
+  const handleCancel = () => {
+    if (isDirty) {
+      setModalOptions({
+        title: "Quitter le formulaire",
+        description: "Vous avez des modifications non enregistrées. Voulez-vous vraiment abandonner vos changements ?",
+        draftData: buildRecipeFormData(getValues()),
+        cancelButtonContent: "Retour",
+        confirmButtonContent: "Enregistrer et quitter",
+        type: "draft",
+      });
+      setShowModal(true);
+    } else {
+      navigate("/profil/mes-recettes");
     }
-  };
+
+    reset();
+  }
 
   const handleChangeQuery = (value: string) => {
+    // Quand j'écris dans le champ, les résultats s'affichent normalement
     skipNextSearch.current = false;
+
     setQuery(value);
   };
 
   const handleClickQuery = (movie: ITmdbMovieDTO) => {
+    // Quand je clique sur un film, on set le titre du film dans le champ
+    // Mais le fait de setter le titre du film ne dois pas redéclencher le useEffect
+    // Donc on met skipNextSearch à true
     skipNextSearch.current = true;
     setQuery(movie.title);
     setSelectedMovie(movie);
@@ -103,16 +161,22 @@ const AddRecipe = () => {
   };
 
   const handleImagePreview = () => {
-    const imageFileList = getValues("image");
-    const file = imageFileList?.[0];
+    if (!imagePreview) return;
 
+    setModalOptions({
+      image: imagePreview,
+      type: "preview",
+    });
+    setShowModal(true);
+  }
+
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
     if (!file) return;
 
     const previewUrl = URL.createObjectURL(file);
-
-    setModalOptions({ image: previewUrl });
-    setShowModal(true);
-  }
+    setImagePreview(previewUrl);
+  };
 
   return (
     <div className='add-recipe-container'>
@@ -168,6 +232,7 @@ const AddRecipe = () => {
                 type="file"
                 {...register('image', {
                   required: { value: true, message: "L'image de la recette est obligatoire" },
+                  onChange: handleFileChange,
                 })}
               />
               <button
@@ -249,6 +314,34 @@ const AddRecipe = () => {
                 {errors.preparationTime.message as string}
               </p>
             )}
+
+            {/* Description de la recette */}
+            <label htmlFor="description">Description de la recette</label>
+            <input
+              id="description"
+              className="title-recipe custom-style"
+              type="text"
+              placeholder="Délicieux poulet mijoté aux saveurs basques..."
+              {...register('description', {
+                required: { value: true, message: "La description de la recette est obligatoire" },
+                minLength: {
+                  value: 10,
+                  message: "Le description de la recette doit contenir au moins 10 caractères",
+                },
+                maxLength: {
+                  value: 500,
+                  message: "Le description de la recette ne peut pas dépasser 100 caractères",
+                },
+                validate: (value) =>
+                  value.trim().length >= 10 || "La description de la recette doit contenir au moins 10 caractères"
+              })}
+            />
+
+            {errors.description && (
+              <p className="error" role="alert">
+                {errors.description.message as string}
+              </p>
+            )}
           </div>
 
           <div className="right-container">
@@ -290,7 +383,8 @@ const AddRecipe = () => {
               <ul className="autocomplete-results">
                 {results.map((movie) => (
                   <li key={movie.id}
-                    onClick={() => handleClickQuery(movie)}>
+                    onClick={() => handleClickQuery(movie)}
+                    onChange={() => handleChangeQuery(movie.title)}>
                     {movie.title}
                   </li>
                 ))}
@@ -338,10 +432,10 @@ const AddRecipe = () => {
             <Controller
               name="category"
               control={control}
-              defaultValue=""
               rules={{ required: "La sélection d'une catégorie est obligatoire" }}
               render={({ field }) => (
                 <CategoriesDropdown
+                  categories={categories}
                   value={field.value}
                   onChange={field.onChange}
                 />
@@ -388,13 +482,21 @@ const AddRecipe = () => {
         </div>
         <div className="submit-recipe">
           <button
-            className="btn m-1 action-btn cancel-btn">
+            className="btn m-1 action-btn cancel-btn"
+            type="button"
+            onClick={() => handleCancel()}>
             Annuler
           </button>
           <button
             className="btn m-1 action-btn submit-btn"
             type="submit">
-            Confirmer
+            {loadingBtn ? (
+              <>
+                <span className="loading loading-spinner"></span> Confirmer
+              </>
+            ) : (
+              "Confirmer"
+            )}
           </button>
         </div>
       </form>

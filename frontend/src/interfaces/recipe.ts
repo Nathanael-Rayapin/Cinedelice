@@ -2,7 +2,7 @@ import type { IMovieDTO } from './movie';
 
 export interface IRecipeDTO {
   id: number;
-  category: ICategoryDTO;
+  category: { name: string };
   category_id: number;
   description: string;
   image: string;
@@ -16,16 +16,8 @@ export interface IRecipeDTO {
   created_at: string;
   updated_at: string;
   user_id: number;
-  user: IUserDTO;
+  user: { username: string };
   movie: IMovieDTO;
-}
-
-interface IUserDTO {
-  username: string;
-}
-
-interface ICategoryDTO {
-  name: string;
 }
 
 export interface ICreateRecipeDTO {
@@ -43,13 +35,14 @@ export interface ICreateRecipeDTO {
 
 export interface ICreateRecipe {
   title: string;
+  description: string;
   movieTitle: string;
-  image: FileList;
+  image: FileList | [];
   ingredients: string;
   preparationSteps: string;
   category: string;
-  preparationTime: number;
-  numberOfPerson: number;
+  preparationTime: string;
+  numberOfPerson: string;
 }
 
 type StatusType = 'draft' | 'published';

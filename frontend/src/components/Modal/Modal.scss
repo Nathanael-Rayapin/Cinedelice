@@ -1,8 +1,50 @@
 .modal-container {
     position: relative;
+
+    .modal-box {
+        padding: 16px;
+
+        p:nth-child(1) {
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 24px;
+        }
+
+        p:nth-child(2) {
+            font-size: 18px;
+            margin-bottom: 48px;
+        }
+
+        .modal-action {
+            display: flex;
+            justify-content: end;
+            gap: 24px;
+
+            .action-btn {
+                height: 50px;
+                border-radius: 80px;
+                border: none;
+                
+                font-size: 18px;
+                font-weight: 600;
+                padding: 0.6rem 1.2rem;
+            }
+
+            .back-btn {
+                border: 2px solid var(--color-black);
+                color: var(--color-black);
+                background-color: var(--color-white);
+            }
+
+            .submit-btn {
+                color: var(--color-white);
+                background: linear-gradient(to right, var(--color-secondary), var(--color-primary));
+            }
+        }
+    }
 }
 
-.modal-action {
+.modal-close {
     position: absolute;
     top: 8px;
     right: 8px;

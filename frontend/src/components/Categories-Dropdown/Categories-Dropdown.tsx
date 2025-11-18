@@ -1,13 +1,15 @@
 import { FaCaretDown } from 'react-icons/fa';
 import { useEffect, useRef } from 'react';
+import type { ICategoryDTO } from '../../interfaces/category';
 import './Categories-Dropdown.scss';
 
 interface ICategoriesDropdownProps {
   value: string;
   onChange: (value: string) => void;
+  categories: ICategoryDTO[];
 }
 
-const CategoriesDropdown = ({ value, onChange }: ICategoriesDropdownProps) => {
+const CategoriesDropdown = ({ value, onChange, categories }: ICategoriesDropdownProps) => {
   const detailsRef = useRef<HTMLDetailsElement>(null);
 
   useEffect(() => {
@@ -26,38 +28,23 @@ const CategoriesDropdown = ({ value, onChange }: ICategoriesDropdownProps) => {
     <div className="categories">
       <details ref={detailsRef} className="dropdown">
         <summary className="categories-btn btn m-1">
-          Categories
+          {value || "Catégorie"}
           <FaCaretDown />
         </summary>
 
         <ul className="menu dropdown-content bg-base-100 rounded-box z-1 w-52 p-2 shadow-sm">
-          <li onClick={() => onChange("Entrées")}>
-            <input
-              type="radio"
-              name="radio-8"
-              className="radio radio-sm radio-custom-color"
-              checked={value === "Entrées"}
-              readOnly />
-            <label>Entrées</label>
-          </li>
-          <li onClick={() => onChange("Plats")}>
-            <input
-              type="radio"
-              name="radio-8"
-              className="radio radio-sm radio-custom-color"
-              checked={value === "Plats"}
-              readOnly />
-            <label>Plats</label>
-          </li>
-          <li onClick={() => onChange("Desserts")}>
-            <input
-              type="radio"
-              name="radio-8"
-              className="radio radio-sm radio-custom-color"
-              checked={value === "Desserts"}
-              readOnly />
-            <label>Desserts</label>
-          </li>
+          {categories.map((category) => (
+            <li key={category.id} onClick={() => onChange(category.name)}>
+              <input
+                type="radio"
+                name="radio-8"
+                className="radio radio-xs radio-custom-color"
+                checked={value === category.name}
+                readOnly
+              />
+              <label>{category.name}</label>
+            </li>
+          ))}
         </ul>
       </details>
     </div>

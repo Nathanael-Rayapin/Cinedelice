@@ -2,22 +2,21 @@
 
     .form-infos {
         display: flex;
-        justify-content: space-between;
+        flex-direction: column;
         width: 100%;
-        gap: 96px;
         margin-bottom: 96px;
 
         label {
             display: block;
             text-align: left;
-            font-size: 20px;
+            font-size: 18px;
             font-weight: 500;
             color: var(--color-black);
             margin: 48px 0 24px 0;
         }
 
         .left-container {
-            width: 50%;
+            width: 100%;
 
             .image-recipe {
                 display: flex;
@@ -32,7 +31,10 @@
 
                 .btn {
                     height: 50px;
+                    color: var(--color-white);
                     background-color: var(--color-deep-gray);
+                    outline: none;
+                    border: none;
                 }
 
                 .btn.active {
@@ -50,7 +52,7 @@
         }
 
         .right-container {
-            width: 50%;
+            width: 100%;
 
             div.search {
                 display: flex;
@@ -163,6 +165,30 @@
 
         .submit-btn {
             background: linear-gradient(to right, var(--color-secondary), var(--color-primary));
+        }
+    }
+}
+
+@media screen and (min-width: 1200px) {
+    .add-recipe-container {
+
+        .form-infos {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            gap: 96px;
+
+            label {
+                font-size: 20px;
+            }
+
+            .left-container {
+                width: 50%;
+            }
+
+            .right-container {
+                width: 50%;
+            }
         }
     }
 }
