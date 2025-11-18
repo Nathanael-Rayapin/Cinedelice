@@ -4,7 +4,7 @@ import type { Request,Response } from "express";
 import { BadRequestError, ConflictError, InternalServerError, NotFoundError, UnauthorizedError } from "../lib/errors.ts";
 import { parseIdFromParams, validateCreateRecipe, validateUpdateRecipe } from "../validations/index.ts";
 import { findOrCreateMovieFromId } from "../services/movie.service.ts";
-import { uploadImageToCloudinary } from "../services/upload.service.ts";
+import { deleteImageFromCloudinary, uploadImageToCloudinary } from "../services/upload.service.ts";
 
 // Lister toutes les recettes publiées
 export async function getAllRecipes(req: Request, res: Response) {
@@ -240,8 +240,7 @@ export async function createRecipe(req: Request, res: Response) {
   res.status(201).json(createdRecipe);
 }
 
-// Modifier n'importe quel recette (admin)
-//peut modifier le movie_id
+// Modifier la categorie de n'importe quel recette (admin)
 export async function updateAnyRecipe(req: Request, res: Response) {
   const recipeId = await parseIdFromParams(req.params.id);
 
@@ -268,7 +267,6 @@ export async function updateAnyRecipe(req: Request, res: Response) {
 }
 
 // Modifier ma recette 
-
 export async function updateMyRecipe(req: Request, res: Response) {
   const user_id = req.currentUserId;
   
@@ -298,13 +296,19 @@ export async function updateMyRecipe(req: Request, res: Response) {
     const movie = await findOrCreateMovieFromId(movie_id);
     finalMovieId = movie.id;
   }
-  // Gestion de l'image
-  // Le comportement attendu :
-  // - Si aucune nouvelle image envoyée → on garde l'ancienne
-  // - Si une nouvelle image envoyée → on supprime l'ancienne sur Cloudinary,
-  //   puis on upload la nouvelle, et on récupère l'URL Cloudinary.
 
-    
+  let finalImageUrl = recipe.image; // par défaut on garde l'ancienne image
+  // Si une nouvelle image envoyée > on supprime l'ancienne sur Cloudinary,
+  if (req.file) {
+    await deleteImageFromCloudinary(recipe.image);
+  
+    //   puis on upload la nouvelle, et on récupère l'URL Cloudinary.
+    finalImageUrl = await uploadImageToCloudinary(req.file.buffer);
+    if (!finalImageUrl) {
+      throw new InternalServerError("Erreur lors de l'upload de l'image");
+    }
+  }
+  // On met à jour la recette avec les nouvelles données 
   const updatedRecipe = await prisma.recipe.update({
     where: { id: recipeId },
     data: {
@@ -317,6 +321,7 @@ export async function updateMyRecipe(req: Request, res: Response) {
       ingredients,
       preparation_steps,
       status,
+      image: finalImageUrl, // Url c'est l'ancien ou nouvelle image
     },
   });
 
