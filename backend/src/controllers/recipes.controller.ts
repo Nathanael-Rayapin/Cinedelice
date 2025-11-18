@@ -182,15 +182,10 @@ export async function createRecipe(req: Request, res: Response) {
   }
   // L'image envoyée par le front via middleware Multer
   const file = req.file;
-  // URL de l'image uploadée sur Cloudinary
+
   //si aucune image n'est fournie, on renvoie une erreur
   if (!file) {
     throw new BadRequestError("Aucun fichier fourni");
-  }
-
-  const imageUrl = await uploadImageToCloudinary(file.buffer); // c'est une string
-  if (!imageUrl) {
-    throw new InternalServerError("Erreur lors de l'upload de l'image");
   }
 
   // On vérifie les données JSON envoyées dans le body
@@ -221,6 +216,11 @@ export async function createRecipe(req: Request, res: Response) {
 
   // Récupérer/créer le film dans NOTRE BDD à partir de l'ID TMDb
   const movie = await findOrCreateMovieFromId(movie_id);
+  // Uploader l'image sur Cloudinary
+  const imageUrl = await uploadImageToCloudinary(file.buffer); // c'est une string
+  if (!imageUrl) {
+    throw new InternalServerError("Erreur lors de l'upload de l'image");
+  }
   // Créer la recette avec le film associé
   const createdRecipe = await prisma.recipe.create({
     data: {
@@ -271,13 +271,14 @@ export async function updateAnyRecipe(req: Request, res: Response) {
 
 export async function updateMyRecipe(req: Request, res: Response) {
   const user_id = req.currentUserId;
-  const recipeId = await parseIdFromParams(req.params.id);
-
+  
   if (!user_id) {
     throw new UnauthorizedError(
       "Vous devez être connecté pour créer une recette"
     );
   }
+  //Récupérer l'ID de la recette depuis l'URL
+  const recipeId = await parseIdFromParams(req.params.id);
 
   const recipe = await prisma.recipe.findUnique({
     //SELECT *FROM recipe WHERE id = <valeur_de_recipeId> AND user_id = <valeur_de_user_id> LIMIT 1;
@@ -297,6 +298,12 @@ export async function updateMyRecipe(req: Request, res: Response) {
     const movie = await findOrCreateMovieFromId(movie_id);
     finalMovieId = movie.id;
   }
+  // Gestion de l'image
+  // Le comportement attendu :
+  // - Si aucune nouvelle image envoyée → on garde l'ancienne
+  // - Si une nouvelle image envoyée → on supprime l'ancienne sur Cloudinary,
+  //   puis on upload la nouvelle, et on récupère l'URL Cloudinary.
+
     
   const updatedRecipe = await prisma.recipe.update({
     where: { id: recipeId },

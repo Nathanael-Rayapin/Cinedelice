@@ -22,7 +22,7 @@ export async function deleteImageFromCloudinary(imageUrl: string): Promise<void>
   // Extraire le public_id de l'URL de l'image
   const parts = imageUrl.split('/');
   const fileWithExt = parts[parts.length - 1]; // vwcnowfdc6f8lpswyutw.jpg
-  const folder = parts[parts.length - 2]; //https://res.cloudinary.com/dmup7k5ta/image/upload/v1763457982/recipes/
+  const folder = parts[parts.length - 2]; //recipes
   //https://res.cloudinary.com/dmup7k5ta/image/upload/v1763457982/recipes/vwcnowfdc6f8lpswyutw.jpg
   const publicId = `${folder}/${fileWithExt.split('.')[0]}`; // recipes/abc123
 

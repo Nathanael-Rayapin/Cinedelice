@@ -113,6 +113,12 @@ async function main() {
   const category2 = await prisma.category.create({
     data: { name: 'Plat principal' },
   });
+  const category3 = await prisma.category.create({
+    data: { name: 'Entrée' },
+  });
+  const category4 = await prisma.category.create({
+    data: { name: 'Autres' },
+  });
 
 
   // ==== Création de recettes ====
@@ -172,7 +178,7 @@ async function main() {
       },
       {
         user_id: user1.id,
-        category_id: category1.id,
+        category_id: category3.id,
         movie_id: 5,
         title: 'Lembas Elfique',
         number_of_person: 8,
@@ -211,7 +217,7 @@ async function main() {
       },
       {
         user_id: admin.id,
-        category_id: category2.id,
+        category_id: category4.id,
         movie_id: 8,
         title: 'Chapaguri de Parasite',
         number_of_person: 4,
