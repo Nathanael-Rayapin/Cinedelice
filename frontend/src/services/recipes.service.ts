@@ -83,17 +83,15 @@ export const getMyRecipe = async (recipeId: number): Promise<IRecipeDTO> => {
 export const createRecipe = async (formData: FormData): Promise<ICreateRecipeDTO> => {
   try {
     const response = await axios.post(`${BASE_URL}/recipes`,
-      {
-        formData
-      },
+      formData,
       {
         headers: {
-          'Content-Type': 'application/json',
+          'Content-Type': 'multipart/form-data',
           Authorization: `Bearer ${localStorage.getItem('token')}`,
         },
       });
 
-    if (response.status !== 200) {
+    if (response.status !== 201) {
       throw new Error('Une erreur est survenue lors de la création de la recette');
     }
 

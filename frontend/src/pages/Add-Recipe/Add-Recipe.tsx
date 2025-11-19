@@ -11,7 +11,7 @@ import { createRecipe } from "../../services/recipes.service";
 import { useNavigate } from "react-router";
 import { getCategories } from "../../services/categories.service";
 import type { ICategoryDTO } from "../../interfaces/category";
-import "./Add-Recipe.scss"
+import "./Add-Recipe.scss";
 
 const AddRecipe = () => {
   const [categories, setCategories] = useState<ICategoryDTO[]>([]);
