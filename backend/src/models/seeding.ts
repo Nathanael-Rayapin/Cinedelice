@@ -108,13 +108,13 @@ async function main() {
 
   // ==== Création de catégories ====
   const category1 = await prisma.category.create({
-    data: { name: 'Dessert' },
+    data: { name: 'Desserts' },
   });
   const category2 = await prisma.category.create({
-    data: { name: 'Plat principal' },
+    data: { name: 'Plats' },
   });
   const category3 = await prisma.category.create({
-    data: { name: 'Entrée' },
+    data: { name: 'Entrées' },
   });
   const category4 = await prisma.category.create({
     data: { name: 'Autres' },
