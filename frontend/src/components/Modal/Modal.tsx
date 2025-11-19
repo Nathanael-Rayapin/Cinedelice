@@ -2,8 +2,6 @@ import { useContext, useEffect } from "react";
 import { GlobalUIContext } from "../../store/interface";
 import { IoCloseOutline } from "react-icons/io5";
 import type { IModalDraft, IModalPreview } from "../../interfaces/modal";
-import { useNavigate } from "react-router";
-import { showSnackbar } from "../../utils/snackbar";
 import "./Modal.scss";
 
 interface IModalProps {
@@ -12,7 +10,6 @@ interface IModalProps {
 // Composant Modal pour afficher des modales de prévisualisation ou de brouillon
 const Modal = ({ show }: IModalProps) => {
     const { setShowModal, modalOptions } = useContext(GlobalUIContext);
-    const navigate = useNavigate();
 
     // Gérer l'affichage de la modale et la fermeture avec la touche Échap
     useEffect(() => {
@@ -36,18 +33,17 @@ const Modal = ({ show }: IModalProps) => {
         };
     }, [show]);
 
-    const handleDraft = async (draftData: FormData) => {
-        try {
-            // TODO: Créer la recette en brouillon quand on aura l'API dédiée
-            // await createRecipe(draftData);
-            showSnackbar("Cette fonctionnalité n'est pas encore disponible", true);
-        } catch (error) {
-            showSnackbar("Oups ! Une erreur s'est produite. Veuillez réessayer plus tard.", false);
-        } finally {
-            handleClose();
-            navigate("/profil/mes-recettes");
-        }
-    }
+    // const handleDraft = async (_draftData: FormData) => {
+    //     try {
+    //         await createRecipe(draftData);
+    //         showSnackbar("Cette fonctionnalité n'est pas encore disponible", true);
+    //     } catch (error) {
+    //         showSnackbar("Oups ! Une erreur s'est produite. Veuillez réessayer plus tard.", false);
+    //     } finally {
+    //         handleClose();
+    //         navigate("/profil/mes-recettes");
+    //     }
+    // }
 
     const handleClose = () => {
         setShowModal(false);
@@ -91,10 +87,12 @@ const Modal = ({ show }: IModalProps) => {
                             {draftOptions.cancelButtonContent}
                         </button>
                         <button
+                            disabled
                             className="btn m-1 action-btn submit-btn"
                             type="submit"
-                            onClick={() => handleDraft(draftOptions.draftData)}>
-                            {draftOptions.confirmButtonContent}
+                            // onClick={() => handleDraft(draftOptions.draftData)}
+                            >
+                            Bientôt disponible
                         </button>
                     </div>
                 </div>

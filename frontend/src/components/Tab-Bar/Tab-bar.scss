@@ -1,11 +1,10 @@
 .tab-bar {
-  max-width: 450px;
+  max-width: 350px;
   width: 100%;
   display: flex;
   align-items: center;
   list-style: none;
   justify-content: space-between;
-  margin-bottom: 24px;
 
   li a.active {
     height: 50px;
@@ -27,6 +26,7 @@
   }
 
   li a:not(.active) {
+    font-size: 16px;
     color: var(--color-deep-gray);
     transition: all 0.3s ease;
 

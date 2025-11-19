@@ -1,12 +1,12 @@
 import { useState } from 'react';
 import { GlobalUIContext, type IContextProviderProps } from './interface';
-import type { IModalOptions } from '../interfaces/modal';
+import type { IModalDraft, IModalPreview } from '../interfaces/modal';
 
 export default function GlobalUIContextProvider({ children }: IContextProviderProps) {
   // Utiliser pour mettre à jour l'UI
   const [loading, setLoading] = useState(false);
   const [showModal, setShowModal] = useState(false);
-  const [modalOptions, setModalOptions] = useState<IModalOptions | null>(null);
+  const [modalOptions, setModalOptions] = useState<IModalDraft | IModalPreview | null>(null);
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
 
   // Ce qu'on met à disposition pour tous les composants

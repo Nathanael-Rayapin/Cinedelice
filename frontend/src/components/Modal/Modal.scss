@@ -24,7 +24,7 @@
                 height: 50px;
                 border-radius: 80px;
                 border: none;
-                
+
                 font-size: 18px;
                 font-weight: 600;
                 padding: 0.6rem 1.2rem;
@@ -39,6 +39,12 @@
             .submit-btn {
                 color: var(--color-white);
                 background: linear-gradient(to right, var(--color-secondary), var(--color-primary));
+            }
+
+            .submit-btn:disabled {
+                background: var(--color-deep-gray);
+                color: var(--color-white);
+                cursor: not-allowed;
             }
         }
     }

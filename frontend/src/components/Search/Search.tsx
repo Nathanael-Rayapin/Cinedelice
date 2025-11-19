@@ -99,7 +99,7 @@ const Search = ({ isMobileOpen, onMobileToggle, isDesktop }: ISearchProps) => {
           ref={inputRef}
           role="searchbox"
           type="search"
-          placeholder="Rechercher un plat/film"
+          placeholder="Rechercher un plat/film..."
           aria-label="Rechercher un plat ou un film"
           value={query}
           onChange={(e) => setQuery(e.target.value)}

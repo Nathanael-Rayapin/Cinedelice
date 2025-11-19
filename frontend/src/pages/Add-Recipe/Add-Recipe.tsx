@@ -100,7 +100,10 @@ const AddRecipe = () => {
   const onSubmit: SubmitHandler<ICreateRecipe> = async (data) => {
     if (!selectedMovie) return;
 
-    const form = buildRecipeFormData(data);
+    const selectedCategory = categories.find(c => c.name === data.category);
+    if (!selectedCategory) return;
+
+    const form = buildRecipeFormData(data, selectedCategory);
 
     try {
       const newRecipe = await createRecipe(form);
@@ -117,13 +120,29 @@ const AddRecipe = () => {
     }
   };
 
-  const buildRecipeFormData = (data: ICreateRecipe): FormData => {
+  const buildRecipeFormData = (data: ICreateRecipe, selectedCategory: ICategoryDTO): FormData => {
+    const form = new FormData();
+    form.append("title", data.title);
+    form.append("category_id", selectedCategory!.id.toString());
+    form.append("movie_id", selectedMovie!.id.toString());
+    form.append("number_of_person", data.numberOfPerson!.toString());
+    form.append("preparation_time", data.preparationTime!.toString());
+    form.append("description", data.description);
+    form.append("image", data.image[0]);
+    form.append("ingredients", data.ingredients);
+    form.append("preparation_steps", data.preparationSteps);
+    form.append("status", "published");
+
+    return form;
+  }
+
+  const buildDraftRecipeFormData = (data: ICreateRecipe): FormData => {
     const selectedCategory = categories.find(c => c.name === data.category);
 
     const form = new FormData();
     form.append("title", data.title);
     form.append("category_id", selectedCategory ? selectedCategory.id.toString() : "0");
-    form.append("movie_id", selectedMovie!.id.toString());
+    form.append("movie_id", selectedMovie ? selectedMovie.id.toString() : "0");
     form.append("number_of_person", data.numberOfPerson!.toString());
     form.append("preparation_time", data.preparationTime!.toString());
     form.append("description", data.description);
@@ -140,7 +159,7 @@ const AddRecipe = () => {
       setModalOptions({
         title: "Quitter le formulaire",
         description: "Vous avez des modifications non enregistrées. Voulez-vous vraiment abandonner vos changements ?",
-        draftData: buildRecipeFormData(getValues()),
+        draftData: buildDraftRecipeFormData(getValues()),
         cancelButtonContent: "Retour",
         confirmButtonContent: "Enregistrer et quitter",
         type: "draft",

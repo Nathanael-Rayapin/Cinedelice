@@ -43,6 +43,10 @@ select {
   font-family: 'Open Sans', sans-serif;
 }
 
+button:focus {
+  outline: #fb8b24 solid 2px !important;
+}
+
 .dropdown-content {
   padding: 1rem;
   gap: 0.5rem;
