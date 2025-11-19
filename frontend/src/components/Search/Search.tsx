@@ -105,7 +105,7 @@ const Search = ({ isMobileOpen, onMobileToggle, isDesktop }: ISearchProps) => {
           onChange={(e) => setQuery(e.target.value)}
           onFocus={() => query.trim() && setIsDropdownOpen(true)}
         />
-        <button type="submit" className="search-btn">
+        <button type="submit" className="search-btn" aria-label='bouton de recherche'>
           <IoIosSearch size={24} color="#D9D9D9" />
         </button>
       </form>
