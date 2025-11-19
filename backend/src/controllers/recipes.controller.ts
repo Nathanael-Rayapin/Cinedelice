@@ -159,9 +159,7 @@ export async function getMyRecipe(req: Request, res: Response) {
       category: {
         select: { name: true },
       },
-      movie:{
-        select: { title: true },
-      },
+      movie : true,
     },
   });
   if (!recipe) {
