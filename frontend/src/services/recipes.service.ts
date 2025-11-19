@@ -4,9 +4,9 @@ import { showSnackbar } from '../utils/snackbar';
 
 const BASE_URL = import.meta.env.VITE_BACKEND_API;
 
-export const getRecipes = async (): Promise<IRecipeDTO[]> => {
+export const getRecipes = async (params?: { search?: string; categorie?: string }): Promise<IRecipeDTO[]> => {
   try {
-    const response = await axios.get(`${BASE_URL}/recipes`);
+    const response = await axios.get(`${BASE_URL}/recipes`, { params });
 
     if (response.status !== 200) {
       throw new Error('Une erreur est survenue lors de la récupération des recettes');

@@ -9,6 +9,7 @@ import { useContext, useEffect, useState } from 'react';
 import { GlobalUIContext } from '../../store/interface';
 import { getCategories } from '../../services/categories.service';
 import type { ICategoryDTO } from '../../interfaces/category';
+import { useLocation, useNavigate } from 'react-router';
 import './Navbar.scss';
 
 const Navbar = () => {
@@ -26,6 +27,12 @@ const Navbar = () => {
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
   }, []);
+
+  const navigate = useNavigate();
+  const location = useLocation();
+  // Récupérer la catégorie active depuis l'URL (ex: /recettes?categorie=Dessert)
+  const searchParams = new URLSearchParams(location.search);
+  const activeCategory = searchParams.get('categorie') || '';
 
   useEffect(() => {
     const fetchCategories = async () => {
@@ -55,7 +62,24 @@ const Navbar = () => {
           </NavLink>
         </div>
         <div className="filters">
-          <CategoriesDropdown value="" onChange={() => { }} categories={categories} />
+          <CategoriesDropdown
+            value={activeCategory}
+            onChange={(categoryName: string) => {
+              // Naviguer vers la page recettes avec le paramètre de catégorie
+              navigate(`/recettes?categorie=${encodeURIComponent(categoryName)}`);
+            }}
+            categories={categories}
+          />
+          {activeCategory && (
+            <button
+              type="button"
+              className="btn btn-ghost reset-category-btn"
+              onClick={() => navigate('/recettes')}
+              title="Réinitialiser le filtre"
+            >
+              Toutes
+            </button>
+          )}
           <Search isMobileOpen={false} onMobileToggle={setIsMobileSearchOpen} isDesktop={true} />
         </div>
         <div className="sections">

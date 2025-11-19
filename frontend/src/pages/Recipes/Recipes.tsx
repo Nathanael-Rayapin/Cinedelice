@@ -8,6 +8,7 @@ import PaginationControls from '../../components/Pagination-Controls/Pagination-
 import { usePageMeta } from '../../hooks/usePageMeta';
 import { pageMetadata } from '../../utils/pageMetadata';
 import './Recipes.scss';
+import { useLocation } from 'react-router';
 
 const Recipes = () => {
   const [recipes, setRecipes] = useState<IRecipeDTO[]>([]);
@@ -18,11 +19,15 @@ const Recipes = () => {
   const { currentItems, currentPage, pageNumbers, goToPage, goToNextPage, goToPreviousPage } =
     usePagination(recipes, 8);
 
+  const location = useLocation();
+
   useEffect(() => {
     const fetchRecipes = async () => {
       try {
         setLoading(true);
-        const recipes = await getRecipes();
+        const searchParams = new URLSearchParams(location.search);
+        const categorie = searchParams.get('categorie') || undefined;
+        const recipes = await getRecipes(categorie ? { categorie } : undefined);
         setRecipes(recipes);
       } catch (error) {
         setErrorMsg(error instanceof Error ? error.message : 'Une erreur est survenue.');
@@ -32,7 +37,7 @@ const Recipes = () => {
     };
 
     fetchRecipes();
-  }, []);
+  }, [location.search]);
 
   return (
     <div className='recipes-container'>
