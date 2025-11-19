@@ -152,7 +152,7 @@ async function main() {
       },
       {
         user_id: user1.id,
-        category_id: category1.id,
+        category_id: category2.id,
         movie_id: 3,
         title: 'Ratatouille de Rémy',
         number_of_person: 4,
@@ -269,7 +269,7 @@ async function main() {
       },
       {
         user_id: admin.id,
-        category_id: category2.id,
+        category_id: category1.id,
         movie_id: 12,
         title: 'Strudel d\'Inglourious Basterds',
         number_of_person: 6,
@@ -282,7 +282,7 @@ async function main() {
       },
       {
         user_id: user1.id,
-        category_id: category2.id,
+        category_id: category3.id,
         movie_id: 13,
         title: 'Soupe de Paddington',
         number_of_person: 4,
