@@ -72,6 +72,7 @@ const Navbar = () => {
               navigate(`/recettes?categorie=${encodeURIComponent(categoryName)}`);
             }}
             categories={categories}
+            isResetVisible={true}
           />
           <Search isMobileOpen={false} onMobileToggle={setIsMobileSearchOpen} isDesktop={true} />
         </div>

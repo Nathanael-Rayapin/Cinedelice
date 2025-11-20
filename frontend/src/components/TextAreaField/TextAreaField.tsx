@@ -1,4 +1,4 @@
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
 import "./TextAreaField.scss";
 // Propriétés du composant TextAreaField
 interface ITextAreaFieldProps {
@@ -11,6 +11,10 @@ interface ITextAreaFieldProps {
 // Composant TextAreaField pour les zones de texte avec auto-resize et puces
 const TextAreaField = ({ value, onChange, options }: ITextAreaFieldProps) => {
     const textareaRef = useRef<HTMLTextAreaElement>(null);
+
+    useEffect(() => {
+        autoResize();
+    }, [value]);
 
     const autoResize = () => {
         const el = textareaRef.current;

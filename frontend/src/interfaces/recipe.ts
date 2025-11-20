@@ -43,6 +43,37 @@ export interface ICreateRecipe {
   category: string;
   preparationTime: string;
   numberOfPerson: string;
+  status: StatusType;
 }
 
-type StatusType = 'draft' | 'published';
+export interface IUpdateRecipeDTO {
+  id: number;
+  user_id: number;
+  category_id: number | null;
+  movie_id: number;
+  title: string;
+  number_of_person: number;
+  preparation_time: number;
+  description: string | null;
+  image: string;
+  ingredients: string;
+  preparation_steps: string;
+  status: StatusType;
+  created_at: Date;
+  updated_at: Date;
+}
+
+export interface IUpdateRecipe {
+  title?: string;
+  description?: string;
+  movieTitle?: string;
+  image?: FileList | [];
+  ingredients?: string;
+  preparationSteps?: string;
+  category: string;
+  preparationTime?: string;
+  numberOfPerson?: string;
+  status: boolean;
+}
+
+export type StatusType = 'draft' | 'published';

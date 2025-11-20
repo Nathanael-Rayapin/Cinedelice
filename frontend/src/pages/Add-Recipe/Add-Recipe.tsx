@@ -11,7 +11,7 @@ import { createRecipe } from "../../services/recipes.service";
 import { useNavigate } from "react-router";
 import { getCategories } from "../../services/categories.service";
 import type { ICategoryDTO } from "../../interfaces/category";
-import "./Add-Recipe.scss";
+import "./Form-Recipe.scss";
 
 const AddRecipe = () => {
   const [categories, setCategories] = useState<ICategoryDTO[]>([]);
@@ -467,6 +467,7 @@ const AddRecipe = () => {
                   categories={categories}
                   value={field.value}
                   onChange={field.onChange}
+                  isResetVisible={false}
                 />
               )}
             />

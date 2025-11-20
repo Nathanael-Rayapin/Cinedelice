@@ -127,6 +127,17 @@
             input.number-of-person {
                 width: 100px;
             }
+
+            .recipe-status {
+                display: flex;
+                align-items: center;
+                gap: 16px;
+                transition: all 0.3s ease;
+
+                p {
+                    font-size: 16px;
+                }
+            }
         }
 
         input.custom-style {
