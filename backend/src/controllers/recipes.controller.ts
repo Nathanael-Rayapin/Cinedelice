@@ -3,9 +3,10 @@ import { Prisma } from "@prisma/client";
 import { recipeUpdateLocks } from "../lib/lock.ts";
 import type { Request,Response } from "express";
 import { BadRequestError, ConflictError, InternalServerError, NotFoundError, UnauthorizedError } from "../lib/errors.ts";
-import { parseIdFromParams, validateCreateRecipe, validateUpdateRecipe } from "../validations/index.ts";
+import { parseIdFromParams,validateDraftRecipe, validateCreateRecipe, validateUpdateRecipe } from "../validations/index.ts";
 import { findOrCreateMovieFromId } from "../services/movie.service.ts";
 import { deleteImageFromCloudinary, uploadImageToCloudinary } from "../services/upload.service.ts";
+
 
 // Lister toutes les recettes publiées
 export async function getAllRecipes(req: Request, res: Response) {
@@ -247,12 +248,8 @@ export async function createDraftRecipe(req: Request, res: Response) {
   if (!user_id) {
     throw new UnauthorizedError("Vous devez être connecté pour créer une recette");
   }
-  // validation du body tous champs optionnels
-  const fields = await validateUpdateRecipe(req.body);
-  // Le titre est obligatoire pour un brouillon
-  if (!fields.title || fields.title.trim().length === 0) {
-    throw new BadRequestError("Le titre de la recette est obligatoire pour un brouillon");
-  }
+  // validation du body tous champs optionnels sauf title
+  const fields = await validateDraftRecipe(req.body);
   // image est optionnelle pour un brouillon
   let imageUrl = null;
   if (req.file) {
@@ -283,7 +280,7 @@ export async function createDraftRecipe(req: Request, res: Response) {
       user_id,
       category_id: fields.category_id || 4, // catégorie "Autres" par défaut si non fournie
       movie_id: finalMovieId,
-      title: fields.title.trim(),
+      title: fields.title,
       number_of_person: fields.number_of_person || 1,
       preparation_time: fields.preparation_time || 10,
       description: fields.description || "",
