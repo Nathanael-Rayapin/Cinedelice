@@ -24,7 +24,9 @@ npm i --save-dev @types/express
 npm i cors
 npm i --save-dev @types/cors
 npm i axios
-
+npm i multer
+npm install --save @types/multer
+npm i cloudinary (hebergeur d'image)
 
 # BDD
 psql -U postgres

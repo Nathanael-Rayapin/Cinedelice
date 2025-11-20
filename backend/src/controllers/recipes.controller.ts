@@ -159,9 +159,10 @@ export async function getMyRecipe(req: Request, res: Response) {
       category: {
         select: { name: true },
       },
-      movie : true,
+      movie:true,
     },
-  });
+  },
+  );
   if (!recipe) {
     throw new NotFoundError("Aucune recette trouvé");
   }
