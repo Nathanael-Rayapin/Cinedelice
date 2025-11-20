@@ -7,7 +7,7 @@ interface PaginationControlsProps {
   goToNextPage: () => void;
   goToPreviousPage: () => void;
 }
-
+// Composant PaginationControls pour la navigation entre les pages
 const PaginationControls = ({
   currentPage,
   pageNumbers,

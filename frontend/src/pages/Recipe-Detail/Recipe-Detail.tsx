@@ -12,11 +12,13 @@ interface IRecipeDetailProps {
   showDraft: boolean;
 }
 
+// Composant RecipeDetail affichant les détails d'une recette spécifique
 const RecipeDetail = ({ showDraft }: IRecipeDetailProps) => {
   const params = useParams();
   const [recipe, setRecipe] = useState<IRecipeDTO | null>(null);
   const { setLoading, setErrorMsg } = useContext(GlobalUIContext);
 
+  // Récupérer les détails de la recette en fonction de l'ID et du type (brouillon ou non)
   useEffect(() => {
     const fetchRecipe = async () => {
       try {

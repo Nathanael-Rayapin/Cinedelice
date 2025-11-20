@@ -11,12 +11,13 @@ import { getCategories } from '../../services/categories.service';
 import type { ICategoryDTO } from '../../interfaces/category';
 import { useLocation, useNavigate } from 'react-router';
 import './Navbar.scss';
-
+// Composant Navbar pour la navigation principale
 const Navbar = () => {
     const [categories, setCategories] = useState<ICategoryDTO[]>([]);
   const [isMobileSearchOpen, setIsMobileSearchOpen] = useState(false);
   const { setLoading, setErrorMsg } = useContext(GlobalUIContext);
 
+  // Fermer la recherche mobile lors du redimensionnement de la fenêtre
   useEffect(() => {
     const handleResize = () => {
       if (window.innerWidth >= 769) {
@@ -28,12 +29,14 @@ const Navbar = () => {
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
+  // Navigation
   const navigate = useNavigate();
   const location = useLocation();
   // Récupérer la catégorie active depuis l'URL (ex: /recettes?categorie=Dessert)
   const searchParams = new URLSearchParams(location.search);
   const activeCategory = searchParams.get('categorie') || '';
 
+  // Récupérer les catégories pour le dropdown
   useEffect(() => {
     const fetchCategories = async () => {
       try {

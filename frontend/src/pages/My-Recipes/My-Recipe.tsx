@@ -8,6 +8,7 @@ import PaginationControls from '../../components/Pagination-Controls/Pagination-
 import '../Recipes/Recipes.scss';
 import './My-Recipe.scss';
 
+// Composant MyRecipe affichant les recettes créées par l'utilisateur avec pagination
 const MyRecipe = () => {
   const [recipes, setRecipes] = useState<IRecipeDTO[]>([]);
   const { setLoading, setErrorMsg } = useContext(GlobalUIContext);
@@ -15,6 +16,7 @@ const MyRecipe = () => {
   const { currentItems, currentPage, pageNumbers, goToPage, goToNextPage, goToPreviousPage } =
     usePagination(recipes, 8);
 
+    // sélectionner les recettes de l'utilisateur
   useEffect(() => {
     const fetchRecipes = async () => {
       try {

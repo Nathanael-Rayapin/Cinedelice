@@ -9,11 +9,12 @@ import "./Modal.scss";
 interface IModalProps {
     show: boolean;
 }
-
+// Composant Modal pour afficher des modales de prévisualisation ou de brouillon
 const Modal = ({ show }: IModalProps) => {
     const { setShowModal, modalOptions } = useContext(GlobalUIContext);
     const navigate = useNavigate();
 
+    // Gérer l'affichage de la modale et la fermeture avec la touche Échap
     useEffect(() => {
         if (!show) return;
 

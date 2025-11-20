@@ -8,6 +8,7 @@ import { updatePassword } from '../../services/auth.service';
 import { GlobalUIContext } from '../../store/interface';
 import './My-Informations.scss';
 
+// Composant MyInformations permettant à l'utilisateur de modifier son mot de passe
 const MyInformations = () => {
   const {
     register,

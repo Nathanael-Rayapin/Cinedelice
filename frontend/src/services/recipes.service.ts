@@ -4,6 +4,8 @@ import { showSnackbar } from '../utils/snackbar';
 
 const BASE_URL = import.meta.env.VITE_BACKEND_API;
 
+
+// Récupérer toutes les recettes
 export const getRecipes = async (params?: { search?: string; categorie?: string }): Promise<IRecipeDTO[]> => {
   try {
     const response = await axios.get(`${BASE_URL}/recipes`, { params });
@@ -19,6 +21,7 @@ export const getRecipes = async (params?: { search?: string; categorie?: string 
   }
 };
 
+// Récupérer une recette par son ID
 export const getOneRecipe = async (recipeId: number): Promise<IRecipeDTO> => {
   try {
     const response = await axios.get(`${BASE_URL}/recipes/${recipeId}`);
@@ -34,6 +37,7 @@ export const getOneRecipe = async (recipeId: number): Promise<IRecipeDTO> => {
   }
 };
 
+// Récupérer les recettes de l'utilisateur connecté
 export const getMyRecipes = async (): Promise<IRecipeDTO[]> => {
   try {
     const response = await axios.get(`${BASE_URL}/recipes/me`, {
@@ -54,6 +58,7 @@ export const getMyRecipes = async (): Promise<IRecipeDTO[]> => {
   }
 };
 
+// Récupérer une recette de l'utilisateur connecté par son ID
 export const getMyRecipe = async (recipeId: number): Promise<IRecipeDTO> => {
   try {
     const response = await axios.get(`${BASE_URL}/recipes/me/${recipeId}`, {
@@ -74,6 +79,7 @@ export const getMyRecipe = async (recipeId: number): Promise<IRecipeDTO> => {
   }
 };
 
+// Créer une nouvelle recette
 export const createRecipe = async (formData: FormData): Promise<ICreateRecipeDTO> => {
   try {
     const response = await axios.post(`${BASE_URL}/recipes`,

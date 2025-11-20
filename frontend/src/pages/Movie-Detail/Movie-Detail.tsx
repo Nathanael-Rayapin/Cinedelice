@@ -8,6 +8,7 @@ import type { IMovieDTO } from "../../interfaces/movie";
 import RecipeCard from "../../components/Recipe-Card/Recipe-Card";
 import "./Movie-Detail.scss";
 
+// Composant MovieDetail affichant les détails d'un film et ses recettes associées
 const MovieDetail = () => {
     const { id } = useParams<{ id: string }>();
     const [movie, setMovie] = useState<IMovieDTO | null>(null);
@@ -15,6 +16,7 @@ const MovieDetail = () => {
     const [errorMsg, setErrorMsg] = useState<string | null>(null);
     const [associatedRecipes, setAssociatedRecipes] = useState<IRecipeDTO[]>([]);
 
+    // Récupérer les détails du film et les recettes associées
     useEffect(() => {
         const fetchMovieAndRecipes = async () => {
             try {
@@ -39,7 +41,7 @@ const MovieDetail = () => {
             }
         };
 
-        fetchMovieAndRecipes();
+        fetchMovieAndRecipes(); 
     }, [id]);
 
     if (loading) {

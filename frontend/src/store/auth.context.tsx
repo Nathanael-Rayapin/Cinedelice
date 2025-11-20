@@ -9,7 +9,7 @@ export default function AuthContextProvider({ children }: IContextProviderProps)
     return !!token;
   });
 
-  // Utiliser pour me conencter
+  // Utiliser pour me connecter
   const login = (data: ISigninDTO) => {
     setIsAuth(true);
     localStorage.setItem('token', data.token);

@@ -2,6 +2,7 @@ import { describe, it, expect } from "vitest";
 import { usePagination } from "./usePagination";
 import { act, renderHook } from "@testing-library/react";
 
+// Tests unitaires pour le hook usePagination
 describe("usePagination", () => {
   const items = Array.from({ length: 20 }, (_, i) => i + 1);
 

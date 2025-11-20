@@ -1,6 +1,6 @@
 import { useRef } from "react";
 import "./TextAreaField.scss";
-
+// Propriétés du composant TextAreaField
 interface ITextAreaFieldProps {
     value: string;
     onChange: (value: string) => void;
@@ -8,7 +8,7 @@ interface ITextAreaFieldProps {
         placeholder?: string;
     }
 }
-
+// Composant TextAreaField pour les zones de texte avec auto-resize et puces
 const TextAreaField = ({ value, onChange, options }: ITextAreaFieldProps) => {
     const textareaRef = useRef<HTMLTextAreaElement>(null);
 
@@ -18,7 +18,7 @@ const TextAreaField = ({ value, onChange, options }: ITextAreaFieldProps) => {
         el.style.height = "auto";
         el.style.height = el.scrollHeight + "px";
     };
-
+    // Appel initial pour ajuster la taille
     const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
         let val = e.target.value;
 

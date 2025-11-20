@@ -22,6 +22,7 @@ const Home = () => {
 
   const tabs = ['Pour vous'];
 
+  // sélectionner les recettes et les films à la une
   useEffect(() => {
     const fetchRecipes = async () => {
       try {

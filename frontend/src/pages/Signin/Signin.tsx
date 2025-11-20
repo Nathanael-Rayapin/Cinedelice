@@ -11,6 +11,7 @@ import './Signin.scss';
 
 const emailPattern = /^.+@.+$/i;
 
+// Composant Signin pour la connexion des utilisateurs
 const Signin = () => {
   usePageMeta(pageMetadata.signin);
   const {

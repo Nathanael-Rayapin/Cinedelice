@@ -4,6 +4,7 @@ import type { IMovieDTO } from '../interfaces/movie';
 import { getRecipes } from '../services/recipes.service';
 import { getMovies } from '../services/movies.service';
 
+// Interface pour les résultats de recherche
 export interface ISearchResult {
   id: number;
   title: string;
@@ -11,7 +12,7 @@ export interface ISearchResult {
   image?: string;
   description?: string;
 }
-
+// Hook personnalisé pour la recherche de recettes et de films
 export const useSearch = () => {
   const [recipes, setRecipes] = useState<IRecipeDTO[]>([]);
   const [movies, setMovies] = useState<IMovieDTO[]>([]);
@@ -42,6 +43,7 @@ export const useSearch = () => {
 
       const q = query.toLowerCase();
 
+      // Résultats de recherche pour les recettes
       const recipeResults: ISearchResult[] = recipes
         .filter((recipe) => recipe.title.toLowerCase().includes(q))
         .map((recipe) => ({
@@ -52,6 +54,7 @@ export const useSearch = () => {
           description: recipe.description,
         }));
 
+        // Résultats de recherche pour les films
       const movieResults: ISearchResult[] = movies
         .filter((movie) => movie.title.toLowerCase().includes(q))
         .map((movie) => ({

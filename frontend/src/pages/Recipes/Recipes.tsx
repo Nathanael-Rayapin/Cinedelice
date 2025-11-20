@@ -10,6 +10,7 @@ import { pageMetadata } from '../../utils/pageMetadata';
 import './Recipes.scss';
 import { useLocation } from 'react-router';
 
+// Composant Recipes affichant le catalogue de recettes avec pagination
 const Recipes = () => {
   const [recipes, setRecipes] = useState<IRecipeDTO[]>([]);
   const { setLoading, setErrorMsg } = useContext(GlobalUIContext);
@@ -21,6 +22,7 @@ const Recipes = () => {
 
   const location = useLocation();
 
+  // sélectionner les recettes
   useEffect(() => {
     const fetchRecipes = async () => {
       try {

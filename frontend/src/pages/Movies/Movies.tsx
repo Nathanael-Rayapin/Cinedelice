@@ -9,6 +9,7 @@ import { usePageMeta } from '../../hooks/usePageMeta';
 import { pageMetadata } from '../../utils/pageMetadata';
 import './Movies.scss';
 
+// Composant Movies affichant le catalogue de films avec pagination
 const Movies = () => {
   const [movies, setMovies] = useState<IMovieDTO[]>([]);
   const { setLoading, setErrorMsg } = useContext(GlobalUIContext);
@@ -18,6 +19,7 @@ const Movies = () => {
   const { currentItems, currentPage, pageNumbers, goToPage, goToNextPage, goToPreviousPage } =
     usePagination(movies, 8);
 
+    // sélectionner les films
   useEffect(() => {
     const fetchMovies = async () => {
       try {

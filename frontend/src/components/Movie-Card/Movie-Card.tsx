@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router";
 import type { IMovieDTO } from "../../interfaces/movie";
 import './Movie-Card.scss';
-
+// Composant MovieCard affichant une carte de film cliquable
 const MovieCard = ({ movie }: { movie: IMovieDTO }) => {
     const navigate = useNavigate();
 

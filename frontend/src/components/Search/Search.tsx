@@ -4,13 +4,13 @@ import { useState, useRef, useEffect, useCallback } from 'react';
 import { useSearch } from '../../hooks/useSearch';
 import type { ISearchResult } from '../../hooks/useSearch';
 import './Search.scss';
-
+// Propriétés du composant Search
 interface ISearchProps {
   isMobileOpen: boolean;
   onMobileToggle: (isOpen: boolean) => void;
   isDesktop: boolean;
 }
-
+// Composant Search pour la recherche de recettes et de films
 const Search = ({ isMobileOpen, onMobileToggle, isDesktop }: ISearchProps) => {
   const [query, setQuery] = useState('');
   const [results, setResults] = useState<ISearchResult[]>([]);
@@ -19,8 +19,8 @@ const Search = ({ isMobileOpen, onMobileToggle, isDesktop }: ISearchProps) => {
   const navigate = useNavigate();
   const { search } = useSearch();
 
-  const dropdownRef = useRef<HTMLDivElement>(null);
-  const inputRef = useRef<HTMLInputElement>(null);
+  const dropdownRef = useRef<HTMLDivElement>(null); // Référence pour le dropdown
+  const inputRef = useRef<HTMLInputElement>(null); // Référence pour l'input de recherche
 
   // Centraliser la logique de fermeture / reset
   const closeSearch = useCallback(() => {

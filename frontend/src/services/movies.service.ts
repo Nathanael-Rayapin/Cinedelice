@@ -6,6 +6,8 @@ const BASE_URL = import.meta.env.VITE_BACKEND_API;
 const TMDB_SEARCH_BASE_URL = import.meta.env.VITE_TMDB_SEARCH_BASE_URL;
 const TMDB_API_KEY = import.meta.env.VITE_TMDB_API_KEY;
 
+
+// Récupérer tous les films
 export const getMovies = async (): Promise<IMovieDTO[]> => {
   try {
     const response = await axios.get(`${BASE_URL}/movies`);
@@ -21,6 +23,7 @@ export const getMovies = async (): Promise<IMovieDTO[]> => {
   }
 };
 
+// Récupérer un film par son ID
 export const getOneMovie = async (movieId: number): Promise<IMovieDTO> => {
   try {
     const response = await axios.get(`${BASE_URL}/movies/${movieId}`);
@@ -36,6 +39,7 @@ export const getOneMovie = async (movieId: number): Promise<IMovieDTO> => {
   }
 };
 
+// Rechercher des films via l'API TMDB
 export const searchMovies = async (query: string): Promise<ITmdbMovieDTO[]> => {
   try {
     const response = await axios.get(`${TMDB_SEARCH_BASE_URL}`, {

@@ -5,6 +5,7 @@ import type { IProfileDTO, IUpdateProfile } from '../interfaces/user';
 
 const BASE_URL = import.meta.env.VITE_BACKEND_API;
 
+// Fonction pour inscrire un nouvel utilisateur
 export const signup = async (userData: ISignup): Promise<ISignupDTO> => {
   try {
     const response = await axios.post(
@@ -35,6 +36,7 @@ export const signup = async (userData: ISignup): Promise<ISignupDTO> => {
   }
 };
 
+// Fonction pour connecter un utilisateur existant
 export const signin = async (userData: ISignin): Promise<ISigninDTO> => {
   try {
     const response = await axios.post(
@@ -62,6 +64,7 @@ export const signin = async (userData: ISignin): Promise<ISigninDTO> => {
   }
 };
 
+// Fonction pour récupérer le profil de l'utilisateur connecté
 export const getProfile = async (): Promise<IProfileDTO> => {
   try {
     const response = await axios.get(`${BASE_URL}/auth/me`, {
@@ -82,6 +85,7 @@ export const getProfile = async (): Promise<IProfileDTO> => {
   }
 };
 
+// Fonction pour mettre à jour le mot de passe de l'utilisateur connecté
 export const updatePassword = async (userData: IUpdateProfile): Promise<void> => {
   try {
     const response = await axios.patch(

@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 
+// Définition des propriétés des métadonnées de la page
 interface PageMetaProps {
   title: string;
   description: string;
@@ -9,6 +10,7 @@ interface PageMetaProps {
   type?: 'website' | 'article';
 }
 
+// Hook personnalisé pour gérer les métadonnées de la page
 export const usePageMeta = ({
   title,
   description,
@@ -49,6 +51,7 @@ export const usePageMeta = ({
       tag.setAttribute('content', content);
     };
 
+    // Metadonnées Open Graph
     updateOGTag('og:title', `${title} | Cuisine du cinéma`);
     updateOGTag('og:description', description);
     updateOGTag('og:type', type);

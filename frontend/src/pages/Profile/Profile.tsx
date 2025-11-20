@@ -6,12 +6,14 @@ import type { IProfileDTO } from '../../interfaces/user';
 import { GlobalUIContext } from '../../store/interface';
 import './Profile.scss';
 
+// Composant Profile affichant le profil utilisateur avec ses recettes et informations
 const Profile = () => {
   const [profile, setProfile] = useState<IProfileDTO | null>(null);
   const { setLoading, setErrorMsg } = useContext(GlobalUIContext);
 
   const tabs = ['Mes recettes', 'Mes informations'];
 
+  // sélectionner le profil de l'utilisateur
   useEffect(() => {
     const fetchProfile = async () => {
       try {

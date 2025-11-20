@@ -6,6 +6,7 @@ interface IOutletContext {
   recipes: IRecipeDTO[];
 }
 
+// Composant ForYou affichant la première recette pour l'utilisateur
 const ForYou = () => {
   const { recipes } = useOutletContext<IOutletContext>();
 

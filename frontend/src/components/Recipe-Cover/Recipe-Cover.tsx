@@ -6,7 +6,7 @@ import { IoChatbubbles } from 'react-icons/io5';
 import type { IRecipeDTO } from '../../interfaces/recipe';
 import { useNavigate } from 'react-router';
 import './Recipe-Cover.scss';
-
+// Composant RecipeCover affichant la couverture d'une recette
 const RecipeCover = ({
   recipe,
   isSeeRecipeVisible,
@@ -15,7 +15,7 @@ const RecipeCover = ({
   isSeeRecipeVisible: boolean;
 }) => {
   const navigate = useNavigate();
-
+// Affichage de la couverture de la recette avec ses informations
   return (
     <div className="recipe-cover">
       <img src={recipe.image} alt="Image de la recette" />

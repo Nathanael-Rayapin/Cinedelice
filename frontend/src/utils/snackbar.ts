@@ -1,5 +1,6 @@
 import Snackbar from 'awesome-snackbar';
 
+// Fonction pour afficher une snackbar avec un message et un style basé sur le succès ou l'échec
 export const showSnackbar = (message: string, success: boolean = true) => {
   if (success) {
     new Snackbar(message, {

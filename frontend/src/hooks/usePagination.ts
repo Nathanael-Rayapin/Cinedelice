@@ -14,6 +14,7 @@ export function usePagination<T>(items: T[], itemsPerPage: number = 8) {
   const goToNextPage = () => setCurrentPage((prev) => Math.min(prev + 1, totalPages));
   const goToPreviousPage = () => setCurrentPage((prev) => Math.max(prev - 1, 1));
 
+  // Calcul des numéros de pages à afficher avec gestion des ellipses
   const pageNumbers = useMemo<(number | string)[]>(() => {
     const pages: (number | string)[] = [];
     const maxVisiblePages = 7;

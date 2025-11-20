@@ -10,6 +10,7 @@ import { usePageMeta } from '../../hooks/usePageMeta';
 import { pageMetadata } from '../../utils/pageMetadata';
 import './Signup.scss';
 
+// Composant Signup pour l'inscription des utilisateurs
 const Signup = () => {
   usePageMeta(pageMetadata.signup);
   const {

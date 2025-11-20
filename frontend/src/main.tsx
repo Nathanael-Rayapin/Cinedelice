@@ -6,7 +6,7 @@ import AuthContextProvider from './store/auth.context.tsx';
 import GlobalUIContextProvider from './store/global.context.tsx';
 import './index.css';
 
-createRoot(document.getElementById('root')!).render(
+createRoot(document.getElementById('root')!).render( 
   <StrictMode>
     <AuthContextProvider>
       <GlobalUIContextProvider>
@@ -16,4 +16,4 @@ createRoot(document.getElementById('root')!).render(
       </GlobalUIContextProvider>
     </AuthContextProvider>
   </StrictMode>
-);
+); 

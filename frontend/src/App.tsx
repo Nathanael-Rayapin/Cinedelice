@@ -22,28 +22,30 @@ import AddRecipe from './pages/Add-Recipe/Add-Recipe';
 import './App.css';
 
 function App() {
-  const authContext = useContext(AuthContext);
-  const location = useLocation();
+  const authContext = useContext(AuthContext); // Accède au contexte d'authentification
+  const location = useLocation(); // Accède à la localisation actuelle
 
   // Remet la page en haut au chargement du composant
   useEffect(() => {
     window.scrollTo(0, 0);
 
-    const token = localStorage.getItem('token');
-    const expiresAtStr = localStorage.getItem('expiresAt');
+    const token = localStorage.getItem('token'); // Récupère le token depuis le localStorage
+    const expiresAtStr = localStorage.getItem('expiresAt'); // Récupère la date d'expiration du token
+
+     // Vérifie si le token est encore valide
 
     if (token && expiresAtStr) {
-      const expiresAt = Number(expiresAtStr);
+      const expiresAt = Number(expiresAtStr); // Convertit la date d'expiration en nombre
 
       if (Date.now() < expiresAt) {
-        authContext.setIsAuth(true);
+        authContext.setIsAuth(true); // Le token est valide, l'utilisateur est authentifié
       } else {
-        authContext.logout();
+        authContext.logout(); // Le token a expiré, déconnecte l'utilisateur
       }
     } else {
-      authContext.setIsAuth(false);
+      authContext.setIsAuth(false); // Pas de token, l'utilisateur n'est pas authentifié
     }
-  }, [location.pathname, authContext.isAuth]);
+  }, [location.pathname, authContext.isAuth]); // Déclenche l'effet à chaque changement de route ou d'état d'authentification
 
   return (
     <>

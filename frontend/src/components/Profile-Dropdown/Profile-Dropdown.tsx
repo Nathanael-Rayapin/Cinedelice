@@ -3,7 +3,7 @@ import { NavLink } from 'react-router';
 import { useContext, useEffect, useRef } from 'react';
 import { AuthContext } from '../../store/interface';
 import './Profile-Dropdown.scss';
-
+// Composant ProfileDropdown pour le menu utilisateur
 const ProfileDropdown = () => {
   const authContext = useContext(AuthContext);
   const detailsRef = useRef<HTMLDetailsElement>(null);

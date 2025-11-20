@@ -2,13 +2,13 @@ import { FaCaretDown } from 'react-icons/fa';
 import { useEffect, useRef } from 'react';
 import type { ICategoryDTO } from '../../interfaces/category';
 import './Categories-Dropdown.scss';
-
+// Composant CategoriesDropdown pour afficher un menu déroulant des catégories
 interface ICategoriesDropdownProps {
   value: string;
   onChange: (value: string) => void;
   categories: ICategoryDTO[];
 }
-
+// Composant CategoriesDropdown pour afficher un menu déroulant des catégories
 const CategoriesDropdown = ({ value, onChange, categories }: ICategoriesDropdownProps) => {
   const detailsRef = useRef<HTMLDetailsElement>(null);
 
