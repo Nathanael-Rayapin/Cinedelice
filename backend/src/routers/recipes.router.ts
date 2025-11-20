@@ -14,7 +14,8 @@ router.get("/recipes", recipesController.getAllRecipes);
 router.get("/recipes/:id", recipesController.getOneRecipe);
 
 router.delete("/recipes/:id", checkRoles(["admin"]), uploadImage, recipesController.deleteAnyRecipe);
-// Ajout d'une recette avec upload d'image via multer middleware
+
 router.post("/recipes", checkRoles(["user", "admin"]), uploadImage, recipesController.createRecipe);
+router.post("/recipes/draft", checkRoles(["user", "admin"]), uploadImage, recipesController.createDraftRecipe);
 
 router.patch("/recipes/:id", checkRoles(["admin"]), recipesController.updateAnyRecipe);

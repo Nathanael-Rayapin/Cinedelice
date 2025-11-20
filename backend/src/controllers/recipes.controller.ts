@@ -256,6 +256,38 @@ export async function createDraftRecipe(req: Request, res: Response) {
     }
     imageUrl = uploadedImage;
   }
+  if (!imageUrl) {
+    imageUrl = "https://placehold.co/400x250?text=Brouillon"; // Image par défaut pour les brouillons sans image
+  }
+  //si aucune image envoyé
+  // validation du body tous champs optionnels
+  const fields = await validateUpdateRecipe(req.body);
+ 
+  let finalMovieId = null;
+  // si un movie_id est fourni, on cherche/crée le film
+  if(fields.movie_id){
+    const movie = await findOrCreateMovieFromId(fields.movie_id);
+    finalMovieId = movie.id;
+  } else {
+    finalMovieId = 1; // ID du film "Inconnu" par défaut
+  }
+  // Créer le brouillon dans la BDD
+  const draftRecipe = await prisma.recipe.create({
+    data: {
+      user_id,
+      category_id: fields.category_id || 4, // catégorie "Autres" par défaut si non fournie
+      movie_id: finalMovieId,
+      title: fields.title || "Recette sans titre",
+      number_of_person: fields.number_of_person || 1,
+      preparation_time: fields.preparation_time || 10,
+      description: fields.description || "",
+      image: imageUrl,
+      ingredients: fields.ingredients || "Ingrédient 1\nIngrédient 2",
+      preparation_steps: fields.preparation_steps || "Étape 1\nÉtape 2",
+      status: fields.status || "draft",
+    },
+  });
+  res.status(201).json(draftRecipe);
 }
 
 // Modifier la categorie de n'importe quel recette (admin)
