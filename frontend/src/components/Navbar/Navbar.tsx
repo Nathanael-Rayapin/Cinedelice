@@ -13,7 +13,7 @@ import { useLocation, useNavigate } from 'react-router';
 import './Navbar.scss';
 // Composant Navbar pour la navigation principale
 const Navbar = () => {
-    const [categories, setCategories] = useState<ICategoryDTO[]>([]);
+  const [categories, setCategories] = useState<ICategoryDTO[]>([]);
   const [isMobileSearchOpen, setIsMobileSearchOpen] = useState(false);
   const { setLoading, setErrorMsg } = useContext(GlobalUIContext);
 
@@ -73,16 +73,6 @@ const Navbar = () => {
             }}
             categories={categories}
           />
-          {activeCategory && (
-            <button
-              type="button"
-              className="btn btn-ghost reset-category-btn"
-              onClick={() => navigate('/recettes')}
-              title="Réinitialiser le filtre"
-            >
-              Toutes
-            </button>
-          )}
           <Search isMobileOpen={false} onMobileToggle={setIsMobileSearchOpen} isDesktop={true} />
         </div>
         <div className="sections">
