@@ -247,6 +247,12 @@ export async function createDraftRecipe(req: Request, res: Response) {
   if (!user_id) {
     throw new UnauthorizedError("Vous devez être connecté pour créer une recette");
   }
+  // validation du body tous champs optionnels
+  const fields = await validateUpdateRecipe(req.body);
+  // Le titre est obligatoire pour un brouillon
+  if (!fields.title || fields.title.trim().length === 0) {
+    throw new BadRequestError("Le titre de la recette est obligatoire pour un brouillon");
+  }
   // image est optionnelle pour un brouillon
   let imageUrl = null;
   if (req.file) {
@@ -260,8 +266,8 @@ export async function createDraftRecipe(req: Request, res: Response) {
     imageUrl = "https://placehold.co/400x250?text=Brouillon"; // Image par défaut pour les brouillons sans image
   }
   //si aucune image envoyé
-  // validation du body tous champs optionnels
-  const fields = await validateUpdateRecipe(req.body);
+
+
  
   let finalMovieId = null;
   // si un movie_id est fourni, on cherche/crée le film
@@ -277,7 +283,7 @@ export async function createDraftRecipe(req: Request, res: Response) {
       user_id,
       category_id: fields.category_id || 4, // catégorie "Autres" par défaut si non fournie
       movie_id: finalMovieId,
-      title: fields.title || "Recette sans titre",
+      title: fields.title.trim(),
       number_of_person: fields.number_of_person || 1,
       preparation_time: fields.preparation_time || 10,
       description: fields.description || "",

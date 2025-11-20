@@ -1,5 +1,5 @@
 @apiBaseUrl = http://localhost:3000/api
-@token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTc2MzQ3ODM2MCwiZXhwIjoxNzYzNDgxOTYwfQ.aDPzHKzAIeiiMmZd5i5Wd8HeSmVkwztX_EHIUuaZN9Y
+@token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTc2MzYzNTA3OCwiZXhwIjoxNzYzNjM4Njc4fQ.gj9bOHUi84Btp0W6uAFkOkanMYiuWFSuLJ1U8EU2pfM
 
 ### Connexion ###
 POST {{apiBaseUrl}}/auth/login
@@ -115,3 +115,14 @@ Content-Type: image/jpeg
 
 < ../kebab.webp
 --update123--
+
+### Créer un brouillon
+POST {{apiBaseUrl}}/recipes/draft
+Authorization: Bearer {{token}}
+Content-Type: multipart/form-data; boundary=draft4
+
+--draft4
+Content-Disposition: form-data; name="title"
+
+Ma recette brouillon
+--draft4--
