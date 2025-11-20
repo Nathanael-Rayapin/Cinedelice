@@ -240,6 +240,24 @@ export async function createRecipe(req: Request, res: Response) {
   res.status(201).json(createdRecipe);
 }
 
+// Créer une recette draft (brouillon)
+export async function createDraftRecipe(req: Request, res: Response) {
+  // Récupérer l'ID de l'utilisateur connecté
+  const user_id = req.currentUserId;
+  if (!user_id) {
+    throw new UnauthorizedError("Vous devez être connecté pour créer une recette");
+  }
+  // image est optionnelle pour un brouillon
+  let imageUrl = null;
+  if (req.file) {
+    const uploadedImage = await uploadImageToCloudinary(req.file.buffer);
+    if (!uploadedImage) {
+      throw new InternalServerError("Erreur lors de l'upload de l'image");
+    }
+    imageUrl = uploadedImage;
+  }
+}
+
 // Modifier la categorie de n'importe quel recette (admin)
 export async function updateAnyRecipe(req: Request, res: Response) {
   const recipeId = await parseIdFromParams(req.params.id);
