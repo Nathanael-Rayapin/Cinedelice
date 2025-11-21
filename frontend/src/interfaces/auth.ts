@@ -1,3 +1,5 @@
+import type { IUserDTO } from "./user";
+
 export interface ISignup {
   username: string;
   email: string;
@@ -21,17 +23,14 @@ export interface ISignupDTO {
 }
 
 export interface ISigninDTO {
-  user: IConnectedUser;
+  user: IUserDTO;
   token: string;
   expiresAt: number;
 }
 
-export interface IConnectedUser {
-  id: number;
-  username: string;
-  email: string;
-  role: Role;
-  created_at: Date;
-}
+export type Role = 'user' | 'admin';
 
-type Role = 'user' | 'admin';
+export type TokenPayload = {
+  userId: number;
+  role: Role;
+};

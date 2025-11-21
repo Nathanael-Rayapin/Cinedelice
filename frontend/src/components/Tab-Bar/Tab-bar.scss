@@ -1,5 +1,4 @@
 .tab-bar {
-  max-width: 350px;
   width: 100%;
   display: flex;
   align-items: center;
@@ -14,6 +13,7 @@
     color: var(--color-white);
     font-size: 18px;
     font-weight: 600;
+    box-shadow: rgba(0, 0, 0, 0.06) 0px 2px 4px 0px inset;
     background: linear-gradient(to right, var(--color-secondary), var(--color-primary));
   }
 
@@ -31,7 +31,13 @@
     transition: all 0.3s ease;
 
     &:hover {
-      color: var(--color-black);
+      color: var(--color-primary);
     }
+  }
+}
+
+@media screen and (max-width: 769px) {
+  .tab-bar {
+    margin-bottom: 16px;
   }
 }

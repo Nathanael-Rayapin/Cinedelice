@@ -6,11 +6,16 @@ export function formatTabPath(tab: string, basePath?: string): string {
   // Nettoie et formate le nom du tab
   const cleanTab = tab.toLowerCase().replace(/\s+/g, '-');
 
-  // Si un chemin de base est fourni, on le garde
-  if (basePath) {
-    return `${basePath}/${cleanTab}`;
+  // Si le chemin commence déjà par "/" c'est un chemin absolu => on ne concatène pas basePath
+  if (cleanTab.startsWith('/')) {
+    return cleanTab;
   }
 
-  // Par défaut, on utilise simplement /{tab}
+  // Si un basePath est fourni, concatène proprement
+  if (basePath) {
+    return `${basePath.replace(/\/$/, '')}/${cleanTab}`;
+  }
+
+  // Par défaut
   return `/${cleanTab}`;
 }

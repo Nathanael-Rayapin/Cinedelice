@@ -20,6 +20,7 @@ import MovieDetail from './pages/Movie-Detail/Movie-Detail';
 import ProtectedRoute from './components/ProtectedRoute/ProtectedRoute';
 import AddRecipe from './pages/Add-Recipe/Add-Recipe';
 import UpdateRecipe from './pages/Update-Recipe/Update-Recipe';
+import AdminDashboard from './pages/Admin-Dashboard/Admin-Dashboard';
 import './App.css';
 
 function App() {
@@ -29,24 +30,7 @@ function App() {
 
   useEffect(() => {
     setErrorMsg(null);
-
     window.scrollTo(0, 0);
-
-    const token = localStorage.getItem('token');
-    const expiresAtStr = localStorage.getItem('expiresAt');
-
-
-    if (token && expiresAtStr) {
-      const expiresAt = Number(expiresAtStr);
-
-      if (Date.now() < expiresAt) {
-        authContext.setIsAuth(true);
-      } else {
-        authContext.logout();
-      }
-    } else {
-      authContext.setIsAuth(false);
-    }
   }, [location.pathname]);
 
   return (
@@ -72,6 +56,7 @@ function App() {
 
           {/* Routes Protégées - Mes recettes */}
           <Route element={<ProtectedRoute isAuthenticated={authContext.isAuth} />}>
+            {/* On imbrique pas cette route dans Profil car on ne veut pas "étendre" le contenu de Profil */}
             <Route path="/ma-recette/:id" element={<RecipeDetail isCurrentUserRecipes={true} />} />
           </Route>
 
@@ -84,6 +69,11 @@ function App() {
               <Route path="ajouter-recette" element={<AddRecipe />} />
               <Route path="modifier-recette/:id" element={<UpdateRecipe />} />
             </Route>
+          </Route>
+
+          {/* Admin */}
+          <Route element={<ProtectedRoute isAuthenticated={authContext.isAuth} />}>
+            <Route path="/espace-admin" element={<AdminDashboard />} />
           </Route>
 
           {/* Autre */}

@@ -1,4 +1,4 @@
-import type { IConnectedUser } from './auth';
+import type { Role } from "./auth";
 
 export interface IUpdateProfile {
   oldPassword: string;
@@ -7,5 +7,13 @@ export interface IUpdateProfile {
 }
 
 export interface IProfileDTO {
-  user: IConnectedUser;
+  user: IUserDTO;
+}
+
+export interface IUserDTO {
+  id: number;
+  username: string;
+  email: string;
+  role: Role;
+  created_at: Date;
 }

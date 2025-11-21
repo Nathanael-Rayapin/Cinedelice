@@ -1,0 +1,58 @@
+.admin-dashboard-container {
+    h1 {
+        text-align: left;
+    }
+
+    .table {
+        margin-top: 48px;
+
+        thead {
+            background-color: var(--color-gray);
+
+            tr th {
+                font-size: 24px;
+                font-weight: 600;
+                padding: 18px;
+                color: var(--color-black);
+            }
+        }
+
+        tbody {
+            .role {
+                text-transform: capitalize;
+            }
+
+            tr td {
+                font-size: 20px;
+                padding: 18px;
+                color: var(--color-black);
+            }
+
+            tr:nth-child(even) {
+                background-color: var(--color-gray);
+            }
+
+            .action-btn {
+                display: flex;
+                gap: 16px;
+
+                button {
+                    height: 50px;
+                    border-radius: 100px;
+                    font-size: 20px;
+                    color: var(--color-white);
+                    font-weight: 500;
+                }
+
+                .change-btn {
+                    background-color: #0088FF;
+                }
+
+                .delete-btn {
+                    background-color: var(--color-tertiary);
+                }
+            }
+        }
+
+    }
+}

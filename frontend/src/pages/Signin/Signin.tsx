@@ -35,7 +35,7 @@ const Signin = () => {
 
     try {
       setLoadingBtn(true);
-      const data = await signin(userData);
+      const data = await signin(userData);            
       authContext.login(data);
 
       // On redirige (à terme on redirigera vers le profil)

@@ -1,5 +1,5 @@
 import { createContext, type ReactNode } from 'react';
-import type { ISigninDTO } from '../interfaces/auth';
+import type { ISigninDTO, Role } from '../interfaces/auth';
 import type { IModalDelete, IModalDraft, IModalPreview } from '../interfaces/modal';
 
 export interface IContextProviderProps {
@@ -10,6 +10,10 @@ export interface IContextProviderProps {
 interface IAuthContextType {
   isAuth: boolean;
   setIsAuth: React.Dispatch<React.SetStateAction<boolean>>;
+  role: Role;
+  setRole: React.Dispatch<React.SetStateAction<Role>>;
+  userId: number | null;
+  setUserId: React.Dispatch<React.SetStateAction<number | null>>;
   login: (data: ISigninDTO) => void;
   logout: () => void;
 }
@@ -17,6 +21,10 @@ interface IAuthContextType {
 export const AuthContext = createContext<IAuthContextType>({
   isAuth: false,
   setIsAuth: () => {},
+  role: 'user',
+  setRole: () => {},
+  userId: null,
+  setUserId: () => {},
   login: () => {},
   logout: () => {},
 });
