@@ -16,7 +16,7 @@ const MyRecipe = () => {
   const { currentItems, currentPage, pageNumbers, goToPage, goToNextPage, goToPreviousPage } =
     usePagination(recipes, 8);
 
-    // sélectionner les recettes de l'utilisateur
+  // sélectionner les recettes de l'utilisateur
   useEffect(() => {
     const fetchRecipes = async () => {
       try {
@@ -44,12 +44,18 @@ const MyRecipe = () => {
   return (
     <div className='recipes-container'>
       <h2>Éditer mes recettes</h2>
+      <p>Mes recettes publiées</p>
       <div className="recipes-list">
-        {currentItems.map((recipe) => (
+        {currentItems.filter((recipe) => recipe.status === "published").map((recipe) => (
           <RecipeCard key={recipe.id} recipe={recipe} hasDraft={true} />
         ))}
       </div>
-
+      <p>Mes recettes en cours de rédaction</p>
+      <div className="recipes-list">
+        {currentItems.filter((recipe) => recipe.status === "draft").map((recipe) => (
+          <RecipeCard key={recipe.id} recipe={recipe} hasDraft={true} />
+        ))}
+      </div>
       <PaginationControls
         currentPage={currentPage}
         pageNumbers={pageNumbers}

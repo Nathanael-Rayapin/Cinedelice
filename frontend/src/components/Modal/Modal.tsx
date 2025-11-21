@@ -35,19 +35,6 @@ const Modal = ({ show }: IModalProps) => {
         };
     }, [show]);
 
-    // TODO: Taper sur la méthode de création d'un draft
-    // const handleDraft = async (_draftData: FormData) => {
-    //     try {
-    //         await createRecipe(draftData);
-    //         showSnackbar("Cette fonctionnalité n'est pas encore disponible", true);
-    //     } catch (error) {
-    //         showSnackbar("Oups ! Une erreur s'est produite. Veuillez réessayer plus tard.", false);
-    //     } finally {
-    //         handleClose();
-    //         navigate("/profil/mes-recettes");
-    //     }
-    // }
-
     const handleClose = () => {
         setShowModal(false);
     }
@@ -90,12 +77,14 @@ const Modal = ({ show }: IModalProps) => {
                             {draftOptions.cancelButtonContent}
                         </button>
                         <button
-                            disabled
                             className="btn m-1 action-btn submit-btn"
                             type="submit"
-                        // onClick={() => handleDraft(draftOptions.draftData)}
+                            onClick={() => {
+                                draftOptions.onConfirm();
+                                handleClose();
+                            }}
                         >
-                            Bientôt disponible
+                            {draftOptions.confirmButtonContent}
                         </button>
                     </div>
                 </div>

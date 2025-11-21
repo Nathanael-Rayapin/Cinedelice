@@ -9,9 +9,9 @@ export interface IModalPreview extends IModalOptions {
 export interface IModalDraft extends IModalOptions {
   title: string;
   description: string;
-  draftData: FormData;
   cancelButtonContent: string;
   confirmButtonContent: string;
+  onConfirm: () => Promise<void>;
 }
 
 export interface IModalDelete extends IModalOptions {

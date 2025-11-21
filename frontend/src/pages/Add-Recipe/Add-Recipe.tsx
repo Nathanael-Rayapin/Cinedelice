@@ -7,7 +7,7 @@ import TextAreaField from "../../components/TextAreaField/TextAreaField";
 import type { ICreateRecipe } from "../../interfaces/recipe";
 import { GlobalUIContext } from "../../store/interface";
 import { Controller, useForm, type SubmitHandler } from "react-hook-form";
-import { createRecipe } from "../../services/recipes.service";
+import { createDraft, createRecipe } from "../../services/recipes.service";
 import { useNavigate } from "react-router";
 import { getCategories } from "../../services/categories.service";
 import type { ICategoryDTO } from "../../interfaces/category";
@@ -30,6 +30,7 @@ const AddRecipe = () => {
     handleSubmit,
     getValues,
     reset,
+    trigger,
     formState: { errors, isValid, isDirty },
     control,
   } = useForm<ICreateRecipe>({
@@ -154,15 +155,34 @@ const AddRecipe = () => {
     return form;
   }
 
-  const handleCancel = () => {
+  const handleCancel = async () => {
+    const isTitleValid = await trigger("title");
+
+    // On vérifie au moins que le titre est valide
+    if (!isTitleValid) {
+      window.scrollTo(0, 0);
+      return;
+    }
+
     if (isDirty) {
       setModalOptions({
         title: "Quitter le formulaire",
         description: "Vous avez des modifications non enregistrées. Voulez-vous vraiment abandonner vos changements ?",
-        draftData: buildDraftRecipeFormData(getValues()),
         cancelButtonContent: "Retour",
         confirmButtonContent: "Enregistrer et quitter",
         type: "draft",
+        onConfirm: async () => {
+          try {
+            setLoadingBtn(true);
+            const recipe = buildDraftRecipeFormData(getValues());
+            await createDraft(recipe);
+          } catch (error) {
+            console.error('Erreur lors de la création d\'une recette', error);
+          } finally {
+            setLoadingBtn(false);
+            navigate("/profil/mes-recettes");
+          }
+        }
       });
       setShowModal(true);
     } else {
@@ -173,9 +193,7 @@ const AddRecipe = () => {
   }
 
   const handleChangeQuery = (value: string) => {
-    // Quand j'écris dans le champ, les résultats s'affichent normalement
     skipNextSearch.current = false;
-
     setQuery(value);
   };
 

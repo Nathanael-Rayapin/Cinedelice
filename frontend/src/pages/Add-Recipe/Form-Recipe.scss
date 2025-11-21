@@ -1,5 +1,6 @@
 .add-recipe-container {
-
+    overflow: hidden;
+    
     .form-infos {
         display: flex;
         flex-direction: column;

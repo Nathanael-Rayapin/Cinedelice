@@ -29,6 +29,7 @@ h2,
 h3,
 h4 {
   font-family: 'Montserrat', sans-serif;
+  color: var(--color-black);
 }
 
 p,
@@ -60,3 +61,4 @@ input[type='checkbox'] {
   border-radius: 4px;
   cursor: pointer;
 }
+

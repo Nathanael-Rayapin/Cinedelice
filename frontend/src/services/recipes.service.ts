@@ -101,6 +101,29 @@ export const createRecipe = async (formData: FormData): Promise<ICreateRecipeDTO
   }
 };
 
+export const createDraft = async (formData: FormData): Promise<IUpdateRecipeDTO> => {
+  try {
+    const response = await axios.post(`${BASE_URL}/recipes/draft`,
+      formData,
+      {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+          Authorization: `Bearer ${localStorage.getItem('token')}`,
+        },
+      });
+
+    if (response.status !== 201) {
+      throw new Error('Une erreur est survenue lors de la création de la recette');
+    }
+
+    showSnackbar("La recette a bien été créée", true);
+    return response.data;
+  } catch (error) {
+    showSnackbar("Oups ! Une erreur s'est produite. Veuillez réessayer plus tard.", false);
+    throw error;
+  }
+};
+
 export const updateRecipe = async (formData: FormData, recipeId: number): Promise<IUpdateRecipeDTO> => {
   try {
     const response = await axios.patch(`${BASE_URL}/recipes/me/${recipeId}`,

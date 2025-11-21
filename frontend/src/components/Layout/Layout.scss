@@ -2,6 +2,9 @@
   position: relative;
   padding: 50px 16px 0;
   min-height: calc(100vh - 100px);
+  background: url("../../assets/images/overlay.svg") no-repeat;
+  background-position: center -150px;
+  overflow: hidden;
 
   .error-msg {
     text-align: center;
@@ -12,6 +15,13 @@
     transform: translate(-50%, calc(-50% - 50px));
     font-size: 24px;
     z-index: 99;
+  }
+
+  .overlay-img  {
+    position: absolute;
+    top: -150px;
+    right: 0;
+    z-index: -2;
   }
 
   .overlay {

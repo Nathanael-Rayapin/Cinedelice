@@ -2,6 +2,7 @@ import { FcLike } from 'react-icons/fc';
 import type { IRecipeDTO } from '../../interfaces/recipe';
 import { useNavigate } from 'react-router';
 import './Recipe-Card.scss';
+
 // Composant RecipeCard affichant une carte de recette cliquable
 const RecipeCard = ({ recipe, hasDraft }: { recipe: IRecipeDTO; hasDraft: boolean }) => {
   const navigate = useNavigate();
