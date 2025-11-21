@@ -1,5 +1,5 @@
 interface IModalOptions {
-  type: 'draft' | 'preview';
+  type: 'draft' | 'preview' | 'delete';
 }
 
 export interface IModalPreview extends IModalOptions {
@@ -12,4 +12,12 @@ export interface IModalDraft extends IModalOptions {
   draftData: FormData;
   cancelButtonContent: string;
   confirmButtonContent: string;
+}
+
+export interface IModalDelete extends IModalOptions {
+  title: string;
+  description: string;
+  cancelButtonContent: string;
+  confirmButtonContent: string;
+  onConfirm: () => Promise<void>;
 }

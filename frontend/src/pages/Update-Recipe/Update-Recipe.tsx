@@ -154,7 +154,7 @@ const UpdateRecipe = () => {
 
             if (updatedRecipe) {
                 reset();
-                navigate("/profil/mes-recettes");
+                navigate(`/ma-recette/${recipeId}`);
             }
 
         } catch (error) {

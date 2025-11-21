@@ -123,3 +123,24 @@ export const updateRecipe = async (formData: FormData, recipeId: number): Promis
     throw error;
   }
 };
+
+export const deleteRecipe = async (recipeId: number): Promise<void> => {
+  try {
+    const response = await axios.delete(`${BASE_URL}/recipes/me/${recipeId}`,
+      {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem('token')}`,
+        },
+      });
+
+    if (response.status !== 204) {
+      throw new Error('Une erreur est survenue lors de la suppression de la recette');
+    }
+
+    showSnackbar("La recette a bien été supprimée", true);
+    return response.data;
+  } catch (error) {
+    showSnackbar("Oups ! Une erreur s'est produite. Veuillez réessayer plus tard.", false);
+    throw error;
+  }
+};

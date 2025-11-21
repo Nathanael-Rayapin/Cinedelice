@@ -2,7 +2,7 @@ import { useNavigate, useParams } from 'react-router';
 import RecipeCover from '../../components/Recipe-Cover/Recipe-Cover';
 import type { IRecipeDTO } from '../../interfaces/recipe';
 import { useContext, useEffect, useState } from 'react';
-import { getMyRecipe, getOneRecipe } from '../../services/recipes.service';
+import { deleteRecipe, getMyRecipe, getOneRecipe } from '../../services/recipes.service';
 import { PiTimerDuotone } from 'react-icons/pi';
 import { TbPointFilled } from 'react-icons/tb';
 import { GlobalUIContext } from '../../store/interface';
@@ -16,7 +16,8 @@ interface IRecipeDetailProps {
 const RecipeDetail = ({ isCurrentUserRecipes }: IRecipeDetailProps) => {
   const params = useParams();
   const [recipe, setRecipe] = useState<IRecipeDTO | null>(null);
-  const { setLoading, setErrorMsg } = useContext(GlobalUIContext);
+  const [loadingBtn, setLoadingBtn] = useState(false);
+  const { setLoading, setErrorMsg, setModalOptions, setShowModal } = useContext(GlobalUIContext);
   const navigate = useNavigate();
 
   // Récupérer les détails de la recette en fonction de où je suis (page public ou privée)
@@ -51,14 +52,51 @@ const RecipeDetail = ({ isCurrentUserRecipes }: IRecipeDetailProps) => {
     navigate(`/profil/modifier-recette/${recipe!.id}`);
   }
 
+  const handleDeleteRecipe = async () => {
+    // On affiche la Modal mais c'est cette page qui gère la logique métier
+    setModalOptions({
+      title: "Suppression de la recette",
+      description: "Êtes-vous sûr de vouloir supprimer cette recette ?",
+      cancelButtonContent: "Annuler",
+      confirmButtonContent: "Supprimer",
+      type: "delete",
+      onConfirm: async () => {
+        try {
+          setLoadingBtn(true);
+          await deleteRecipe(recipe!.id);
+        } catch (error) {
+          console.error('Erreur lors de la suppression de la recette', error);
+        } finally {
+          setLoadingBtn(false);
+          navigate("/profil/mes-recettes");
+        }
+      },
+    });
+    setShowModal(true);
+  }
+
   return (
     recipe && (
       <div className="recipe-detail">
         {
           isCurrentUserRecipes &&
           <div className="actions">
-            <button className='btn m-1 update-btn' onClick={() => handleUpdateRecipe()}>Modifier</button>
-            <button className='btn m-1 delete-btn'>Supprimer</button>
+            <button
+              className='btn m-1 update-btn'
+              onClick={() => handleUpdateRecipe()}>
+              Modifier
+            </button>
+            <button
+              className='btn m-1 delete-btn'
+              onClick={() => handleDeleteRecipe()}>
+              {loadingBtn ? (
+                <>
+                  <span className="loading loading-spinner"></span> Supprimer
+                </>
+              ) : (
+                "Supprimer"
+              )}
+            </button>
           </div>
         }
         <RecipeCover recipe={recipe!} isSeeRecipeVisible={false} />

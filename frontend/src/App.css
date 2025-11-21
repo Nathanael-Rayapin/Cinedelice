@@ -44,7 +44,7 @@ select {
 }
 
 button:focus {
-  outline: #fb8b24 solid 2px !important;
+  outline: #fb8b24 solid 1px !important;
 }
 
 .dropdown-content {
