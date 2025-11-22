@@ -3,7 +3,7 @@ import { prisma } from "../models/index.ts";
 import { BadRequestError,NotFoundError,ForbiddenError,ConflictError,UnauthorizedError} from "../lib/errors.ts";
 import { Role } from "../models/index.js";
 import * as argon2 from "argon2";
-import { parseIdFromParams, validatePassword } from "../validations/index.ts";
+import { parseIdFromParams, validateRegisterUser, validateUpdateUserRole, validateUpdatePassword } from "../validations/index.ts";
 
 // Lister tous les utilisateurs
 export async function getAllUsers(req: Request, res: Response) {
@@ -22,14 +22,7 @@ export async function getAllUsers(req: Request, res: Response) {
 // Créer un nouvel utilisateur
 export async function registerUser(req: Request, res: Response) {
   // On récupère les données envoyées par le client dans le corps de la requête
-  const { username, email, password, age_declaration, cgu_accepted } = req.body;
- 
-  // Vérifier que tous les champs obligatoires sont bien présents
-  if (!username || !email || !password || age_declaration !== true || cgu_accepted !== true) {
-    throw new BadRequestError("Tous les champs sont obligatoires.");
-  }
-
-  await validatePassword(password);
+  const { username, email, password, age_declaration, cgu_accepted } = await validateRegisterUser(req.body);
 
   // Vérifier que l'email n'est pas déjà utilisé
   const alreadyExistingUser = await prisma.user.findFirst({ where: { email } });
@@ -67,12 +60,7 @@ export async function updateUserRole(req: Request, res: Response) {
   const targetUserId = await parseIdFromParams(req.params.id); // l’utilisateur ciblé
   const adminId = req.currentUserId; // l’admin connecté (du token)
 
-  const { role } = req.body;
-
-  // Vérifier que le rôle est valide
-  if (role !== Role.admin && role !== Role.user) {
-    throw new BadRequestError("Le rôle doit être 'admin' ou 'user'.");
-  }
+  const { role } = await validateUpdateUserRole(req.body);
 
   // Vérifier que l'utilisateur existe
   const userToUpdate = await prisma.user.findUnique({ where: { id: targetUserId } });
@@ -127,11 +115,7 @@ export async function deleteUser(req: Request, res: Response) {
 // Modifier son mot de passe
 export async function updatePassword(req: Request, res: Response) {
   const userId = req.currentUserId; // récupéré depuis le token (middleware)
-  const { oldPassword, newPassword } = req.body;
-
-  if (!oldPassword || !newPassword) {
-    throw new BadRequestError("L'ancien et le nouveau mot de passe sont obligatoires.");
-  }
+  const { oldPassword, newPassword } = await validateUpdatePassword(req.body);
 
   const user = await prisma.user.findUnique({ where: { id: userId } });
   if (!user) throw new NotFoundError("Utilisateur introuvable.");
@@ -152,6 +136,7 @@ export async function updatePassword(req: Request, res: Response) {
     message: "Votre mot de passe a bien été modifié"
   });
 }
+
 // Supprimer son propre compte
 export async function deleteAccount(req: Request, res: Response) {
   const userId = req.currentUserId;
