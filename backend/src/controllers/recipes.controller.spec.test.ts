@@ -75,24 +75,27 @@ describe("[GET] /recipes - Filter by category", () => {
           user_id: user.id,
         },
       });
-
+      // Construire l'URL pour l'endpoint de l'API avec le nom de la catégorie encodé
       const url = `http://localhost:4002/api/recipes?categorie=${encodeURIComponent(categoryA.name)}`;
-
+      // Envoyer une requête GET à l'endpoint de l'API
       const response = await axios.get(url);
 
       assert.equal(response.status, 200);
+      // Vérifier que les données de la réponse sont un tableau
       assert.ok(Array.isArray(response.data));
 
+      // Vérifier si les données de la réponse contiennent des enregistrements de la catégorie B
       const containsCatB = response.data.some(
         (r: any) => r.category.name === categoryB.name
       );
+      // Vérifier si les données de la réponse contiennent des enregistrements de la catégorie B
       assert.equal(containsCatB, false);
 
       const containsCatA = response.data.some(
         (r: any) => r.category.name === categoryA.name
       );
       assert.equal(containsCatA, true);
-
+    // Nettoyer la base de données après la test
     } finally {
       await prisma.recipe.deleteMany();
       await prisma.movie.deleteMany();
