@@ -4,22 +4,16 @@ import { UnauthorizedError } from "./errors.ts";
 import type { Role } from "@prisma/client";
 
 // === Configuration ===
-const ONE_HOUR_IN_MILLISECONDS = 1 * 60 * 60 * 1000;
+const TOKEN_EXPIRATION = "1h";
 
 // === Générer un token JWT simple ===
 export function generateAccessToken(userId: number, role: Role) {
   const payload = { userId, role };
 
   const token = jwt.sign(payload, config.jwtSecret, {//creation du token chiffré
-    expiresIn: `${ONE_HOUR_IN_MILLISECONDS}ms`, // expire dans 1h
+    expiresIn: TOKEN_EXPIRATION,
   });
-  const expiresAt = Date.now() + ONE_HOUR_IN_MILLISECONDS;
-
-  return {
-    token,
-    expiresInMS: ONE_HOUR_IN_MILLISECONDS,
-    expiresAt
-  };
+  return {token};
 }
 
 // === Vérifier et décoder un token ===
