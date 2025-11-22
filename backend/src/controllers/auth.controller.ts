@@ -3,6 +3,7 @@ import type { Request, Response } from "express";
 import { UnauthorizedError } from "../lib/errors.ts";
 import { prisma } from "../models/index.ts";
 import { generateAccessToken, verifyAndDecodeJWT} from "../lib/tokens.ts";
+import { validateLoginUser } from "../validations/auth.validation.ts";
 
 //========Inscription d'un utilisateur=============
 
@@ -10,7 +11,7 @@ import { generateAccessToken, verifyAndDecodeJWT} from "../lib/tokens.ts";
 // ===================Connexion=====================
 
 export async function loginUser(req: Request, res: Response) {
-  const { email, password } = req.body;
+  const { email, password } = await validateLoginUser(req.body);
 
   // Récupérer l'utilisateur en BDD via son email
   const user = await prisma.user.findUnique({ where: { email } });
