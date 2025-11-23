@@ -1,0 +1,114 @@
+@apiBaseUrl = http://localhost:3000/api
+@token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjMsInJvbGUiOiJ1c2VyIiwiaWF0IjoxNzYzOTcwODg5LCJleHAiOjE3NjM5NzQ0ODl9.Q1C4JFnLqBZZLGbFcIGkfDhM2NE2ilxar09Tli_FiHo
+
+### ============================================
+### TESTS LOGIN - validateLoginUser
+### ============================================
+
+### Mon profil ###
+GET {{apiBaseUrl}}/auth/me
+Authorization: Bearer {{token}}
+
+### ✅ Connexion valide
+POST {{apiBaseUrl}}/auth/login
+Content-Type: application/json
+
+{
+  "email": "test@example.com",
+  "password": "Password123!"
+}
+
+### ❌ Email invalide (format)
+POST {{apiBaseUrl}}/auth/login
+Content-Type: application/json
+
+{
+  "email": "invalidemail",
+  "password": "Password123!"
+}
+
+### ✅ Email avec espaces (.trim() supprime les esp inutiles)
+POST {{apiBaseUrl}}/auth/login
+Content-Type: application/json
+
+{
+  "email": "  test@example.com  ",
+  "password": "Password123!"
+}
+
+### ✅ Password avec espaces (.trim() supprime les esp inutiles)
+POST {{apiBaseUrl}}/auth/login
+Content-Type: application/json
+
+{
+  "email": "  test@example.com  ",
+  "password": "  Password123!  "
+}
+
+### ❌ Email trop long (> 255 caractères)
+POST {{apiBaseUrl}}/auth/login
+Content-Type: application/json
+
+{
+  "email": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa@test.com",
+  "password": "Password123!"
+}
+
+### ❌ Email absent
+POST {{apiBaseUrl}}/auth/login
+Content-Type: application/json
+
+{
+  "password": "Password123!"
+}
+
+### ❌ Mot de passe vide
+POST {{apiBaseUrl}}/auth/login
+Content-Type: application/json
+
+{
+  "email": "test@example.com",
+  "password": ""
+}
+
+### ❌ Mot de passe absent
+POST {{apiBaseUrl}}/auth/login
+Content-Type: application/json
+
+{
+  "email": "test@example.com"
+}
+
+### ❌ Mot de passe avec espaces uniquement
+POST {{apiBaseUrl}}/auth/login
+Content-Type: application/json
+
+{
+  "email": "test@example.com",
+  "password": "   "
+}
+
+### ❌ Body vide
+POST {{apiBaseUrl}}/auth/login
+Content-Type: application/json
+
+{
+}
+
+### ❌ Email correct mais mot de passe incorrect (erreur métier, pas validation)
+POST {{apiBaseUrl}}/auth/login
+Content-Type: application/json
+
+{
+  "email": "test@example.com",
+  "password": "WrongPassword"
+}
+
+### ❌ Email inexistant (erreur métier, pas validation)
+POST {{apiBaseUrl}}/auth/login
+Content-Type: application/json
+
+{
+  "email": "nonexistent@example.com",
+  "password": "Password123!"
+}

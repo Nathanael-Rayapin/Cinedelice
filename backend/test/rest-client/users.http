@@ -1,0 +1,370 @@
+@apiBaseUrl = http://localhost:3000/api
+@token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTc2MzkzNjIyMywiZXhwIjoxNzYzOTM5ODIzfQ.jirWx2Cvebhn5sWE9ny1EkZ6ZH-jeVfvgBmyKirvbHU
+
+### ============================================
+### LOGIN
+### ============================================
+
+### Connexion ###
+POST {{apiBaseUrl}}/auth/login
+Content-Type: application/json
+
+{
+  "email": "test@example.com",
+  "password": "Password12345!"
+}
+
+### Mon profil ###
+GET {{apiBaseUrl}}/auth/me
+Authorization: Bearer {{token}}
+
+### ============================================
+### TESTS REGISTER USER - validateRegisterUser
+### ============================================
+
+
+### ✅ Inscription valide
+POST {{apiBaseUrl}}/users
+Content-Type: application/json
+
+{
+  "username": "testuser123",
+  "email": "test@example.com",
+  "password": "Password123!",
+  "age_declaration": true,
+  "cgu_accepted": true
+}
+
+### ❌ Username trop court (< 3 caractères)
+POST {{apiBaseUrl}}/users
+Content-Type: application/json
+
+{
+  "username": "ab",
+  "email": "test@example.com",
+  "password": "Password123!",
+  "age_declaration": true,
+  "cgu_accepted": true
+}
+
+### ❌ Username trop long (> 50 caractères)
+POST {{apiBaseUrl}}/users
+Content-Type: application/json
+
+{
+  "username": "abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz",
+  "email": "test@example.com",
+  "password": "Password123!",
+  "age_declaration": true,
+  "cgu_accepted": true
+}
+
+### ❌ Username avec caractères invalides
+POST {{apiBaseUrl}}/users
+Content-Type: application/json
+
+{
+  "username": "test user@123",
+  "email": "test@example.com",
+  "password": "Password123!",
+  "age_declaration": true,
+  "cgu_accepted": true
+}
+
+### ✅ Username avec espaces (.trim() supprime les esp inutiles)
+POST {{apiBaseUrl}}/users
+Content-Type: application/json
+
+{
+  "username": "  test-user-trim  ",
+  "email": "test_user_trim@example.com",
+  "password": "Password123!",
+  "age_declaration": true,
+  "cgu_accepted": true
+}
+
+### ❌ Email invalide
+POST {{apiBaseUrl}}/users
+Content-Type: application/json
+
+{
+  "username": "testuser",
+  "email": "invalidemail",
+  "password": "Password123!",
+  "age_declaration": true,
+  "cgu_accepted": true
+}
+
+### ❌ Email trop long (> 255 caractères)
+POST {{apiBaseUrl}}/users
+Content-Type: application/json
+
+{
+  "username": "testuser",
+  "email": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa@example.com",
+  "password": "Password123!",
+  "age_declaration": true,
+  "cgu_accepted": true
+}
+
+### ✅ Email avec espaces (.trim() supprime les esp inutiles)
+POST {{apiBaseUrl}}/users
+Content-Type: application/json
+
+{
+  "username": "test-mail-trim",
+  "email": "  test_mail_trim@example.com  ",
+  "password": "Password123!",
+  "age_declaration": true,
+  "cgu_accepted": true
+}
+
+### ❌ Mot de passe trop court (< 8 caractères)
+POST {{apiBaseUrl}}/users
+Content-Type: application/json
+
+{
+  "username": "testuser",
+  "email": "test@example.com",
+  "password": "Pass1!",
+  "age_declaration": true,
+  "cgu_accepted": true
+}
+
+### ❌ Mot de passe sans minuscule
+POST {{apiBaseUrl}}/users
+Content-Type: application/json
+
+{
+  "username": "testuser",
+  "email": "test@example.com",
+  "password": "PASSWORD123!",
+  "age_declaration": true,
+  "cgu_accepted": true
+}
+
+### ❌ Mot de passe sans majuscule
+POST {{apiBaseUrl}}/users
+Content-Type: application/json
+
+{
+  "username": "testuser",
+  "email": "test@example.com",
+  "password": "password123!",
+  "age_declaration": true,
+  "cgu_accepted": true
+}
+
+### ❌ Mot de passe sans chiffre
+POST {{apiBaseUrl}}/users
+Content-Type: application/json
+
+{
+  "username": "testuser",
+  "email": "test@example.com",
+  "password": "Password!",
+  "age_declaration": true,
+  "cgu_accepted": true
+}
+
+### ❌ Mot de passe sans caractère spécial
+POST {{apiBaseUrl}}/users
+Content-Type: application/json
+
+{
+  "username": "testuser",
+  "email": "test@example.com",
+  "password": "Password123",
+  "age_declaration": true,
+  "cgu_accepted": true
+}
+
+### ✅ Mot de passe avec espaces (.trim() supprime les esp inutiles)
+POST {{apiBaseUrl}}/users
+Content-Type: application/json
+
+{
+  "username": "test-password-trim",
+  "email": "test_password_trim@example.com",
+  "password": "  Password123!  ",
+  "age_declaration": true,
+  "cgu_accepted": true
+}
+
+### ❌ age_declaration absent
+POST {{apiBaseUrl}}/users
+Content-Type: application/json
+
+{
+  "username": "testuser",
+  "email": "test@example.com",
+  "password": "Password123!",
+  "cgu_accepted": true
+}
+
+### ❌ age_declaration false
+POST {{apiBaseUrl}}/users
+Content-Type: application/json
+
+{
+  "username": "testuser",
+  "email": "test@example.com",
+  "password": "Password123!",
+  "age_declaration": false,
+  "cgu_accepted": true
+}
+
+### ❌ cgu_accepted absent
+POST {{apiBaseUrl}}/users
+Content-Type: application/json
+
+{
+  "username": "testuser",
+  "email": "test@example.com",
+  "password": "Password123!",
+  "age_declaration": true
+}
+
+### ❌ cgu_accepted false
+POST {{apiBaseUrl}}/users
+Content-Type: application/json
+
+{
+  "username": "testuser",
+  "email": "test@example.com",
+  "password": "Password123!",
+  "age_declaration": true,
+  "cgu_accepted": false
+}
+
+### ============================================
+### TESTS UPDATE USER ROLE - validateUpdateUserRole
+### ============================================
+
+### ✅ Modifier le rôle en admin (valide)
+PATCH {{apiBaseUrl}}/users/3
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "role": "admin"
+}
+
+### ❌ Modifier le rôle en user (un admin ne peut modifier le rôle d'u autre admin)
+PATCH {{apiBaseUrl}}/users/3
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "role": "user"
+}
+
+### ❌ Rôle invalide
+PATCH {{apiBaseUrl}}/users/4
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "role": "superadmin"
+}
+
+### ❌ Rôle absent
+PATCH {{apiBaseUrl}}/users/4
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+}
+
+### ============================================
+### TESTS UPDATE PASSWORD - validateUpdatePassword
+### ============================================
+
+### ✅ Modifier mot de passe (valide)
+PATCH {{apiBaseUrl}}/users/me/password
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "oldPassword": "Password123!",
+  "newPassword": "NewPassword123!"
+}
+
+### ❌ Ancien mot de passe vide
+PATCH {{apiBaseUrl}}/users/me/password
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "oldPassword": "",
+  "newPassword": "NewPassword123!"
+}
+
+### ❌ Ancien mot de passe absent
+PATCH {{apiBaseUrl}}/users/me/password
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "newPassword": "NewPassword123!"
+}
+
+### ❌ Nouveau mot de passe trop court
+PATCH {{apiBaseUrl}}/users/me/password
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "oldPassword": "Password123!",
+  "newPassword": "NewP1!"
+}
+
+### ❌ Nouveau mot de passe sans minuscule
+PATCH {{apiBaseUrl}}/users/me/password
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "oldPassword": "Password123!",
+  "newPassword": "NEWPASSWORD123!"
+}
+
+### ❌ Nouveau mot de passe sans majuscule
+PATCH {{apiBaseUrl}}/users/me/password
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "oldPassword": "NewPassword123!",
+  "newPassword": "newpassword123!"
+}
+
+### ❌ Nouveau mot de passe sans chiffre
+PATCH {{apiBaseUrl}}/users/me/password
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "oldPassword": "Password123!",
+  "newPassword": "NewPassword!"
+}
+
+### ❌ Nouveau mot de passe sans caractère spécial
+PATCH {{apiBaseUrl}}/users/me/password
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "oldPassword": "Password123!",
+  "newPassword": "NewPassword123"
+}
+
+### ✅ Nouveau mot de passe avec espaces (.trim() supprime les esp inutiles)
+PATCH {{apiBaseUrl}}/users/me/password
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "oldPassword": "NewPassword123!",
+  "newPassword": "  Password123!  "
+}

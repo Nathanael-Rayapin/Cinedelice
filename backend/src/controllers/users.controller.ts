@@ -27,7 +27,7 @@ export async function registerUser(req: Request, res: Response) {
   // Vérifier que l'email n'est pas déjà utilisé
   const alreadyExistingUser = await prisma.user.findFirst({ where: { email } });
   if (alreadyExistingUser) {
-    throw new ConflictError("Un problème est survenue !");
+    throw new ConflictError("Une erreur est survenue");
   }
 
   // Hasher le mot de passe (argon2) pour éviter de le stocker en clair

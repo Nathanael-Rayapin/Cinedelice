@@ -18,8 +18,11 @@ const registerUserSchema = z.object({
     .max(50, { message: "Le nom d'utilisateur ne peut pas dépasser 50 caractères" })
     .regex(/^[a-zA-Z0-9_-]+$/, { message: "Le nom d'utilisateur ne peut contenir que des lettres, chiffres, tirets et underscores" }),
   
-  email: z.email({ message: "L'adresse email n'est pas valide" }) // z.email() gère déjà le .trim()
-    .max(255, { message: "L'email ne peut pas dépasser 255 caractères" }),
+  email: z
+    .string()
+    .trim()
+    .email("L'adresse email n'est pas valide")
+    .max(255, "L'email ne peut pas dépasser 255 caractères"),
   
   password: passwordSchema,
   
