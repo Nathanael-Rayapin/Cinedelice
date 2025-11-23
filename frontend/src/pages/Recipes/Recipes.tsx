@@ -7,8 +7,8 @@ import { usePagination } from '../../hooks/usePagination';
 import PaginationControls from '../../components/Pagination-Controls/Pagination-Controls';
 import { usePageMeta } from '../../hooks/usePageMeta';
 import { pageMetadata } from '../../utils/pageMetadata';
-import './Recipes.scss';
 import { useLocation } from 'react-router';
+import './Recipes.scss';
 
 // Composant Recipes affichant le catalogue de recettes avec pagination
 const Recipes = () => {

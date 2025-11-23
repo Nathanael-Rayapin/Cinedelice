@@ -1,4 +1,10 @@
-import { PrismaClient } from "@prisma/client";
+import { PrismaClient } from '../../prisma/generated/prisma/client';
+import { PrismaPg } from '@prisma/adapter-pg';
+export type { Prisma } from '../../prisma/generated/prisma/client';
+export { Role } from '../../prisma/generated/prisma/client';
 
-// On créer un client de connexion vers la base de données
-export const prisma = new PrismaClient();
+const adapter = new PrismaPg({
+  connectionString: process.env.DATABASE_URL
+});
+
+export const prisma = new PrismaClient({ adapter });

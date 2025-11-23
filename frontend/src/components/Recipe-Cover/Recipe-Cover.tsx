@@ -1,11 +1,12 @@
 import { LuClapperboard } from 'react-icons/lu';
 import { TbChefHat } from 'react-icons/tb';
 import { IoMdTime } from 'react-icons/io';
-import { FcLike } from 'react-icons/fc';
+import { GoHeartFill } from "react-icons/go";
 import { IoChatbubbles } from 'react-icons/io5';
 import type { IRecipeDTO } from '../../interfaces/recipe';
 import { useNavigate } from 'react-router';
 import './Recipe-Cover.scss';
+
 // Composant RecipeCover affichant la couverture d'une recette
 const RecipeCover = ({
   recipe,
@@ -15,7 +16,7 @@ const RecipeCover = ({
   isSeeRecipeVisible: boolean;
 }) => {
   const navigate = useNavigate();
-// Affichage de la couverture de la recette avec ses informations
+  // Affichage de la couverture de la recette avec ses informations
   return (
     <div className="recipe-cover">
       <img src={recipe.image} alt="Image de la recette" />
@@ -39,8 +40,12 @@ const RecipeCover = ({
 
         <div className={`recipe-infos ${isSeeRecipeVisible ? 'with-button' : 'no-button'}`}>
           <div className="info-item">
-            <FcLike size={24} />
-            <p>3000</p>
+            {
+              recipe.likedByMe
+                ? <GoHeartFill color='#f44336' size={24} />
+                : <GoHeartFill color='#fff' size={24} />
+            }
+            <p>{recipe._count.favourites || 0}</p>
           </div>
           <div className="info-item">
             <IoChatbubbles color="#fff" size={24} />

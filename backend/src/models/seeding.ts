@@ -323,6 +323,20 @@ async function main() {
     ],
   });
 
+  // ==== Création de favoris ====
+  await prisma.favourite.createMany({
+    data: [
+      { user_id: user1.id, recipe_id: 1 },
+      { user_id: user1.id, recipe_id: 3 },
+      { user_id: user1.id, recipe_id: 5 },
+      { user_id: user1.id, recipe_id: 7 },
+
+      { user_id: admin.id, recipe_id: 1 },
+      { user_id: admin.id, recipe_id: 2 },
+      { user_id: admin.id, recipe_id: 4 },
+      { user_id: admin.id, recipe_id: 6 },
+    ],
+  });
 
   console.log('✅ Données insérées avec succès !');
 }

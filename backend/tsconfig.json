@@ -5,15 +5,16 @@
     "rootDir": "./",                  // Où se trouve notre code TS
     "outDir": "./dist",               // Où sera généré notre code JS
 
-    "target": "esnext",               // Language cible pour la compilation TS -> dernière version de JS
-    "module": "nodenext",             // Type de résolution cible pour les modules (ESM)
-    "moduleResolution": "nodenext",   // Type de résolution source pour les modules (ESM)
+    "target": "ES2023",               // Language cible pour la compilation TS -> dernière version de JS
+    "module": "ESNext",             // Type de résolution cible pour les modules (ESM)
+    "moduleResolution": "bundler",   // Type de résolution source pour les modules (ESM)
     
     "forceConsistentCasingInFileNames": true, // Éviter les problèmes de casing dans les noms de fichier
     "rewriteRelativeImportExtensions": true,  // Autoriser les imports avec l'extension .ts
     "skipLibCheck": true,                     // Ne pas checker le code TS des fichier .d.ts
     
-    "strict": true,                   // Règle de syntaxe TS à respecter
+    "strict": true,
+    "esModuleInterop": true,                   // Règle de syntaxe TS à respecter
     "erasableSyntaxOnly": true,       // Utiliser uniquement la syntaxe supportées par Node.js (pas d'enum, décorateurs...)
     "verbatimModuleSyntax": true,     // Avoir les imports de type via `import type`
         "typeRoots": [                // Permettre a TS de reconnaitre les types perso

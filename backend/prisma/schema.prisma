@@ -1,29 +1,36 @@
 // Pour générer le code permettant de requêter la BDD (client Prisma)
 generator client {
-  provider = "prisma-client-js"
+  // Provider le plus à jour
+  provider = "prisma-client"
+  // Sert à générer le client prisma (qu'on importe dans nos controllers) 
+  // et tout ce dont on aurais besoins. On ne met pas dans les node_modules 
+  // car node_modules n'est pas push sur Github et donc n'importe qui pourrais
+  // avoir une version différente de prisma.
+  output   = "./generated/prisma"
 }
 
-// Pour choisir la bonne base de données
 datasource db {
   provider = "postgresql"
-  url      = env("DATABASE_URL")
+  // url gérer dans prisma.config.ts
+  // Une erreur survenait car l'extension Vscode pour Prisma tapait sur la version 7.0.0
 }
 
 // ==== Models ===
 
 model User {
-  id Int @id @default(autoincrement())
-  username String @unique()
-  email String @unique()
-  password  String
-  age_declaration Boolean 
-  cgu_accepted Boolean
-  role Role @default(user)
+  id              Int     @id @default(autoincrement())
+  username        String  @unique()
+  email           String  @unique()
+  password        String
+  age_declaration Boolean
+  cgu_accepted    Boolean
+  role            Role    @default(user)
 
   created_at DateTime @default(now())
   updated_at DateTime @default(now()) @updatedAt
 
-  recipes Recipe[] // un utilisateur peut avoir plusieurs recettes (relation inverse)
+  recipes    Recipe[] // un utilisateur peut avoir plusieurs recettes (relation inverse)
+  favourites Favourite[]
 
   @@map("user") // Correspondance entre le model "User" en minuscule dans le code et la table "user" dans la BDD 
 }
@@ -34,7 +41,7 @@ enum Role {
 }
 
 model Category {
-  id Int @id @default(autoincrement())
+  id   Int    @id @default(autoincrement())
   name String @unique()
 
   created_at DateTime @default(now())
@@ -44,13 +51,14 @@ model Category {
 
   @@map("category")
 }
+
 model Movie {
-  id            Int      @id @default(autoincrement())
-  id_movie_tmdb Int      @unique // chaque film TMDb n'existe qu'une fois
+  id            Int    @id @default(autoincrement())
+  id_movie_tmdb Int    @unique // chaque film TMDb n'existe qu'une fois
   title         String
   synopsis      String
   image         String
-  release_year  String  
+  release_year  String
   director      String
 
   created_at DateTime @default(now())
@@ -62,28 +70,44 @@ model Movie {
   @@map("movie")
 }
 
-model Recipe{
-  id Int @id @default(autoincrement())
-  user_id Int
-  category_id Int? // clé étrangère vers la catégorie optionnel
-  movie_id Int // id du film 
-  title String
-  number_of_person Int
-  preparation_time Int
-  description String? // description courte (optionnelle)
-  image String // URL de l'image de la recette
-  ingredients String
+model Recipe {
+  id                Int           @id @default(autoincrement())
+  user_id           Int
+  category_id       Int? // clé étrangère vers la catégorie optionnel
+  movie_id          Int // id du film 
+  title             String
+  number_of_person  Int
+  preparation_time  Int
+  description       String? // description courte (optionnelle)
+  image             String // URL de l'image de la recette
+  ingredients       String
   preparation_steps String
-  status Recipe_status @default(draft)// état de publication (brouillon ou publiée)
-  created_at         DateTime      @default(now())                 // date de création automatique
-  updated_at         DateTime      @default(now()) @updatedAt      // date de mise à jour automatique
+  status            Recipe_status @default(draft) // état de publication (brouillon ou publiée)
+  created_at        DateTime      @default(now()) // date de création automatique
+  updated_at        DateTime      @default(now()) @updatedAt // date de mise à jour automatique
 
-  user User @relation(fields: [user_id], references: [id], onDelete: Cascade) //une recette appartient à un utilisateur
-  category Category? @relation(fields: [category_id], references: [id], onDelete: SetNull) // une recette appartient à une catégorie (ou aucune si supprimé)
-  movie Movie @relation(fields: [movie_id], references: [id], onDelete: Cascade) // une recette appartient a un film
+  user       User        @relation(fields: [user_id], references: [id], onDelete: Cascade) //une recette appartient à un utilisateur
+  category   Category?   @relation(fields: [category_id], references: [id], onDelete: SetNull) // une recette appartient à une catégorie (ou aucune si supprimé)
+  movie      Movie       @relation(fields: [movie_id], references: [id], onDelete: Cascade) // une recette appartient a un film
+  favourites Favourite[]
+
   @@map("recipe")
-
 }
+
+model Favourite {
+  id        Int @id @default(autoincrement())
+  user_id   Int
+  recipe_id Int
+
+  created_at DateTime @default(now())
+
+  user   User   @relation(fields: [user_id], references: [id], onDelete: Cascade)
+  recipe Recipe @relation(fields: [recipe_id], references: [id], onDelete: Cascade)
+
+  @@unique([user_id, recipe_id])
+  @@map("favourite")
+}
+
 enum Recipe_status {
   draft
   published
