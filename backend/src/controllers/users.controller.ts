@@ -1,6 +1,6 @@
 import type { Request, Response } from "express";
 import { prisma } from "../models/index.ts";
-import { BadRequestError,NotFoundError,ForbiddenError,ConflictError,UnauthorizedError} from "../lib/errors.ts";
+import { NotFoundError, ForbiddenError, ConflictError, UnauthorizedError} from "../lib/errors.ts";
 import { Role } from "../models/index.js";
 import * as argon2 from "argon2";
 import { parseIdFromParams, validateRegisterUser, validateUpdateUserRole, validateUpdatePassword } from "../validations/index.ts";
