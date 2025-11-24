@@ -415,7 +415,6 @@ const AddRecipe = () => {
                       setQuery(e.target.value);
                     }}
                   />
-                  <IoIosSearch size={24} color="#D9D9D9" />
                 </div>
               )}
             />
@@ -519,7 +518,6 @@ const AddRecipe = () => {
                 },
               })}
             />
-
             {errors.numberOfPerson && (
               <p className="error" role="alert">
                 {errors.numberOfPerson.message as string}
