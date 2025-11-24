@@ -19,7 +19,7 @@
     "test": "npm run test:unit && npm run test:spec",
     "dev": "tsx --watch --env-file=.env index.ts",
     "============= Pour Render ======": "",
-    "init-db": "npm run db:migrate:reset && npm run db:migrate:deploy && npm run db:seed && tsx ./src/models/seeding.ts",
+    "init-db": "npm run db:migrate:reset && npm run db:migrate:deploy && tsx ./src/models/seeding.ts",
     "build": "tsc --project tsconfig.json",
     "start": "tsx --watch index.ts"
   },
