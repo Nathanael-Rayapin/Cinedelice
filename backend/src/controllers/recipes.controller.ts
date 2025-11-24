@@ -1,5 +1,5 @@
 import { prisma } from "../models/index.ts";
-import { Prisma } from "@prisma/client";
+import type { Prisma } from "../models/index.ts";
 import { recipeUpdateLocks } from "../lib/lock.ts";
 import type { Request,Response } from "express";
 import { BadRequestError, ConflictError, InternalServerError, NotFoundError, UnauthorizedError } from "../lib/errors.ts";
@@ -63,6 +63,8 @@ export async function getAllRecipes(req: Request, res: Response) {
         select: { name: true } },//on inclut les le nom de la categorie
       movie: { 
         select: { title: true } }, //on affiche aussi le titre du film
+      _count: { 
+        select: { favourites: true } }, // on affiche aussi le nombre de likes
     },
   });
   res.status(200).json(recipes);
@@ -88,7 +90,9 @@ export async function getOneRecipe(req: Request, res: Response) {
       category: {
         select: { name: true },
       },
-      movie:true ,
+      movie:true,
+      _count: { 
+        select: { favourites: true } },
     },
   },
   );
@@ -121,6 +125,8 @@ export async function getAllMyRecipes(req: Request, res: Response) {
         select: { name: true },
       },
       movie:true,
+      _count: { 
+        select: { favourites: true } },
     },
   },
   );
@@ -161,6 +167,8 @@ export async function getMyRecipe(req: Request, res: Response) {
         select: { name: true },
       },
       movie:true,
+      _count: { 
+        select: { favourites: true } },
     },
   },
   );
