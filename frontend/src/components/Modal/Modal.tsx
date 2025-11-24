@@ -1,7 +1,7 @@
 import { useContext, useEffect } from "react";
 import { GlobalUIContext } from "../../store/interface";
 import { IoCloseOutline } from "react-icons/io5";
-import type { IModalDelete, IModalDraft, IModalPreview } from "../../interfaces/modal";
+import type { IModalDefault, IModalPreview } from "../../interfaces/modal";
 import "./Modal.scss";
 
 interface IModalProps {
@@ -61,61 +61,30 @@ const Modal = ({ show }: IModalProps) => {
         </div>)
     }
 
-    if (modalOptions.type === 'draft') {
-        const draftOptions = modalOptions as IModalDraft;
+    if (modalOptions.type === 'default') {
+        const defaultOptions = modalOptions as IModalDefault;
 
         return <div className="modal-container">
             <dialog id="my-modal" className="modal">
                 <div className="modal-box">
-                    <p>{draftOptions.title}</p>
-                    <p>{draftOptions.description}</p>
+                    <p>{defaultOptions.title}</p>
+                    <p>{defaultOptions.description}</p>
                     <div className="modal-action">
                         <button
                             className="btn m-1 action-btn back-btn"
                             type="button"
                             onClick={() => handleClose()}>
-                            {draftOptions.cancelButtonContent}
+                            {defaultOptions.cancelButtonContent}
                         </button>
                         <button
                             className="btn m-1 action-btn submit-btn"
                             type="submit"
                             onClick={() => {
-                                draftOptions.onConfirm();
+                                defaultOptions.onConfirm();
                                 handleClose();
                             }}
                         >
-                            {draftOptions.confirmButtonContent}
-                        </button>
-                    </div>
-                </div>
-            </dialog>
-        </div>
-    }
-
-    if (modalOptions.type === 'delete') {
-        const deleteOptions = modalOptions as IModalDelete;
-
-        return <div className="modal-container">
-            <dialog id="my-modal" className="modal">
-                <div className="modal-box">
-                    <p>{deleteOptions.title}</p>
-                    <p>{deleteOptions.description}</p>
-                    <div className="modal-action">
-                        <button
-                            className="btn m-1 action-btn back-btn"
-                            type="button"
-                            onClick={() => handleClose()}>
-                            {deleteOptions.cancelButtonContent}
-                        </button>
-                        <button
-                            className="btn m-1 action-btn submit-btn"
-                            type="submit"
-                            onClick={() => {
-                                deleteOptions.onConfirm();
-                                handleClose();
-                            }}
-                        >
-                            {deleteOptions.confirmButtonContent}
+                            {defaultOptions.confirmButtonContent}
                         </button>
                     </div>
                 </div>

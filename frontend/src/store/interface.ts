@@ -1,6 +1,6 @@
 import { createContext, type ReactNode } from 'react';
 import type { ISigninDTO, Role } from '../interfaces/auth';
-import type { IModalDelete, IModalDraft, IModalPreview } from '../interfaces/modal';
+import type { IModalDefault, IModalPreview } from '../interfaces/modal';
 
 export interface IContextProviderProps {
   children: ReactNode;
@@ -35,8 +35,8 @@ interface IGlobalUIContextType {
   setLoading: React.Dispatch<React.SetStateAction<boolean>>;
   showModal: boolean;
   setShowModal: React.Dispatch<React.SetStateAction<boolean>>;
-  modalOptions: IModalPreview | IModalDraft | IModalDelete | null;
-  setModalOptions: React.Dispatch<React.SetStateAction<IModalPreview | IModalDraft | IModalDelete | null>>;
+  modalOptions: IModalPreview | IModalDefault | null;
+  setModalOptions: React.Dispatch<React.SetStateAction<IModalPreview | IModalDefault | null>>;
   errorMsg: string | null;
   setErrorMsg: React.Dispatch<React.SetStateAction<string | null>>;
 }

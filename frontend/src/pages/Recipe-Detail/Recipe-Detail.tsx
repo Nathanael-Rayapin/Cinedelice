@@ -59,7 +59,7 @@ const RecipeDetail = ({ isCurrentUserRecipes }: IRecipeDetailProps) => {
       description: "Êtes-vous sûr de vouloir supprimer cette recette ?",
       cancelButtonContent: "Annuler",
       confirmButtonContent: "Supprimer",
-      type: "delete",
+      type: "default",
       onConfirm: async () => {
         try {
           setLoadingBtn(true);

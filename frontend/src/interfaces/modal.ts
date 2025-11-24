@@ -1,20 +1,12 @@
 interface IModalOptions {
-  type: 'draft' | 'preview' | 'delete';
+  type: 'preview' | 'default';
 }
 
 export interface IModalPreview extends IModalOptions {
   image: string;
 }
 
-export interface IModalDraft extends IModalOptions {
-  title: string;
-  description: string;
-  cancelButtonContent: string;
-  confirmButtonContent: string;
-  onConfirm: () => Promise<void>;
-}
-
-export interface IModalDelete extends IModalOptions {
+export interface IModalDefault extends IModalOptions {
   title: string;
   description: string;
   cancelButtonContent: string;

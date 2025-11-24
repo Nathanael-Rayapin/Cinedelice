@@ -56,3 +56,16 @@
 
     }
 }
+
+.no-data-found {
+    position: absolute;
+    top: 60%;
+    left: 50%;
+    transform: translate(-50%, calc(-50% - 50px));
+
+    h2 {
+        font-weight: 400;
+        color: var(--color-deep-gray);
+        text-align: center;
+    }
+}

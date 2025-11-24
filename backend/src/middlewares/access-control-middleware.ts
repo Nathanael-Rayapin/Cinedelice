@@ -7,6 +7,8 @@ export function checkRoles(roles: Role[]) {
   return (req: Request, res: Response, next: NextFunction) => {
     // On récupère le token UNIQUEMENT depuis le header Authorization
     const authHeader = req.headers.authorization;
+    console.log("HEADER ", req.headers);
+    
     if (!authHeader) {
       throw new UnauthorizedError("Token manquant dans le header Authorization");
     }

@@ -170,14 +170,14 @@ const AddRecipe = () => {
         description: "Vous avez des modifications non enregistrées. Voulez-vous vraiment abandonner vos changements ?",
         cancelButtonContent: "Retour",
         confirmButtonContent: "Enregistrer et quitter",
-        type: "draft",
+        type: "default",
         onConfirm: async () => {
           try {
             setLoadingBtn(true);
             const recipe = buildDraftRecipeFormData(getValues());
             await createDraft(recipe);
           } catch (error) {
-            console.error('Erreur lors de la création d\'une recette', error);
+            console.error('Erreur lors de la création d\'une recette en brouillon', error);
           } finally {
             setLoadingBtn(false);
             navigate("/profil/mes-recettes");
