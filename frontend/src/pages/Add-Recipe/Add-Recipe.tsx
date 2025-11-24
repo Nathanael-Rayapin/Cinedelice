@@ -1,4 +1,3 @@
-import { IoIosSearch } from "react-icons/io";
 import CategoriesDropdown from "../../components/Categories-Dropdown/Categories-Dropdown";
 import { useContext, useEffect, useRef, useState } from "react";
 import { searchMovies } from "../../services/movies.service";

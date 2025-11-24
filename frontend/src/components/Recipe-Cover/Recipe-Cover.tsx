@@ -40,12 +40,8 @@ const RecipeCover = ({
 
         <div className={`recipe-infos ${isSeeRecipeVisible ? 'with-button' : 'no-button'}`}>
           <div className="info-item">
-            {
-              recipe.likedByMe
-                ? <GoHeartFill color='#f44336' size={24} />
-                : <GoHeartFill color='#fff' size={24} />
-            }
-            <p>{recipe._count.favourites || 0}</p>
+            <GoHeartFill color='#f44336' size={24} />
+            <p>2457</p>
           </div>
           <div className="info-item">
             <IoChatbubbles color="#fff" size={24} />

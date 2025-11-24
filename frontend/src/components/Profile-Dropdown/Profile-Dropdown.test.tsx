@@ -13,6 +13,10 @@ describe('ProfileDropdown', () => {
           value={{
             isAuth: false,
             setIsAuth: vi.fn(),
+            role: 'user',
+            setRole: vi.fn(),
+            userId: 1,
+            setUserId: vi.fn(),
             logout: vi.fn(),
             login: vi.fn(),
           }}
@@ -36,6 +40,10 @@ describe('ProfileDropdown', () => {
           value={{
             isAuth: true,
             setIsAuth: setIsAuthMock,
+            role: 'user',
+            setRole: vi.fn(),
+            userId: 1,
+            setUserId: vi.fn(),
             logout: logoutMock,
             login: vi.fn(),
           }}
