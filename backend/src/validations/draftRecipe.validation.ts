@@ -1,16 +1,6 @@
 import z from "zod";
 import { BadRequestError } from "../lib/errors.ts";
-
-/**
- * Transforme "" => undefined  
- * Car FormData envoie "" quand un champ est vide.
- */
-const emptyToUndefined = (value: unknown) => {
-  if (typeof value === "string" && value.trim() === "") {
-    return undefined;
-  }
-  return value;
-};
+import { emptyToUndefined } from "./utils.ts";
 
 /**
  * Schéma pour les BROUILLONS
