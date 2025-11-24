@@ -6,9 +6,21 @@ import {
     type ByRoleMatcher,
     type ByRoleOptions,
 } from '@testing-library/react';
-import { beforeEach, describe, expect, it } from 'vitest';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { BrowserRouter } from 'react-router';
 import AddRecipe from './Add-Recipe';
+
+vi.mock('awesome-snackbar', () => {
+  return {
+    default: class {
+      view = document.createElement('div');
+      show() {}
+      hide() {}
+      getHeight() { return 0; }
+      adjustListPositions() {}
+    },
+  };
+});
 
 describe('Add Recipe Form', () => {
     beforeEach(() => {
