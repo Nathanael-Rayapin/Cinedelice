@@ -1,6 +1,6 @@
 import z from "zod";
 import { BadRequestError } from "../lib/errors.ts";
-import { Role } from "@prisma/client";
+import { Role } from "../models/index.ts";
 
 // Schémas
 const passwordSchema = z.string()
