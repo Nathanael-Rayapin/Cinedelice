@@ -98,7 +98,6 @@ describe('Signin Form', () => {
         created_at: new Date(),
       },
       token: 'fake-token',
-      expiresAt: Date.now() + 1000,
     });
 
     fireEvent.change(emailInput, { target: { value: 'john.doe@gmail.com' } });
