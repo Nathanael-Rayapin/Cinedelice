@@ -82,7 +82,7 @@ const AdminDashboard = () => {
             <h1>Back-Office</h1>
 
             <div className="overflow-x-auto">
-                {users.filter((user) => user.id !== userId).length === 0 ? (
+                {users.filter((user) => user.id !== userId && user.role !== 'admin').length === 0 ? (
                     <div className="no-data-found">
                         <h2 className="no-users-message">Aucun utilisateur trouvé.</h2>
                     </div>
@@ -98,7 +98,7 @@ const AdminDashboard = () => {
                         <tbody>
                             {/* Je ne dois pas voir mon propre profil car si je change mon propre rôle
                         techniquement je ne devrais plus avoir accès à ce dashboard */}
-                            {users.filter((user) => user.id !== userId).map((user) => (
+                            {users.filter((user) => user.id !== userId && user.role !== 'admin').map((user) => (
                                 <tr key={user.id}>
                                     <td>{user.email}</td>
                                     <td className="role">{user.role}</td>
