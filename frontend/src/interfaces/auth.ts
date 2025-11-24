@@ -25,7 +25,6 @@ export interface ISignupDTO {
 export interface ISigninDTO {
   user: IUserDTO;
   token: string;
-  expiresAt: number;
 }
 
 export type Role = 'user' | 'admin';
@@ -33,4 +32,6 @@ export type Role = 'user' | 'admin';
 export type TokenPayload = {
   userId: number;
   role: Role;
+  exp: number;
+  iat?: number;
 };

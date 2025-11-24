@@ -13,13 +13,13 @@ export default function AuthContextProvider({ children }: IContextProviderProps)
 
   useEffect(() => {
     const token = localStorage.getItem("token");
-    const expiresAtStr = localStorage.getItem("expiresAt");
 
-    if (token && expiresAtStr) {
-      const expiresAt = Number(expiresAtStr);
-
-      if (Date.now() < expiresAt) {
+    if (token) {
+      const payload = jwtDecode<TokenPayload>(token);
+      if (payload.exp && Date.now() < payload.exp * 1000) {
         setIsAuth(true);
+        setRole(payload.role);
+        setUserId(payload.userId);
         return;
       }
     }
@@ -50,16 +50,22 @@ export default function AuthContextProvider({ children }: IContextProviderProps)
   });
 
   const login = (data: ISigninDTO) => {
-    setIsAuth(true);
-    setRole(data.user.role);
-    localStorage.setItem('token', data.token);
-    localStorage.setItem('expiresAt', data.expiresAt.toString());
+    try {
+      const payload = jwtDecode<TokenPayload>(data.token);
+
+      setIsAuth(true);
+      setRole(payload.role);
+      setUserId(payload.userId);
+      localStorage.setItem('token', data.token);
+    } catch (error) {
+      console.error('Erreur lors du décodage du token', error);
+      logout();
+    }
   };
 
   const logout = () => {
     setIsAuth(false);
     localStorage.removeItem('token');
-    localStorage.removeItem('expiresAt');
   };
 
   // Ce qu'on met à disposition pour tous les composants
