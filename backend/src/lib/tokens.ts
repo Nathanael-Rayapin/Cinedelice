@@ -1,7 +1,7 @@
 import jwt, { type JwtPayload } from "jsonwebtoken";
 import { config } from "../../config/config.ts";
 import { UnauthorizedError } from "./errors.ts";
-import type { Role } from "@prisma/client";
+import type { Role } from "../models/index.ts";
 
 // === Configuration ===
 const TOKEN_EXPIRATION = "1h";
