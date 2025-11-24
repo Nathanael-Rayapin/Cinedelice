@@ -16,9 +16,10 @@
     "============= Pour les tests ======": "",
     "test:unit": "tsx --test ./**/*.unit.test.ts",
     "test:spec": "tsx --env-file=.env --test ./**/*.spec.test.ts",
-
     "test": "npm run test:unit && npm run test:spec",
-    "dev": "tsx --watch --env-file=.env index.ts"
+    "dev": "tsx --watch --env-file=.env index.ts",
+    "============= Pour Render ======": "",
+    "init-db": "npm run db:migrate:reset && npm run db:migrate:deploy && npm run db:seed && tsx ./src/models/seeding.ts"
   },
   "keywords": [],
   "author": "",
